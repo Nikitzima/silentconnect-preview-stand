@@ -23,17 +23,17 @@
 <canvas id="bg" aria-hidden="true"></canvas>
 <div class="resend-grid" aria-hidden="true"></div>
 
-<!-- Панель прототипа: все боевые экраны SilentConnect -->
+<!-- Панель прототипа: все боевые экраны SilentConnect (адаптивные подписи на мобильных) -->
 <div class="lab">
   <div class="container">
     <div class="lab-group">
       <span class="lab-label">Экран</span>
-      <button type="button" class="lab-pill on" data-page-tab="landing">Витрина (/)</button>
-      <button type="button" class="lab-pill" data-page-tab="order">Заказ (/order/…)</button>
-      <button type="button" class="lab-pill" data-page-tab="sub">Мастер (/sub/setup/…)</button>
-      <button type="button" class="lab-pill" data-page-tab="cabinet">Кабинет (/cabinet/…)</button>
-      <button type="button" class="lab-pill" data-page-tab="legal">Документы и Инфо</button>
-      <button type="button" class="lab-pill" data-open-cabinet>Модалка Входа</button>
+      <button type="button" class="lab-pill on" data-page-tab="landing">Витрина<span class="hide-sm"> (/)</span></button>
+      <button type="button" class="lab-pill" data-page-tab="order">Заказ<span class="hide-sm"> (/order/…)</span></button>
+      <button type="button" class="lab-pill" data-page-tab="sub">Мастер<span class="hide-sm"> (/sub/setup/…)</span></button>
+      <button type="button" class="lab-pill" data-page-tab="cabinet">Кабинет<span class="hide-sm"> (/cabinet/…)</span></button>
+      <button type="button" class="lab-pill" data-page-tab="legal">Инфо<span class="hide-sm"> и Документы</span></button>
+      <button type="button" class="lab-pill" data-open-cabinet>Вход<span class="hide-sm"> (Модалка)</span></button>
     </div>
     <button type="button" class="kbd-hint" data-open-cmd title="Быстрый переход (Ctrl+K)">
       <span>Поиск и переход</span><kbd>⌘K</kbd>
@@ -46,7 +46,7 @@
   <header class="nav" id="nav">
     <a href="#top" class="brand" data-go="landing" aria-label="SilentConnect">
       <img src="assets/branding/avatar.webp" alt="" class="brand-logo" width="34" height="34">
-      SilentConnect
+      <span>SilentConnect</span>
     </a>
     <nav class="nav-links" aria-label="Разделы">
       <a href="#tariffs" data-go="landing">Тарифы</a>
@@ -62,7 +62,7 @@
 </div>
 
 <!-- =====================================================================
-     1. ВИТРИНА / ЛЕНДИНГ (/) — 100% White-Hat (только "Европа", без упоминаний стран и протоколов)
+     1. ВИТРИНА / ЛЕНДИНГ (/) — 100% White-Hat
      ===================================================================== -->
 <main id="view-landing" data-view>
 
@@ -78,16 +78,16 @@
           </div>
         </div>
 
-        <div class="hero-facts">
-          <div class="fact"><b>Серверы в Европе</b><span>маршрут выбирается автоматически</span></div>
-          <div class="fact"><b>Без лимитов трафика</b><span>в основном профиле</span></div>
-          <div class="fact"><b>Возврат 14 дней</b><span>на первый заказ</span></div>
-        </div>
-
         <div class="stage-col">
           <div class="stage-wrap">
             <div id="stage" aria-label="Интерактивный 3D-глобус. Потяните, чтобы повернуть."></div>
           </div>
+        </div>
+
+        <div class="hero-facts">
+          <div class="fact"><b>Серверы в Европе</b><span>каналы до 10 Гбит/с</span></div>
+          <div class="fact"><b>Без лимитов трафика</b><span>в основном профиле</span></div>
+          <div class="fact"><b>Возврат 14 дней</b><span>на первый заказ</span></div>
         </div>
       </div>
     </div>
@@ -125,9 +125,9 @@
 
           <div class="includes">
             <div class="inc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34e3a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-              <span><b>Без лимитов по трафику</b> в основном профиле — на всех устройствах</span></div>
+              <span><b>Без лимитов по трафику и скорости</b> в основном профиле — на всех устройствах</span></div>
             <div class="inc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34e3a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-              <span>Дополнительный профиль <b>AmneziaWG</b> — <b class="tab" id="awgQ">250 ГБ</b> в месяц</span></div>
+              <span>Выделенный игровой профиль <b>AmneziaWG</b> — <b class="tab" id="awgQ">250 ГБ</b> в месяц + резервный контур</span></div>
             <div class="inc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34e3a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
               <span>Постоянная ссылка: при продлении ничего перенастраивать не нужно</span></div>
           </div>
@@ -135,12 +135,28 @@
 
         <aside class="checkout glass spot border-beam" id="checkout">
           <div class="checkout-glow" aria-hidden="true"></div>
-          <div class="co-plan" id="coPlan">Тариф «Личный» · 6 месяцев</div>
-          <div class="co-price"><b class="metal tab" id="coPrice">719</b><span>₽</span></div>
-          <div class="co-sub tab">
-            <s id="coOld">894 ₽</s>
-            <b id="coMonth">120 ₽ в месяц</b>
-            <span class="co-save" id="coSave">экономия 175 ₽</span>
+
+          <div class="co-top">
+            <div class="co-plan" id="coPlan">Тариф «Личный» · 6 месяцев</div>
+            <span class="co-badge tab" id="coPctBadge">−20%</span>
+          </div>
+
+          <div class="co-price-block">
+            <div class="co-price">
+              <b class="metal tab" id="coPrice">719</b>
+              <span class="co-curr">₽</span>
+              <s class="co-old tab" id="coOld">894 ₽</s>
+            </div>
+            <div class="co-breakdown tab">
+              <div class="co-row">
+                <span>Стоимость в пересчёте</span>
+                <b id="coMonth">120 ₽ / мес</b>
+              </div>
+              <div class="co-row" id="coSaveRow">
+                <span>Выгода за выбранный срок</span>
+                <b class="co-save" id="coSave">экономия 175 ₽</b>
+              </div>
+            </div>
           </div>
 
           <form class="co-form" id="orderForm" action="/order" method="POST" novalidate>
@@ -170,7 +186,7 @@
             <label class="check"><input type="checkbox" name="email_reminders" value="1" checked>
               <span>Напомнить об окончании подписки на почту</span></label>
 
-            <!-- Cloudflare Turnstile (Интерактивный превью-виджет) -->
+            <!-- Cloudflare Turnstile -->
             <div class="cf-widget" data-checked="true" role="checkbox" aria-checked="true" tabindex="0">
               <div class="cf-left"><span class="cf-check">✓</span><span>Проверка пройдена</span></div>
               <div class="cf-right"><span class="cf-brand">CLOUDFLARE</span><span class="cf-sub">Turnstile · Конфиденциальность</span></div>
@@ -184,23 +200,23 @@
     </div>
   </section>
 
-  <!-- Возможности -->
+  <!-- Возможности (Достоверная информация и компактная верстка) -->
   <section class="section" id="features">
     <div class="container">
       <div class="sec-head">
         <h2 class="h2 metal">Что вы получаете</h2>
-        <p class="sec-lead">Только то, что действительно влияет на ежедневное пользование.</p>
+        <p class="sec-lead">Только то, что действительно влияет на скорость и стабильность каждый день.</p>
       </div>
       <div class="bento">
         <article class="bcard glass spot b7">
           <div>
-            <h3>Серверы в Европе</h3>
-            <p>Несколько узлов в Евросоюзе. Приложение само выбирает маршрут с наименьшей задержкой — вам не нужно ничего переключать.</p>
+            <h3>Европейские локации до 10 Гбит/с</h3>
+            <p>Несколько независимых узлов в Евросоюзе с минимальной задержкой. Выбирайте нужную локацию вручную или включите автовыбор лучшего пинга в приложении.</p>
           </div>
           <div class="route" aria-hidden="true">
             <span class="node">Устройство</span>
             <span class="lane"><i class="pkt"></i><i class="pkt" style="animation-delay:-1.2s"></i></span>
-            <span class="node hot">Европа</span>
+            <span class="node hot">Европа (10 Гбит/с)</span>
             <span class="lane"><i class="pkt" style="animation-delay:-.5s"></i><i class="pkt" style="animation-delay:-1.7s"></i></span>
             <span class="node">Интернет</span>
           </div>
@@ -208,8 +224,8 @@
 
         <article class="bcard glass spot b5">
           <div>
-            <h3>Два профиля в одной подписке</h3>
-            <p>Основной профиль работает без лимитов. Дополнительный профиль AmneziaWG — со своим пакетом трафика, он зависит от выбранного тарифа.</p>
+            <h3>Три режима в одной подписке</h3>
+            <p>Безлимитный основной профиль на каждый день, выделенный игровой контур <b>AmneziaWG</b> (прямой UDP) и резервный канал для мобильных сетей.</p>
           </div>
           <div class="quota tab">
             <div><small>Личный</small><b>250 ГБ</b></div>
@@ -220,15 +236,19 @@
 
         <article class="bcard glass spot b5">
           <div>
-            <h3>Без журналов посещений</h3>
-            <p>Мы не записываем историю сайтов и DNS-запросы. Для работы сервиса хранится только Email, история заказов и общий объём трафика.</p>
+            <h3>Без журналов активности</h3>
+            <p>Мы не записываем историю посещений и DNS-запросы. Для работы подписки хранится только привязанный Email, срок доступа и общий счётчик трафика.</p>
+          </div>
+          <div class="bcard-badges">
+            <span class="node hot">Strict No-Logs</span>
+            <span class="node">Возврат 14 дней</span>
           </div>
         </article>
 
         <article class="bcard glass spot b7">
           <div>
-            <h3>Одна ссылка для всех устройств</h3>
-            <p>Продлили или перешли на другой тариф — настройки остаются прежними. Управлять доступом можно в кабинете по Email или через Telegram-бота.</p>
+            <h3>Постоянная ссылка до 9 устройств</h3>
+            <p>Продлили или перешли на другой тариф — настройки на устройствах остаются прежними. Управление подпиской доступно на сайте и в Telegram-боте.</p>
           </div>
           <div class="plat"><span>iOS</span><span>Android</span><span>Windows</span><span>macOS</span><span>Linux</span><span>Android TV</span><span>Apple TV</span></div>
         </article>
@@ -244,9 +264,27 @@
         <p class="sec-lead">Страница подписки сама определит устройство и предложит подходящее приложение.</p>
       </div>
       <div class="steps">
-        <article class="step glass spot"><div class="step-n metal">1</div><h3>Оформите подписку</h3><p>Выберите тариф здесь или в Telegram-боте. Ссылка появится сразу после оплаты и придёт на почту.</p></article>
-        <article class="step glass spot"><div class="step-n metal">2</div><h3>Установите приложение</h3><p>Откройте страницу подписки — мы подскажем, какое приложение скачать для вашего устройства.</p></article>
-        <article class="step glass spot"><div class="step-n metal-em">3</div><h3>Нажмите «Подключить»</h3><p>Профиль добавится одной кнопкой. Дальше всё работает само, в том числе после продления.</p></article>
+        <article class="step glass spot">
+          <div class="step-n metal">1</div>
+          <div class="step-txt">
+            <h3>Оформите подписку</h3>
+            <p>Выберите тариф здесь или в Telegram-боте. Ссылка появится сразу после оплаты и придёт на почту.</p>
+          </div>
+        </article>
+        <article class="step glass spot">
+          <div class="step-n metal">2</div>
+          <div class="step-txt">
+            <h3>Установите приложение</h3>
+            <p>Откройте страницу подписки — мы подскажем, какое приложение скачать для вашего устройства.</p>
+          </div>
+        </article>
+        <article class="step glass spot">
+          <div class="step-n metal-em">3</div>
+          <div class="step-txt">
+            <h3>Нажмите «Подключить»</h3>
+            <p>Профиль добавится одной кнопкой. Дальше всё работает само, в том числе после продления.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -257,8 +295,8 @@
       <div class="faq-grid">
         <div>
           <h2 class="h2 metal">Частые вопросы</h2>
-          <p class="sec-lead" style="margin-top:16px">Не нашли ответ — напишите, поддержка отвечает круглосуточно.</p>
-          <div style="margin-top:24px"><a class="btn btn-ghost" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать в поддержку</a></div>
+          <p class="sec-lead" style="margin-top:12px">Не нашли ответ — напишите, поддержка отвечает круглосуточно.</p>
+          <div style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать в поддержку</a></div>
         </div>
         <div class="faq-list glass spot" id="faqList"></div>
       </div>
@@ -285,7 +323,6 @@
     </div>
 
     <div class="grid-2">
-      <!-- Левая колонка: Состав заказа + Личная ссылка (равная высота с правой колонкой) -->
       <section class="card glass spot">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
@@ -300,11 +337,11 @@
           </div>
           <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:flex-end">
             <span style="color:var(--mut);font-size:14px">Итоговая сумма</span>
-            <b class="metal-em tab" id="ordTotal" style="font-size:44px;letter-spacing:-.05em;line-height:1">959 ₽</b>
+            <b class="metal-em tab" id="ordTotal" style="font-size:42px;letter-spacing:-.05em;line-height:1">959 ₽</b>
           </div>
         </div>
 
-        <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--line)">
+        <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--line)">
           <label class="lbl" for="orderSelfLink">Личная ссылка на эту страницу заказа</label>
           <div class="copy-row">
             <input class="field" id="orderSelfLink" readonly value="https://silentconnect.net/order/ord_9f42a8c1/tok_7b3e91a">
@@ -313,12 +350,12 @@
         </div>
       </section>
 
-      <!-- Правая колонка: Состояние 1 — Ожидает оплаты (симметричная высота) -->
+      <!-- Состояние 1 — Ожидает оплаты -->
       <div class="order-col-right" id="ordWait">
         <section class="card glass spot border-beam">
           <div>
-            <h2 style="font-size:23px;font-weight:600;letter-spacing:-.03em">Быстрая онлайн-оплата</h2>
-            <p style="margin-top:10px;color:var(--mut);font-size:15px;line-height:1.6">Мгновенная автоматическая активация сразу после подтверждения платежа. Чек и ссылка придут на указанный Email.</p>
+            <h2 style="font-size:22px;font-weight:600;letter-spacing:-.03em">Быстрая онлайн-оплата</h2>
+            <p style="margin-top:8px;color:var(--mut);font-size:14.5px;line-height:1.55">Мгновенная автоматическая активация сразу после подтверждения платежа. Чек и ссылка придут на указанный Email.</p>
             <div class="pay-methods">
               <span class="pay-chip">СБП (QR-код)</span>
               <span class="pay-chip">Карты РФ (МИР / Visa / MC)</span>
@@ -326,37 +363,37 @@
             </div>
           </div>
           <div>
-            <a href="#" class="btn btn-primary btn-lg btn-block" id="payBtn" style="margin-top:20px">Оплатить онлайн <span id="payBtnSum" class="tab">959 ₽</span> →</a>
-            <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid var(--line);font-size:13px;color:var(--mut)">
+            <a href="#" class="btn btn-primary btn-lg btn-block" id="payBtn" style="margin-top:18px">Оплатить онлайн <span id="payBtnSum" class="tab">959 ₽</span> →</a>
+            <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid var(--line);font-size:12.5px;color:var(--mut)">
               <span>Ожидаем подтверждение платежа (обновление каждые 4 сек)…</span>
               <b class="tab" style="color:#fff">14:48</b>
             </div>
           </div>
         </section>
 
-        <section class="card glass spot" style="padding:24px 28px">
+        <section class="card glass spot" style="padding:22px 26px">
           <div>
-            <h3 style="font-size:17px;font-weight:600;letter-spacing:-.02em">Оплата через оператора или помощь</h3>
-            <p style="margin-top:6px;color:var(--mut);font-size:14px;line-height:1.55">Если не проходит платёж или нужна альтернативная оплата, напишите оператору — отвечаем за 2–5 минут.</p>
+            <h3 style="font-size:16.5px;font-weight:600;letter-spacing:-.02em">Оплата через оператора или помощь</h3>
+            <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.5">Если не проходит платёж или нужна альтернативная оплата, напишите оператору — отвечаем за 2–5 минут.</p>
           </div>
-          <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">
+          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
             <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать оператору (@SilentConnectSupport)</a>
             <button type="button" class="btn btn-danger btn-sm" id="cancelOrdBtn">Отменить заказ</button>
           </div>
         </section>
       </div>
 
-      <!-- Правая колонка: Состояние 2 — Оплачен и доставлен -->
+      <!-- Состояние 2 — Оплачен и доставлен -->
       <section class="card glass spot border-beam" id="ordDone" hidden>
         <div>
-          <h2 style="font-size:24px;font-weight:600;letter-spacing:-.03em">Подписка активирована</h2>
-          <p style="margin-top:10px;color:var(--mut);font-size:15px;line-height:1.6">Доступ готов к работе. Перейдите в мастер настройки, чтобы подключить ваши устройства в один клик.</p>
+          <h2 style="font-size:23px;font-weight:600;letter-spacing:-.03em">Подписка активирована</h2>
+          <p style="margin-top:8px;color:var(--mut);font-size:14.5px;line-height:1.55">Доступ готов к работе. Перейдите в мастер настройки, чтобы подключить ваши устройства в один клик.</p>
 
-          <div style="margin-top:22px">
+          <div style="margin-top:20px">
             <button type="button" class="btn btn-primary btn-lg btn-block" data-go="sub">Открыть мастер настройки и подключения →</button>
           </div>
 
-          <div style="margin-top:22px;padding-top:20px;border-top:1px solid var(--line)">
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">
             <label class="lbl" for="subKeyLink">Постоянная ссылка для импорта подписки</label>
             <div class="copy-row">
               <input class="field" id="subKeyLink" readonly value="https://sub.silentconnect.net/my-secret-sub/import/sc_live_88f29a1d">
@@ -365,22 +402,22 @@
           </div>
         </div>
 
-        <div style="margin-top:20px;padding:18px;border-radius:18px;background:rgba(0,0,0,.28);border:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+        <div style="margin-top:18px;padding:16px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
           <div>
-            <b style="font-size:14.5px;display:block">Уведомления и продление в Telegram</b>
-            <span style="font-size:13px;color:var(--mut)">Привяжите заказ к боту, чтобы не пропустить окончание срока</span>
+            <b style="font-size:14px;display:block">Уведомления и продление в Telegram</b>
+            <span style="font-size:12.5px;color:var(--mut)">Привяжите заказ к боту, чтобы не пропустить окончание срока</span>
           </div>
           <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectBot?start=claim_ord_9f42a8c1" target="_blank" rel="noopener">Привязать в Telegram</a>
         </div>
       </section>
 
-      <!-- Правая колонка: Состояние 3 — Отменён -->
+      <!-- Состояние 3 — Отменён -->
       <section class="card glass spot" id="ordCancelled" hidden>
         <div>
-          <h2 style="font-size:23px;font-weight:600;letter-spacing:-.03em">Заказ отменён</h2>
-          <p style="margin-top:10px;color:var(--mut);font-size:15px;line-height:1.6">Этот заказ был отменён пользователем или истёк по времени ожидания. Вы можете оформить новый заказ на витрине в любой момент.</p>
+          <h2 style="font-size:22px;font-weight:600;letter-spacing:-.03em">Заказ отменён</h2>
+          <p style="margin-top:8px;color:var(--mut);font-size:14.5px;line-height:1.55">Этот заказ был отменён пользователем или истёк по времени ожидания. Вы можете оформить новый заказ на витрине в любой момент.</p>
         </div>
-        <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:10px">
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px">
           <button type="button" class="btn btn-primary" data-go="landing">Выбрать тариф заново</button>
           <a class="btn btn-ghost" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Связаться с поддержкой</a>
         </div>
@@ -391,14 +428,12 @@
 
 <!-- =====================================================================
      3. МАСТЕР ПОДКЛЮЧЕНИЯ И УПРАВЛЕНИЯ ПОДПИСКОЙ (/sub/setup/<sub_id>)
-        Личный кабинет пользователя — реальные страны (🇳🇱 🇵🇱 🇫🇮), иконки, полные инструкции
      ===================================================================== -->
 <main id="view-sub" data-view hidden>
   <div class="page"><div class="container">
 
-    <!-- Панель состояния подписки (для проверки привязанной / непривязанной почты) -->
-    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px">
-      <div style="font-size:13.5px;color:var(--mut)">Личная страница управления подпиской и подключения устройств</div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+      <div style="font-size:13px;color:var(--mut)">Личная страница управления подпиской и подключения устройств</div>
       <div class="lab-group">
         <span class="lab-label">Статус почты</span>
         <button type="button" class="lab-pill on" data-email-state="bound">Почта привязана ✓</button>
@@ -406,17 +441,16 @@
       </div>
     </div>
 
-    <!-- Карточка статуса подписки и быстрых действий -->
     <section class="card glass spot">
-      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px">
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-          <img src="assets/branding/avatar.webp" alt="SilentConnect" style="width:46px;height:46px;border-radius:14px;border:1px solid var(--line-2);object-fit:cover">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:14px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <img src="assets/branding/avatar.webp" alt="SilentConnect" style="width:44px;height:44px;border-radius:12px;border:1px solid var(--line-2);object-fit:cover">
           <div>
-            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-              <h1 class="metal" style="font-size:clamp(1.65rem,2.8vw,2.2rem);font-weight:600;letter-spacing:-.035em">Подписка SilentConnect</h1>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <h1 class="metal" style="font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:600;letter-spacing:-.035em">Подписка SilentConnect</h1>
               <span class="status ok"><i></i>Активна</span>
             </div>
-            <p style="margin-top:4px;color:var(--mut);font-size:14px">ID профиля: <span class="tab" style="color:#fff">sc_live_88f29a1d</span> · Почта: <b id="subBoundEmail" style="color:var(--em-t)">c***t@example.com</b></p>
+            <p style="margin-top:3px;color:var(--mut);font-size:13.5px">ID профиля: <span class="tab" style="color:#fff">sc_live_88f29a1d</span> · Почта: <b id="subBoundEmail" style="color:var(--em-t)">c***t@example.com</b></p>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -426,7 +460,6 @@
         </div>
       </div>
 
-      <!-- 4 метрики подписки -->
       <div class="sub-metrics tab">
         <div class="s-metric"><small>Тариф и лимит</small><b>Домашний · до 6 устр.</b></div>
         <div class="s-metric"><small>Срок действия</small><b>до 23.04.2027 (180 дн.)</b></div>
@@ -434,7 +467,7 @@
         <div class="s-metric"><small>Пакет AmneziaWG</small><b>381,6 ГБ остаток из 500</b></div>
       </div>
 
-      <!-- Анимированный аккордеон «Продлить подписку / Привязать почту» (1:1 с боевым сайтом) -->
+      <!-- Аккордеон «Продлить подписку / Привязать почту» -->
       <div class="renew-acc" id="renewAcc" data-open="false">
         <button type="button" class="renew-head" id="renewToggle" aria-expanded="false">
           <div class="renew-head-left">
@@ -449,13 +482,11 @@
         <div class="renew-body-wrap">
           <div class="renew-body-inner">
             <div class="renew-body">
-              <!-- Уведомление, если почта привязана -->
               <div class="email-bound-pill" id="emailBoundPill">
                 <span>✅ <b>Почта привязана:</b> <span style="font-family:ui-monospace,monospace;color:#fff" id="boundEmailLabel">c***t@example.com</span> (напоминания и вход в кабинет активны)</span>
                 <button type="button" class="link" id="changeBoundEmailBtn" style="font-size:13px">Изменить почту</button>
               </div>
 
-              <!-- Предупреждение, если почта ещё НЕ привязана (например, подписка куплена в боте) -->
               <div class="email-unbound-alert" id="emailUnboundAlert" hidden>
                 <span style="font-size:18px;line-height:1">⚠️</span>
                 <div>
@@ -464,29 +495,27 @@
                 </div>
               </div>
 
-              <!-- Галочка «Только привязать почту (без смены тарифа и оплаты)» -->
               <div class="bind-only-card" id="bindOnlyCard">
-                <label class="check" style="font-size:14px;color:#fff;font-weight:560;align-items:center">
+                <label class="check" style="font-size:13.5px;color:#fff;font-weight:560;align-items:center">
                   <input type="checkbox" id="bindEmailOnly">
                   <span>Только привязать или сменить почту (без продления тарифа — <b style="color:var(--em-t)">0 ₽ Бесплатно</b>)</span>
                 </label>
               </div>
 
-              <!-- Блок выбора тарифа и срока для продления (приглушается при выборе «Только привязать почту») -->
               <div id="renewPlanSelectors">
-                <p style="font-size:13.5px;color:var(--mut);margin-bottom:14px">При продлении новые дни суммируются с вашим текущим остатком (180 дн.). Ссылка и настройки на устройствах не изменятся.</p>
-                <div class="grid-2" style="align-items:start;margin-bottom:18px">
+                <p style="font-size:13px;color:var(--mut);margin-bottom:12px">При продлении новые дни суммируются с вашим текущим остатком (180 дн.). Ссылка и настройки на устройствах не изменятся.</p>
+                <div class="grid-2" style="align-items:start;margin-bottom:16px">
                   <div>
                     <span class="field-label">1. Лимит устройств</span>
-                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="renDev">
-                      <button type="button" class="platform-tab" data-r-dev="3">Личный (3)</button>
-                      <button type="button" class="platform-tab active" data-r-dev="6">Домашний (6)</button>
-                      <button type="button" class="platform-tab" data-r-dev="9">Расширенный (9)</button>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" id="renDev">
+                      <button type="button" class="platform-tab" data-r-dev="3" style="min-width:0">Личный (3)</button>
+                      <button type="button" class="platform-tab active" data-r-dev="6" style="min-width:0">Домашний (6)</button>
+                      <button type="button" class="platform-tab" data-r-dev="9" style="min-width:0">Расшир. (9)</button>
                     </div>
                   </div>
                   <div>
                     <span class="field-label">2. Период продления</span>
-                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="renMonths">
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px" id="renMonths">
                       <button type="button" class="platform-tab" data-r-m="1" style="min-width:0">1 мес</button>
                       <button type="button" class="platform-tab" data-r-m="3" style="min-width:0">3 мес</button>
                       <button type="button" class="platform-tab active" data-r-m="6" style="min-width:0">6 мес</button>
@@ -496,16 +525,15 @@
                 </div>
               </div>
 
-              <!-- Поля Email, Промокод, Cloudflare Turnstile и кнопка отправки -->
-              <form id="renewForm" class="grid-2" style="align-items:end;padding-top:16px;border-top:1px solid var(--line)" novalidate>
-                <div style="display:grid;gap:12px">
+              <form id="renewForm" class="grid-2" style="align-items:end;padding-top:14px;border-top:1px solid var(--line)" novalidate>
+                <div style="display:grid;gap:10px">
                   <div id="renewEmailFieldWrap">
                     <label class="lbl" for="renewEmailInput">Ваш Email (для чека, напоминаний и входа в кабинет)</label>
-                    <input class="field" id="renewEmailInput" type="email" placeholder="name@example.com" value="client@example.com" required style="min-height:46px">
+                    <input class="field" id="renewEmailInput" type="email" placeholder="name@example.com" value="client@example.com" required style="min-height:44px">
                   </div>
                   <div id="renewPromoWrap">
                     <label class="lbl" for="renewPromoInput">Промокод или подарочный код (необязательно)</label>
-                    <input class="field" id="renewPromoInput" type="text" placeholder="WELCOME10 или GIFT30" style="min-height:46px;text-transform:uppercase">
+                    <input class="field" id="renewPromoInput" type="text" placeholder="WELCOME10 или GIFT30" style="min-height:44px;text-transform:uppercase">
                   </div>
                   <label class="check">
                     <input type="checkbox" checked>
@@ -513,18 +541,18 @@
                   </label>
                 </div>
 
-                <div style="display:grid;gap:12px">
+                <div style="display:grid;gap:10px">
                   <div class="cf-widget" data-checked="true" role="checkbox" aria-checked="true" tabindex="0">
                     <div class="cf-left"><span class="cf-check">✓</span><span>Проверка безопасности пройдена</span></div>
                     <div class="cf-right"><span class="cf-brand">CLOUDFLARE</span><span class="cf-sub">Turnstile</span></div>
                   </div>
 
-                  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border-radius:18px;background:rgba(0,0,0,.32);border:1px solid var(--line-2)">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-radius:16px;background:rgba(0,0,0,.32);border:1px solid var(--line-2);flex-wrap:wrap">
                     <div>
-                      <small style="color:var(--mut);font-size:12.5px;display:block" id="renSummary">Домашний (6 устр.) · +180 дней</small>
-                      <b class="metal-em tab" style="font-size:30px;letter-spacing:-.04em" id="renPrice">959 ₽</b>
+                      <small style="color:var(--mut);font-size:12px;display:block" id="renSummary">Домашний (6 устр.) · +180 дней</small>
+                      <b class="metal-em tab" style="font-size:28px;letter-spacing:-.04em" id="renPrice">959 ₽</b>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="renSubmitBtn">Оплатить 959 ₽ →</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="renSubmitBtn">Оплатить 959 ₽ →</button>
                   </div>
                 </div>
               </form>
@@ -537,8 +565,8 @@
     <!-- Переключатель 3 режимов Мастера подключения (Liquid Glass Segmented Control) -->
     <div class="mode-bar">
       <div>
-        <h2 style="font-size:24px;font-weight:600;letter-spacing:-.03em">Мастер настройки и подключения</h2>
-        <p style="font-size:14.5px;color:var(--mut);margin-top:4px">Выберите контур: безлимитный основной, игровой AmneziaWG с выбором страны или резервный канал Белых списков.</p>
+        <h2 style="font-size:22px;font-weight:600;letter-spacing:-.03em">Мастер настройки и подключения</h2>
+        <p style="font-size:14px;color:var(--mut);margin-top:3px">Выберите контур: безлимитный основной, игровой AmneziaWG с выбором страны или резервный канал Белых списков.</p>
       </div>
       <div class="mode-seg-wrap">
         <div class="seg" id="modeSeg" role="radiogroup" aria-label="Режим подключения">
@@ -550,11 +578,8 @@
       </div>
     </div>
 
-    <!-- ===================================================================
-         РЕЖИМ 1: ОСНОВНОЙ (Безлимитный — Все 7 платформ и все 7 клиентов)
-         =================================================================== -->
+    <!-- РЕЖИМ 1: ОСНОВНОЙ -->
     <section class="card glass spot" id="subMode-main">
-      <!-- Выбор операционной системы с оригинальными SVG-иконками и автоопределением устройства -->
       <div class="platform-selector-card">
         <div class="platform-bar-header">
           <div class="platform-bar-title">
@@ -566,59 +591,51 @@
         <div class="platform-nav-track" id="osTabsMain" role="tablist"></div>
       </div>
 
-      <!-- Выбор клиентского приложения (Тактильные карточки с оригинальными .webp иконками) -->
-      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap">
         <span class="field-label" style="margin:0">2. Выберите клиентское приложение для <b id="curOsNameMain" style="color:#fff">iOS</b></span>
-        <small style="font-size:12.5px;color:var(--dim)">Нажмите на карточку клиента — инструкция ниже обновится мгновенно</small>
+        <small style="font-size:12px;color:var(--dim)">Нажмите на карточку клиента — инструкция ниже обновится мгновенно</small>
       </div>
       <div class="apps-grid" id="appsGridMain"></div>
-
-      <!-- Компактная 2-колоночная сетка шагов подключения (с полными инструкциями из боевого сайта) -->
       <div class="setup-steps" id="stepsGridMain"></div>
     </section>
 
-    <!-- ===================================================================
-         РЕЖИМ 2: ИГРОВОЙ / AMNEZIAWG (Выделенные слоты + Реальные страны 🇳🇱 🇵🇱 🇫🇮)
-         =================================================================== -->
+    <!-- РЕЖИМ 2: ИГРОВОЙ / AMNEZIAWG -->
     <section class="card glass spot" id="subMode-awg" hidden>
-      <div class="grid-12" style="align-items:center;margin-bottom:22px">
+      <div class="grid-12" style="align-items:center;margin-bottom:18px">
         <div style="grid-column:span 7">
-          <h3 style="font-size:22px;font-weight:600;letter-spacing:-.03em">Выделенные слоты AmneziaWG (Игровой контур)</h3>
-          <p style="margin-top:8px;color:var(--mut);font-size:14.5px;line-height:1.6">Прямое UDP-соединение с минимальной задержкой для онлайн-игр, голосовых чатов и домашних роутеров. Выбирайте точную страну подключения для каждого устройства.</p>
+          <h3 style="font-size:20px;font-weight:600;letter-spacing:-.03em">Выделенные слоты AmneziaWG (Игровой контур)</h3>
+          <p style="margin-top:6px;color:var(--mut);font-size:14px;line-height:1.55">Прямое UDP-соединение с минимальной задержкой для онлайн-игр, голосовых чатов и домашних роутеров. Выбирайте точную страну подключения для каждого устройства.</p>
         </div>
-        <div style="grid-column:span 5;padding:20px;border-radius:20px;background:rgba(0,0,0,.32);border:1px solid var(--line)">
+        <div style="grid-column:span 5;padding:16px 18px;border-radius:18px;background:rgba(0,0,0,.32);border:1px solid var(--line)">
           <div style="display:flex;justify-content:space-between;align-items:baseline">
-            <span style="font-size:13.5px;color:var(--mut)">Пакет трафика AmneziaWG</span>
-            <span style="font-size:12.5px;color:var(--em-t)">сброс 1-го числа</span>
+            <span style="font-size:13px;color:var(--mut)">Пакет трафика AmneziaWG</span>
+            <span style="font-size:12px;color:var(--em-t)">сброс 1-го числа</span>
           </div>
-          <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:baseline">
-            <b class="tab" style="font-size:25px;font-weight:600;letter-spacing:-.03em">381,6 ГБ <span style="font-size:14px;color:var(--mut);font-weight:400">из 500 ГБ</span></b>
-            <span class="tab" style="font-size:13px;color:var(--mut)">76% доступно</span>
+          <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:baseline">
+            <b class="tab" style="font-size:22px;font-weight:600;letter-spacing:-.03em">381,6 ГБ <span style="font-size:13px;color:var(--mut);font-weight:400">из 500 ГБ</span></b>
+            <span class="tab" style="font-size:12.5px;color:var(--mut)">76% доступно</span>
           </div>
-          <div class="bar" style="margin-top:10px"><i style="width:76%"></i></div>
+          <div class="bar" style="margin-top:8px"><i style="width:76%"></i></div>
         </div>
       </div>
 
-      <!-- Живой замер пинга до европейских локаций (Нидерланды, Польша, Финляндия) -->
-      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
         <span class="field-label" style="margin:0">Задержка (Ping) до игровых узлов от вашего провайдера</span>
         <button type="button" class="btn btn-ghost btn-sm" id="pingBtn">⚡ Проверить пинг</button>
       </div>
       <div class="ping tab">
-        <div>🇳🇱 Нидерланды (Амстердам)<span id="pNl">32 мс</span></div>
-        <div>🇵🇱 Польша (Варшава)<span id="pPl">24 мс</span></div>
-        <div>🇫🇮 Финляндия (Хельсинки)<span id="pFi">19 мс</span></div>
+        <div><span>🇳🇱 Нидерланды</span><b id="pNl">32 мс</b></div>
+        <div><span>🇵🇱 Польша</span><b id="pPl">24 мс</b></div>
+        <div><span>🇫🇮 Финляндия</span><b id="pFi">19 мс</b></div>
       </div>
 
-      <!-- Карточки слотов устройств (Переименование, Смена страны, Скачать .conf, QR, Ключ) -->
       <div class="slots" id="awgSlotsGrid"></div>
 
-      <!-- Выбор ОС и клиента для настройки AmneziaWG (AmneziaVPN / AmneziaWG) -->
       <div class="platform-selector-card">
         <div class="platform-bar-header">
           <div class="platform-bar-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--em)"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Инструкция по установке: выберите устройство
+            Инструкция по установке: выберите устройство (<span id="curOsNameAwg">Windows</span>)
           </div>
           <div class="platform-bar-hint">Автоопределение: <strong id="detectedOsAwg">Windows</strong></div>
         </div>
@@ -630,25 +647,22 @@
       <div class="setup-steps" id="stepsGridAwg"></div>
     </section>
 
-    <!-- ===================================================================
-         РЕЖИМ 3: БЕЛЫЕ СПИСКИ (OpenFlux Stream — Реальные страны + Инструкции по ОС)
-         =================================================================== -->
+    <!-- РЕЖИМ 3: БЕЛЫЕ СПИСКИ (OpenFlux Stream) -->
     <section class="card glass spot" id="subMode-openflux" hidden>
-      <!-- Предупреждающий инфо-баннер из боевого сайта -->
       <div class="of-info-banner">
         <div style="display:flex;align-items:flex-start;gap:12px">
-          <span style="font-size:20px;line-height:1">⚠️</span>
+          <span style="font-size:18px;line-height:1">⚠️</span>
           <div>
-            <h3 style="font-size:16px;font-weight:650;color:#fef08a;margin-bottom:4px">Специальный режим «Белых Списков» (OpenFlux Stream)</h3>
-            <p style="font-size:13.5px;color:#cbd5e1;line-height:1.55">Используйте этот режим, <b>только если оператор связи отключил мобильный интернет</b> и оставил доступ лишь к ограниченному перечню российских сайтов (белые списки). Трафик маскируется под облачную сессию работы с документами Mail.ru Cloud. Скорость канала до ~3 Мбит/с — для мессенджеров, почты, банков и карт.</p>
+            <h3 style="font-size:15px;font-weight:650;color:#fef08a;margin-bottom:4px">Специальный режим «Белых Списков» (OpenFlux Stream)</h3>
+            <p style="font-size:13px;color:#cbd5e1;line-height:1.5">Используйте этот режим, <b>только если оператор связи отключил мобильный интернет</b> и оставил доступ лишь к ограниченному перечню российских сайтов (белые списки). Трафик маскируется под облачную сессию работы с документами Mail.ru Cloud. Скорость канала до ~3 Мбит/с — для мессенджеров, почты, банков и карт.</p>
           </div>
         </div>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px">
         <div>
-          <h3 style="font-size:20px;font-weight:600;letter-spacing:-.025em">Ваш персональный слот OpenFlux (1 устройство)</h3>
-          <p style="margin-top:4px;color:var(--mut);font-size:14px">Вы можете в любой момент переключать выходную локацию между Нидерландами, Польшей и Финляндией.</p>
+          <h3 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Ваш персональный слот OpenFlux (1 устройство)</h3>
+          <p style="margin-top:3px;color:var(--mut);font-size:13.5px">Вы можете в любой момент переключать выходную локацию между Нидерландами, Польшей и Финляндией.</p>
         </div>
         <div class="lab-group">
           <span class="lab-label">Состояние слота</span>
@@ -658,77 +672,71 @@
         </div>
       </div>
 
-      <!-- Состояние OpenFlux 1: Не активирован -->
       <div class="of-box" id="ofInactive" hidden>
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px">
           <div>
             <span class="status wait"><i></i>Не активирован</span>
-            <h4 style="font-size:18px;font-weight:600;margin-top:10px">Персональный слот Белых списков свободен</h4>
-            <p style="margin-top:6px;color:var(--mut);font-size:14px;max-width:44em">Нажмите кнопку, чтобы выбрать страну (🇳🇱 Нидерланды, 🇵🇱 Польша или 🇫🇮 Финляндия) и сгенерировать индивидуальный ключ OpenFlux.</p>
+            <h4 style="font-size:17px;font-weight:600;margin-top:8px">Персональный слот Белых списков свободен</h4>
+            <p style="margin-top:5px;color:var(--mut);font-size:13.5px;max-width:44em">Нажмите кнопку, чтобы выбрать страну (🇳🇱 Нидерланды, 🇵🇱 Польша или 🇫🇮 Финляндия) и сгенерировать индивидуальный ключ OpenFlux.</p>
           </div>
-          <button type="button" class="btn btn-primary" data-open-wl-picker="activate">⚡ Активировать подключение →</button>
+          <button type="button" class="btn btn-primary btn-sm" data-open-wl-picker="activate">⚡ Активировать подключение →</button>
         </div>
       </div>
 
-      <!-- Состояние OpenFlux 2: Активен -->
       <div class="of-box" id="ofActive">
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px">
           <div>
             <span class="status ok"><i></i>Слот активен · <b id="ofActiveCountry">🇳🇱 Нидерланды (Амстердам)</b></span>
-            <h4 style="font-size:18px;font-weight:600;margin-top:10px">Персональный ключ подключения OpenFlux</h4>
+            <h4 style="font-size:17px;font-weight:600;margin-top:8px">Персональный ключ подключения OpenFlux</h4>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button type="button" class="btn btn-ghost btn-sm" data-open-wl-picker="switch">🔄 Сменить сервер (страну)</button>
             <button type="button" class="btn btn-ghost btn-sm" data-qr="QR-код ключа OpenFlux">📱 QR-код ключа</button>
           </div>
         </div>
-        <div class="copy-row" style="margin-top:14px">
+        <div class="copy-row" style="margin-top:12px">
           <input class="field" id="ofKeyInput" readonly value="vless://of_99281a-nl-ams@edge.silentconnect.net:443?security=reality&sni=cloud.mail.ru#SilentConnect-OpenFlux-NL">
-          <button type="button" class="btn btn-primary btn-sm" style="min-height:44px" data-toast="Ключ OpenFlux скопирован в буфер обмена">📋 Скопировать ключ</button>
+          <button type="button" class="btn btn-primary btn-sm" style="min-height:42px" data-toast="Ключ OpenFlux скопирован в буфер обмена">📋 Скопировать ключ</button>
         </div>
       </div>
 
-      <!-- Состояние OpenFlux 3: Безопасная двухэтапная миграция (Handover 05:00) -->
       <div class="of-box" id="ofMigrating" hidden>
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px">
           <div>
             <span class="of-timer tab">⏳ Безопасный переход на <b id="ofTargetCountry">🇵🇱 Польшу (Варшава)</b> · Осталось <b id="ofTimer">04:52</b></span>
-            <h4 style="font-size:18px;font-weight:600;margin-top:10px">Шаг 1: Добавьте новый ключ, пока старый сервер ещё работает</h4>
+            <h4 style="font-size:17px;font-weight:600;margin-top:8px">Шаг 1: Добавьте новый ключ, пока старый сервер ещё работает</h4>
           </div>
           <button type="button" class="btn btn-ghost btn-sm" data-set-of="active">✖ Отменить переход</button>
         </div>
-        <p style="margin-top:8px;color:var(--mut);font-size:14px;line-height:1.6">Чтобы вы не потеряли доступ в условиях блокировки, старый сервер продолжает работать ещё 5 минут. Скопируйте новый ключ ниже, импортируйте его в приложение и только после этого нажмите «Подтвердить переход».</p>
-        <div class="copy-row" style="margin-top:14px">
+        <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.55">Чтобы вы не потеряли доступ в условиях блокировки, старый сервер продолжает работать ещё 5 минут. Скопируйте новый ключ ниже, импортируйте его в приложение и только после этого нажмите «Подтвердить переход».</p>
+        <div class="copy-row" style="margin-top:12px">
           <input class="field" id="ofNewKeyInput" readonly value="vless://of_new_pl-waw@edge.silentconnect.net:443?security=reality&sni=cloud.mail.ru#SilentConnect-OpenFlux-PL">
-          <button type="button" class="btn btn-ghost btn-sm" style="min-height:44px" data-toast="Новый ключ OpenFlux скопирован">📋 Скопировать новый ключ</button>
+          <button type="button" class="btn btn-ghost btn-sm" style="min-height:42px" data-toast="Новый ключ OpenFlux скопирован">📋 Скопировать новый ключ</button>
         </div>
-        <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
           <button type="button" class="btn btn-primary btn-sm" id="ofConfirmBtn">✅ Подтвердить переход (удалить старый сервер)</button>
           <button type="button" class="btn btn-ghost btn-sm" data-qr="Новый сервер OpenFlux">📱 QR-код нового ключа</button>
         </div>
       </div>
 
-      <!-- Выбор ОС для инструкции OpenFlux (iOS, Android, Windows, macOS, Linux) -->
       <div class="platform-selector-card">
         <div class="platform-bar-header">
           <div class="platform-bar-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--em)"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Настройка клиента OpenFlux для вашего устройства
+            Настройка клиента OpenFlux (<span id="curOsNameOf">Windows</span>)
           </div>
           <div class="platform-bar-hint">Автоопределение: <strong id="detectedOsOf">Windows</strong></div>
         </div>
         <div class="platform-nav-track" id="osTabsOf" role="tablist"></div>
       </div>
 
-      <!-- Компактная 2-колоночная сетка шагов для OpenFlux -->
       <div class="setup-steps" id="stepsGridOf"></div>
     </section>
 
-    <!-- Карточка партнёрской программы (как внизу страницы подписки на боевом) -->
-    <section class="card glass spot" style="margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:24px 30px">
+    <section class="card glass spot" style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 24px">
       <div>
-        <h3 style="font-size:19px;font-weight:600;letter-spacing:-.02em">Партнёрская программа: 10% вам + 10% другу</h3>
-        <p style="margin-top:4px;color:var(--mut);font-size:14px">Делитесь реферальной ссылкой в Telegram-боте — друг получит скидку 10%, а вы — бонусные дни или баланс.</p>
+        <h3 style="font-size:17.5px;font-weight:600;letter-spacing:-.02em">Партнёрская программа: 10% вам + 10% другу</h3>
+        <p style="margin-top:3px;color:var(--mut);font-size:13.5px">Делитесь реферальной ссылкой в Telegram-боте — друг получит скидку 10%, а вы — бонусные дни или баланс.</p>
       </div>
       <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectBot?start=partner" target="_blank" rel="noopener">Присоединиться в Telegram-боте →</a>
     </section>
@@ -765,10 +773,10 @@
       <article class="cab-card glass spot border-beam">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-            <h2 style="font-size:21px;font-weight:600;letter-spacing:-.025em">Подписка #1 · Домашний</h2>
+            <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #1 · Домашний</h2>
             <span class="status ok"><i></i>Активна</span>
           </div>
-          <div class="kv" style="margin-top:16px">
+          <div class="kv" style="margin-top:14px">
             <div><span>Лимит устройств</span><b>до 6 устройств</b></div>
             <div><span>Пакет AmneziaWG</span><b class="tab">500 ГБ / мес</b></div>
             <div><span>Действует до</span><b class="tab">23.04.2027 (осталось 180 дн.)</b></div>
@@ -783,10 +791,10 @@
       <article class="cab-card glass spot">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-            <h2 style="font-size:21px;font-weight:600;letter-spacing:-.025em">Подписка #2 · Личный</h2>
+            <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #2 · Личный</h2>
             <span class="status wait"><i></i>Истекает через 4 дн.</span>
           </div>
-          <div class="kv" style="margin-top:16px">
+          <div class="kv" style="margin-top:14px">
             <div><span>Лимит устройств</span><b>до 3 устройств</b></div>
             <div><span>Пакет AmneziaWG</span><b class="tab">250 ГБ / мес</b></div>
             <div><span>Действует до</span><b class="tab">27.10.2026 (осталось 4 дн.)</b></div>
@@ -827,7 +835,7 @@
 
 <footer class="footer">
   <div class="container">
-    <a href="#top" class="brand" data-go="landing"><img src="assets/branding/avatar.webp" alt="" class="brand-logo" width="34" height="34">SilentConnect</a>
+    <a href="#top" class="brand" data-go="landing"><img src="assets/branding/avatar.webp" alt="" class="brand-logo" width="30" height="30">SilentConnect</a>
     <nav aria-label="Информация">
       <a href="#" data-go="legal" data-doc-link="about">О сервисе</a>
       <a href="#" data-go="legal" data-doc-link="terms">Соглашение</a>
@@ -842,16 +850,16 @@
 <!-- Мобильная панель оформления -->
 <div class="mbar glass" id="mbar">
   <div><small id="mbPlan">Личный · 6 мес</small><b class="tab" id="mbPrice">719 ₽</b></div>
-  <a href="#checkout" class="btn btn-primary" data-go="landing">К оформлению</a>
+  <a href="#checkout" class="btn btn-primary btn-sm" data-go="landing">К оформлению</a>
 </div>
 
-<!-- Модалка входа в кабинет по Email (Magic Link + Cloudflare Turnstile) -->
-<div class="modal" id="cabinetModal" role="dialog" aria-modal="true" aria-labelledby="cabTitle">
+<!-- Модалка входа в кабинет по Email -->
+<div class="modal" id="cabinetModal" role="dialog" aria-modal="true" aria-labelledby="cabTitle" hidden>
   <div class="modal-box glass">
     <button type="button" class="modal-x" data-close aria-label="Закрыть">✕</button>
-    <h2 id="cabTitle" style="font-size:26px;font-weight:600;letter-spacing:-.035em" class="metal">Вход в кабинет</h2>
-    <p style="margin-top:10px;color:var(--mut);font-size:15px;line-height:1.6">Укажите Email, на который оформляли подписку. Мы отправим одноразовую ссылку для входа на 30 минут — пароль не нужен.</p>
-    <form id="cabinetForm" style="margin-top:20px;display:grid;gap:12px">
+    <h2 id="cabTitle" style="font-size:24px;font-weight:600;letter-spacing:-.035em" class="metal">Вход в кабинет</h2>
+    <p style="margin-top:8px;color:var(--mut);font-size:14px;line-height:1.55">Укажите Email, на который оформляли подписку. Мы отправим одноразовую ссылку для входа на 30 минут — пароль не нужен.</p>
+    <form id="cabinetForm" style="margin-top:18px;display:grid;gap:12px">
       <input class="field" type="email" required placeholder="name@example.com" autocomplete="email">
       <div class="cf-widget" data-checked="true" role="checkbox" aria-checked="true" tabindex="0">
         <div class="cf-left"><span class="cf-check">✓</span><span>Проверка пройдена</span></div>
@@ -859,19 +867,19 @@
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block">Отправить ссылку для входа</button>
     </form>
-    <p style="margin-top:18px;font-size:13px;color:var(--dim)">Для демонстрации прототипа: <button type="button" class="link" data-go="cabinet">Открыть экран кабинета с подписками →</button></p>
+    <p style="margin-top:16px;font-size:12.5px;color:var(--dim)">Для демонстрации прототипа: <button type="button" class="link" data-go="cabinet">Открыть экран кабинета с подписками →</button></p>
   </div>
 </div>
 
-<!-- Модалка смены страны для слота AmneziaWG (с предупреждением о перекачке .conf / QR) -->
-<div class="modal" id="awgSwitchModal" role="dialog" aria-modal="true">
+<!-- Модалка смены страны для слота AmneziaWG -->
+<div class="modal" id="awgSwitchModal" role="dialog" aria-modal="true" hidden>
   <div class="modal-box glass">
     <button type="button" class="modal-x" data-close aria-label="Закрыть">✕</button>
-    <h3 style="font-size:21px;font-weight:600;letter-spacing:-.025em">🌍 Смена локации слота <span id="awgModalSlotTitle" style="color:var(--em-t)">#1 (iPhone)</span></h3>
-    <div style="margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(246,196,83,.1);border:1px solid rgba(246,196,83,.35);font-size:13px;color:#fde68a;line-height:1.5">
+    <h3 style="font-size:19px;font-weight:600;letter-spacing:-.025em">🌍 Смена локации слота <span id="awgModalSlotTitle" style="color:var(--em-t)">#1 (iPhone)</span></h3>
+    <div style="margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(246,196,83,.1);border:1px solid rgba(246,196,83,.35);font-size:12.5px;color:#fde68a;line-height:1.45">
       ⚠️ <b>Обратите внимание:</b> при смене страны ключ для этого слота будет перевыпущен на новом сервере. После смены необходимо <b>заново скачать файл .conf или отсканировать QR-код</b>.
     </div>
-    <div style="margin-top:16px;display:grid;gap:10px" id="awgCountryList">
+    <div style="margin-top:14px;display:grid;gap:8px" id="awgCountryList">
       <label class="country-opt">
         <span><b>🇳🇱 Нидерланды</b> (Амстердам)</span>
         <input type="radio" name="awg_country" value="nl" checked>
@@ -885,20 +893,20 @@
         <input type="radio" name="awg_country" value="fi">
       </label>
     </div>
-    <div style="margin-top:20px;display:grid;gap:10px">
+    <div style="margin-top:18px;display:grid;gap:8px">
       <button type="button" class="btn btn-primary btn-block" id="awgConfirmSwitchBtn">Сменить локацию и перевыпустить ключ</button>
       <button type="button" class="btn btn-ghost btn-block" data-close>Отмена</button>
     </div>
   </div>
 </div>
 
-<!-- Модалка выбора страны для OpenFlux (Белые списки) -->
-<div class="modal" id="wlPickerModal" role="dialog" aria-modal="true">
+<!-- Модалка выбора страны для OpenFlux -->
+<div class="modal" id="wlPickerModal" role="dialog" aria-modal="true" hidden>
   <div class="modal-box glass">
     <button type="button" class="modal-x" data-close aria-label="Закрыть">✕</button>
-    <h3 id="wlPickerTitle" style="font-size:21px;font-weight:600;letter-spacing:-.025em">🌍 Выберите страну подключения OpenFlux</h3>
-    <p style="margin-top:8px;color:var(--mut);font-size:14px;line-height:1.55">Трафик пойдёт через защищённый российский шлюз Белых списков с выходом в выбранной европейской локации:</p>
-    <div style="margin-top:16px;display:grid;gap:10px">
+    <h3 id="wlPickerTitle" style="font-size:19px;font-weight:600;letter-spacing:-.025em">🌍 Выберите страну подключения OpenFlux</h3>
+    <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.5">Трафик пойдёт через защищённый российский шлюз Белых списков с выходом в выбранной европейской локации:</p>
+    <div style="margin-top:14px;display:grid;gap:8px">
       <label class="country-opt">
         <span><b>🇳🇱 Нидерланды</b> (Амстердам)</span>
         <input type="radio" name="wl_country" value="nl">
@@ -912,7 +920,7 @@
         <input type="radio" name="wl_country" value="fi">
       </label>
     </div>
-    <div style="margin-top:20px;display:grid;gap:10px">
+    <div style="margin-top:18px;display:grid;gap:8px">
       <button type="button" class="btn btn-primary btn-block" id="wlConfirmPickBtn">Продолжить →</button>
       <button type="button" class="btn btn-ghost btn-block" data-close>Отмена</button>
     </div>
@@ -920,12 +928,12 @@
 </div>
 
 <!-- Модалка подтверждения удаления старого сервера OpenFlux -->
-<div class="modal" id="ofConfirmModal" role="dialog" aria-modal="true">
+<div class="modal" id="ofConfirmModal" role="dialog" aria-modal="true" hidden>
   <div class="modal-box glass" style="border-color:rgba(248,113,113,.45)">
     <button type="button" class="modal-x" data-close aria-label="Закрыть">✕</button>
-    <h3 style="font-size:21px;font-weight:600;letter-spacing:-.025em;color:#fecaca">⚠️ ВНИМАНИЕ: Отключение старого сервера</h3>
-    <p style="margin-top:10px;color:var(--mut);font-size:14.5px;line-height:1.6">Убедитесь, что вы уже скопировали и импортировали <b>НОВЫЙ ключ</b> в приложение! Если вы удалите старый сервер в условиях активных «Белых списков», не добавив новый, вы рискуете потерять доступ к этой странице.</p>
-    <div style="margin-top:22px;display:grid;gap:10px">
+    <h3 style="font-size:19px;font-weight:600;letter-spacing:-.025em;color:#fecaca">⚠️ ВНИМАНИЕ: Отключение старого сервера</h3>
+    <p style="margin-top:8px;color:var(--mut);font-size:13.5px;line-height:1.55">Убедитесь, что вы уже скопировали и импортировали <b>НОВЫЙ ключ</b> в приложение! Если вы удалите старый сервер в условиях активных «Белых списков», не добавив новый, вы рискуете потерять доступ к этой странице.</p>
+    <div style="margin-top:18px;display:grid;gap:8px">
       <button type="button" class="btn btn-primary btn-block" id="ofFinalizeBtn">Да, я импортировал новый ключ — завершить переход</button>
       <button type="button" class="btn btn-ghost btn-block" data-close>Отмена — я сначала скопирую ключ</button>
     </div>
@@ -933,19 +941,19 @@
 </div>
 
 <!-- Модалка QR -->
-<div class="modal" id="qrModal" role="dialog" aria-modal="true">
-  <div class="modal-box glass" style="max-width:360px;text-align:center">
+<div class="modal" id="qrModal" role="dialog" aria-modal="true" hidden>
+  <div class="modal-box glass" style="max-width:340px;text-align:center">
     <button type="button" class="modal-x" data-close aria-label="Закрыть">✕</button>
-    <h3 id="qrTitle" style="font-size:20px;font-weight:600;letter-spacing:-.02em">QR-код</h3>
+    <h3 id="qrTitle" style="font-size:18px;font-weight:600;letter-spacing:-.02em">QR-код</h3>
     <div class="qr"><svg viewBox="0 0 100 100" width="100%" height="100%" fill="currentColor"><path d="M10 10h25v25H10zM15 15v15h15V15zM20 20h5v5h-5zM65 10h25v25H65zM70 15v15h15V15zM75 20h5v5h-5zM10 65h25v25H10zM15 70v15h15V70zM20 75h5v5h-5zM45 15h10v10H45zM45 35h15v10H45zM15 45h20v10H15zM45 55h10v20H45zM65 45h20v10H65zM65 65h10v10H65zM80 75h10v15H80zM60 80h15v10H60z"/></svg></div>
-    <p id="qrSub" style="font-size:12.5px;color:var(--mut);word-break:break-all">https://sub.silentconnect.net/my-secret-sub/import/sc_live_88f29a1d</p>
+    <p id="qrSub" style="font-size:12px;color:var(--mut);word-break:break-all">https://sub.silentconnect.net/my-secret-sub/import/sc_live_88f29a1d</p>
   </div>
 </div>
 
 <!-- Command Palette (⌘K / Ctrl+K) -->
-<div class="modal" id="cmdModal" role="dialog" aria-modal="true" aria-label="Быстрый переход">
+<div class="modal" id="cmdModal" role="dialog" aria-modal="true" aria-label="Быстрый переход" hidden>
   <div class="modal-box glass cmd-box">
-    <input class="cmd-input" id="cmdInput" type="text" placeholder="Куда перейти? (например: тарифы, мастер, кабинет, возвраты…)" autocomplete="off">
+    <input class="cmd-input" id="cmdInput" type="text" placeholder="Куда перейти? (тарифы, мастер, кабинет, возвраты…)" autocomplete="off">
     <div class="cmd-list" id="cmdList"></div>
   </div>
 </div>

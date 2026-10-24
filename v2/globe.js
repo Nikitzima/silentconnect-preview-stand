@@ -1,9 +1,17 @@
+/* =========================================================================
+   SilentConnect 3D Metallic Globe (Resend Hardware Approach):
+   - Full Studio PMREM Reflections, Extruded Squircle Bezel & Continent Relief
+   - Adaptive Mobile Mesh (128x64 on mobile vs 280x140 on desktop) +
+     Strict IntersectionObserver Pause so scrolling checkout has 0% GPU load.
+   ========================================================================= */
 import * as THREE from 'three';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const stage = document.getElementById('stage');
 
 function initGlobe(){
+const isMobile = window.matchMedia('(max-width: 860px)').matches;
+
 const LAND = [
   [[-168,66],[-162,70],[-156,71],[-140,70],[-128,70],[-115,68],[-95,72],[-82,73],[-80,63],[-94,59],[-90,55],[-82,52],[-78,58],[-70,60],[-62,58],[-56,52],[-60,47],[-66,44],[-70,42],[-76,38],[-76,35],[-81,31],[-80,26],[-82,26],[-84,30],[-90,30],[-97,28],[-97,22],[-92,18],[-88,21],[-87,16],[-83,10],[-79,9],[-80,7],[-85,10],[-92,14],[-100,17],[-106,23],[-112,30],[-110,24],[-115,30],[-117,33],[-121,35],[-124,40],[-124,46],[-125,49],[-131,54],[-138,59],[-146,61],[-152,59],[-158,57],[-164,55],[-158,58],[-162,60],[-166,62],[-164,64]],
   [[-120,72],[-100,73],[-80,74],[-65,82],[-90,82],[-115,78],[-122,75]],
@@ -17,7 +25,7 @@ const LAND = [
 ];
 
 function buildHeightField(){
-  const W = 1024, H = 512;
+  const W = isMobile ? 512 : 1024, H = isMobile ? 256 : 512;
   const c = document.createElement('canvas'); c.width = W; c.height = H;
   const ctx = c.getContext('2d');
   ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H);
@@ -31,7 +39,7 @@ function buildHeightField(){
     ctx.closePath(); ctx.fill();
   }
   const src = ctx.getImageData(0,0,W,H).data;
-  const w = 512, h = 256;
+  const w = isMobile ? 256 : 512, h = isMobile ? 128 : 256;
   let f = new Float32Array(w*h);
   for (let y=0;y<h;y++) for (let x=0;x<w;x++){
     let s=0;
@@ -56,15 +64,16 @@ function buildHeightField(){
     }
     return o;
   }
-  f = blur(f,2); f = blur(f,2);
+  f = blur(f,2);
+  if (!isMobile) f = blur(f,2);
   const ss = (a,b,x)=>{ const t=Math.min(1,Math.max(0,(x-a)/(b-a))); return t*t*(3-2*t); };
   for (let i=0;i<f.length;i++) f[i] = ss(0.32,0.68,f[i]);
   f = blur(f,1);
   return { data:f, w, h };
 }
 
-const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true, powerPreference:'high-performance' });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true, powerPreference: isMobile ? 'default' : 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.35 : 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.08;
@@ -79,7 +88,7 @@ camera.lookAt(0, -0.05, 0);
 function buildEnvironment(){
   const env = new THREE.Scene();
   const dome = new THREE.Mesh(
-    new THREE.SphereGeometry(20, 48, 24),
+    new THREE.SphereGeometry(20, 32, 16),
     new THREE.ShaderMaterial({
       side: THREE.BackSide, depthWrite:false,
       vertexShader:`varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
@@ -110,17 +119,17 @@ function buildEnvironment(){
 scene.environment = buildEnvironment();
 
 function radialTexture(stops){
-  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const c = document.createElement('canvas'); c.width = c.height = 128;
   const g = c.getContext('2d');
-  const grad = g.createRadialGradient(128,128,0,128,128,128);
+  const grad = g.createRadialGradient(64,64,0,64,64,64);
   stops.forEach(([o,col])=>grad.addColorStop(o,col));
-  g.fillStyle = grad; g.fillRect(0,0,256,256);
+  g.fillStyle = grad; g.fillRect(0,0,128,128);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
 const cardGroup = new THREE.Group();
 scene.add(cardGroup);
-function squircleShape(size, n=4.2, seg=120){
+function squircleShape(size, n=4.2, seg=80){
   const s = new THREE.Shape(), a = size/2;
   for (let i=0;i<=seg;i++){
     const t = i/seg*Math.PI*2, c = Math.cos(t), si = Math.sin(t);
@@ -132,7 +141,7 @@ function squircleShape(size, n=4.2, seg=120){
 }
 const CARD_Z = -1.35;
 const cardGeo = new THREE.ExtrudeGeometry(squircleShape(3.35), {
-  depth:0.12, bevelEnabled:true, bevelThickness:0.06, bevelSize:0.06, bevelSegments:6, curveSegments:120
+  depth:0.12, bevelEnabled:true, bevelThickness:0.06, bevelSize:0.06, bevelSegments: isMobile ? 3 : 5, curveSegments: isMobile ? 64 : 100
 });
 cardGeo.center();
 const cardMat = new THREE.MeshPhysicalMaterial({
@@ -169,7 +178,8 @@ function sampleH(lon, lat){
 }
 
 const R = 1, EXTRUDE = 0.045;
-let geo = new THREE.SphereGeometry(R, 320, 160);
+const segW = isMobile ? 128 : 280, segH = isMobile ? 64 : 140;
+let geo = new THREE.SphereGeometry(R, segW, segH);
 geo.deleteAttribute('uv'); geo.deleteAttribute('normal');
 geo = mergeVertices(geo, 1e-5);
 {
@@ -228,7 +238,6 @@ globeMat.onBeforeCompile = (s)=>{
 const tiltGroup = new THREE.Group();
 const globe = new THREE.Mesh(geo, globeMat);
 tiltGroup.add(globe);
-
 tiltGroup.position.y = 0.08;
 scene.add(tiltGroup);
 
@@ -268,7 +277,7 @@ stage.addEventListener('pointermove', e=>{
   const now = performance.now(), dt = Math.max(1, now-lastT)/1000;
   const dx = e.clientX - lastX, dy = e.clientY - lastY;
   if (e.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx) * 1.5) return;
-  const k = 4.2 / r.width;
+  const k = 4.2 / Math.max(120, r.width);
   rotY += dx * k;
   velY = THREE.MathUtils.lerp(velY, (dx*k)/dt, 0.5);
   tiltTarget = THREE.MathUtils.clamp(tiltTarget + dy*k*0.65, -0.65, 0.85);
@@ -290,7 +299,7 @@ new ResizeObserver(resize).observe(stage);
 resize();
 
 let visible = true;
-new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold:0 }).observe(stage);
+new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold:0.01 }).observe(stage);
 
 const clock = new THREE.Clock();
 function tick(){
