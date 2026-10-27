@@ -430,21 +430,36 @@ function renderCatalog() {
     coOld.hidden = cur.saved <= 0;
   }
 
-  const coMonth = $('#coMonth');
-  if (coMonth) {
-    coMonth.textContent = S.promoType === 'gift' ? '0 ₽ / мес (сертификат)' : `${fmt(cur.per)} ₽ / мес`;
+  const coMonthEl = $('#coMonth');
+  if (coMonthEl) {
+    if (S.promoType === 'gift') {
+      coMonthEl.textContent = '0';
+    } else {
+      num(coMonthEl, cur.per, '', 320);
+    }
   }
 
   const coSaveRow = $('#coSaveRow');
   const coSave = $('#coSave');
-  if (coSave) {
-    let note = '';
-    if (S.promoType === 'gift') note = `бесплатно по коду (${fmt(cur.base)} ₽)`;
-    else if (S.promoPct > 0) note = `экономия ${fmt(cur.saved)} ₽ (промокод −${S.promoPct}%)`;
-    else if (S.refPct > 0) note = `экономия ${fmt(cur.saved)} ₽ (приглашение −${S.refPct}%)`;
-    else if (cur.saved > 0) note = `экономия ${fmt(cur.saved)} ₽`;
-    coSave.textContent = note;
-    if (coSaveRow) coSaveRow.hidden = !note;
+  if (coSaveRow && coSave) {
+    if (S.promoType === 'gift') {
+      coSaveRow.hidden = false;
+      coSave.innerHTML = `бесплатно по коду (${fmt(cur.base)} ₽)`;
+    } else if (S.promoPct > 0) {
+      coSaveRow.hidden = false;
+      coSave.innerHTML = `экономия <span id="coSaveVal">${fmt(cur.saved)}</span> ₽ (промокод −${S.promoPct}%)`;
+      if ($('#coSaveVal')) num($('#coSaveVal'), cur.saved, '', 320);
+    } else if (S.refPct > 0) {
+      coSaveRow.hidden = false;
+      coSave.innerHTML = `экономия <span id="coSaveVal">${fmt(cur.saved)}</span> ₽ (приглашение −${S.refPct}%)`;
+      if ($('#coSaveVal')) num($('#coSaveVal'), cur.saved, '', 320);
+    } else if (cur.saved > 0) {
+      coSaveRow.hidden = false;
+      coSave.innerHTML = `экономия <span id="coSaveVal">${fmt(cur.saved)}</span> ₽`;
+      if ($('#coSaveVal')) num($('#coSaveVal'), cur.saved, '', 320);
+    } else {
+      coSaveRow.hidden = true;
+    }
   }
 
   const fOffer = $('#fOffer');
@@ -457,19 +472,19 @@ function renderCatalog() {
 }
 window.renderCatalog = renderCatalog;
 
-/* Промокоды */
+/* Промокоды с плавной аккордеон-анимацией */
 const promoToggle = $('#promoToggle');
-const promoBox = $('#promoBox');
+const promoBoxWrap = $('#promoBoxWrap');
 const promoCaret = $('#promoCaret');
-if (promoToggle && promoBox) {
+if (promoToggle && promoBoxWrap) {
   promoToggle.addEventListener('click', () => {
-    const isHidden = promoBox.hidden;
-    promoBox.hidden = !isHidden;
-    promoToggle.setAttribute('aria-expanded', String(isHidden));
-    if (promoCaret) promoCaret.style.transform = isHidden ? 'rotate(180deg)' : '';
-    if (isHidden) {
+    const isOpen = promoBoxWrap.classList.contains('open');
+    promoBoxWrap.classList.toggle('open', !isOpen);
+    promoToggle.setAttribute('aria-expanded', String(!isOpen));
+    if (promoCaret) promoCaret.style.transform = !isOpen ? 'rotate(180deg)' : '';
+    if (!isOpen) {
       const pInput = $('#promo');
-      if (pInput) setTimeout(() => pInput.focus(), 60);
+      if (pInput) setTimeout(() => pInput.focus(), 160);
     }
   });
 }
@@ -857,7 +872,7 @@ function renderMainSetup() {
           <span class="app-name">${name}</span>
           <span class="app-badge ${badgeClassOf(a.badge)}">${a.badge}</span>
         </div></div>
-        <span class="app-check" aria-hidden="true">${on ? '✓' : ''}</span>`;
+        <span class="app-check" aria-hidden="true">${on ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}</span>`;
       card.addEventListener('click', () => {
         S.appMain = a.id;
         renderMainSetup();
@@ -882,7 +897,7 @@ function renderMainSetup() {
           <div class="s-step-head"><span class="s-step-num">2</span><h4>Автоматический импорт ключа</h4></div>
           <p>Нажмите «Добавить подписку». Приложение откроется автоматически и применит зашифрованный профиль SilentConnect.</p>
         </div>
-        <div class="step-btns"><a href="${importUrlFor(cur.id)}" class="btn btn-primary btn-sm" onclick="event.preventDefault();toast('Открываем ${title} и передаём профиль…')">Добавить подписку ⚡</a></div>
+        <div class="step-btns"><a href="${importUrlFor(cur.id)}" class="btn btn-primary btn-sm" onclick="event.preventDefault();toast('Открываем ${title} и передаём профиль…')">Добавить подписку <svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></a></div>
       </div>
       <div class="s-step done">
         <div>
@@ -895,7 +910,7 @@ function renderMainSetup() {
           <div class="s-step-head"><span class="s-step-num">4</span><h4>Резервный способ (ручной импорт)</h4></div>
           <p>Если бесшовный переход не сработал: скопируйте ссылку ниже в буфер обмена и выберите «Импорт из буфера обмена» в настройках приложения.</p>
         </div>
-        <div class="step-btns"><button type="button" class="btn btn-ghost btn-sm" onclick="copyToClipboard('${SUB_IMPORT_URL}', 'Ссылка подписки скопирована!')">Скопировать ссылку 🔗</button></div>
+        <div class="step-btns"><button type="button" class="btn btn-ghost btn-sm" onclick="copyToClipboard('${SUB_IMPORT_URL}', 'Ссылка подписки скопирована!')">Скопировать ссылку <svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button></div>
         <input class="field mono-field" readonly value="${SUB_IMPORT_URL}" aria-label="Ссылка подписки" onclick="this.select()">
       </div>`;
   }
@@ -1048,7 +1063,7 @@ function renderAwgSetup() {
           <span class="app-name">${a.name}</span>
           <span class="app-badge ${badgeClassOf(a.badge)}">${a.badge}</span>
         </div></div>
-        <span class="app-check" aria-hidden="true">${on ? '✓' : ''}</span>`;
+        <span class="app-check" aria-hidden="true">${on ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}</span>`;
       card.addEventListener('click', () => { S.appAwg = a.id; renderAwgSetup(); });
       grid.appendChild(card);
     });
@@ -1068,7 +1083,7 @@ function renderAwgSetup() {
             <div class="s-step-head"><span class="s-step-num">2</span><h4>Импорт конфигурации слота</h4></div>
             <p>Скачайте <code>.conf</code> файл или отсканируйте QR-код любого из ваших слотов выше и включите тумблер подключения.</p>
           </div>
-          <div class="step-btns"><button type="button" class="btn btn-primary btn-sm" onclick="downloadSlotConf(1)">Скачать слот #1 (.conf) ⚡</button></div>
+          <div class="step-btns"><button type="button" class="btn btn-primary btn-sm" onclick="downloadSlotConf(1)">Скачать слот #1 (.conf) <svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></button></div>
         </div>`;
     }
   }
@@ -1354,13 +1369,13 @@ function renderRenewCalculations() {
   if (S.bindOnly) {
     if (sumEl) sumEl.textContent = 'Привязка / смена почты без оплаты';
     if (totalEl) totalEl.textContent = '0 ₽';
-    if (submitBtn) submitBtn.textContent = 'Привязать почту';
+    if (submitBtn) submitBtn.innerHTML = 'Привязать почту <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
     if (selectors) selectors.classList.add('dimmed-block');
     if (bindCard) bindCard.classList.add('active');
   } else {
     if (sumEl) sumEl.textContent = `${CFG.names[S.renDev]} (${S.renDev} устр.) · +${CFG.days[S.renMonths]} дней`;
-    if (totalEl) totalEl.textContent = `${fmt(price)} ₽`;
-    if (submitBtn) submitBtn.textContent = `Оплатить ${fmt(price)} ₽ →`;
+    if (totalEl) num(totalEl, price, ' ₽', 280);
+    if (submitBtn) submitBtn.innerHTML = `Оплатить ${fmt(price)} ₽ <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`;
     if (selectors) selectors.classList.remove('dimmed-block');
     if (bindCard) bindCard.classList.remove('active');
   }
@@ -1570,13 +1585,13 @@ const LEGAL_DOCS = {
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0">
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px">
-          <h3 style="color:var(--em-t);margin-top:0;font-size:17px">✉️ Электронная почта</h3>
+          <h3 style="color:var(--em-t);margin-top:0;font-size:17px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:6px;color:var(--em-t)"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Электронная почта</h3>
           <p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">Вопросы по заказам, чекам, возвратам и корпоративным подпискам:</p>
           <a href="mailto:support@silentconnect.net" style="color:#fff;font-weight:600;font-size:15px;text-decoration:underline">support@silentconnect.net</a>
         </div>
 
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px">
-          <h3 style="color:#38bdf8;margin-top:0;font-size:17px">✈️ Telegram Поддержка</h3>
+          <h3 style="color:#38bdf8;margin-top:0;font-size:17px"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:-3px;margin-right:6px;color:#38bdf8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z"/></svg>Telegram Поддержка</h3>
           <p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">Мгновенная помощь специалиста, проверка статуса ключей и продление доступа:</p>
           <a href="https://t.me/SilentConnectSupport" style="color:#fff;font-weight:600;font-size:15px;text-decoration:underline" target="_blank" rel="noopener">@SilentConnectSupport</a>
         </div>

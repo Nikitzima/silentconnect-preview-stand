@@ -478,11 +478,10 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .modal.open{display:flex;animation:fade .2s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .modal-box{position:relative;width:100%;max-width:450px;padding:26px;border-radius:24px}
-.modal-x{position:absolute;top:12px;right:12px;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--mut);background:rgba(255,255,255,.04);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all .18s ease;z-index:2}
-.modal-x::after{content:'';position:absolute;inset:-6px}
+.modal-x{position:absolute;top:14px;right:14px;width:36px;height:36px;min-width:36px;min-height:36px;padding:0;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--mut);background:rgba(255,255,255,.04);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all .18s ease;z-index:2;box-sizing:border-box}
 .modal-x:hover,.modal-x:focus-visible{color:var(--hi);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);outline:none}
 .modal-x:active{transform:scale(.92)}
-.modal-x svg{width:16px;height:16px;pointer-events:none}
+.modal-x svg{width:14px;height:14px;pointer-events:none}
 .qr{width:184px;height:184px;margin:16px auto;padding:10px;border-radius:16px;background:#080e0c;color:var(--hi);display:grid;place-items:center}
 
 .cmd-box{max-width:520px;padding:14px}
@@ -531,21 +530,29 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   /* Компактный Split-Hero на мобилках с 3D-глобусом справа (как на ПК и у Resend) */
   .hero{padding-top:calc(var(--lab-h) + 68px);padding-bottom:10px}
   .hero-grid{
-    grid-template-columns:minmax(0,1fr) 142px;
+    grid-template-columns:minmax(0,1fr) auto;
     grid-template-areas:
-      "copy stage"
+      "title title"
+      "subtext stage"
       "facts facts";
-    gap:14px 10px;
+    gap:14px 12px;
     align-items:center;
   }
-  .hero h1{font-size:clamp(1.65rem,6.4vw,2.3rem);line-height:1.02}
-  .hero-lead{margin-top:8px;font-size:13px;line-height:1.45}
-  .hero-cta{margin-top:14px;gap:8px 10px}
-  .hero-cta .btn-lg{min-height:40px;padding:0 18px;font-size:13.5px}
-  .hero-price{font-size:12.5px}
-  .stage-wrap{width:140px;height:140px}
+  .hero-copy{display:contents}
+  .hero h1{grid-area:title;width:100%;max-width:100%;font-size:clamp(1.75rem,7.2vw,2.4rem);line-height:1.04;letter-spacing:-.035em}
+  .hero h1 span{display:inline}
+  .hero h1 span:first-child::after{content:" "}
+  .hero-subtext{grid-area:subtext;min-width:0;display:flex;flex-direction:column;justify-content:center}
+  .hero-lead{margin-top:0;font-size:12.5px;line-height:1.48;color:var(--mut)}
+  .hero-cta{margin-top:12px;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+  .hero-cta .btn-lg{min-height:40px;padding:0 16px;font-size:13.5px;width:100%;max-width:170px}
+  .hero-price{font-size:12px}
+  .stage-col{grid-area:stage;display:flex;justify-content:flex-end;align-items:center;min-width:0}
+  .stage-wrap{width:clamp(150px,39vw,190px);height:clamp(150px,39vw,190px)}
+  .stage-wrap::before{width:100%!important}
+  .stage-col{overflow:hidden}
 
-  .hero-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 10px;margin-top:4px;padding-top:12px}
+  .hero-facts{grid-area:facts;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 10px;margin-top:4px;padding-top:12px}
   .fact b{font-size:12px;line-height:1.2}
   .fact span{font-size:10.5px;line-height:1.2}
 
@@ -651,8 +658,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .bento{grid-template-columns:1fr;gap:8px}
   .bcard{padding:14px 15px;gap:10px}
   .apps-grid{grid-template-columns:1fr}
-  .hero-grid{grid-template-columns:minmax(0,1fr) 124px}
-  .stage-wrap{width:122px;height:122px}
+  .stage-wrap{width:clamp(140px,38vw,165px);height:clamp(140px,38vw,165px)}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -700,4 +706,21 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .brand span{display:none}
   .nav-actions{gap:6px}
   .nav-actions .btn-sm{padding:5px 9px;font-size:11.5px}
+}
+
+/* Аккордеон промокода с плавной анимацией */
+.promo-box-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.16,1,.3,1),opacity .22s ease,margin .26s ease;opacity:0;margin-top:0}
+.promo-box-wrap.open{grid-template-rows:1fr;opacity:1;margin-top:10px}
+.promo-box-inner{overflow:hidden;min-height:0}
+
+/* Плавная анимация перелистывания режимов подписки */
+.slide-enter-right{opacity:0;transform:translateX(24px)}
+.slide-enter-left{opacity:0;transform:translateX(-24px)}
+.slide-enter-active{opacity:1;transform:translateX(0);transition:opacity .25s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1)}
+
+/* Бейджи платформ без сиротских переносов на мобильных */
+@media (max-width:640px){
+  .plat{gap:6px 6px;font-size:11.5px}
+  .plat span{padding:2px 7px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid var(--line);white-space:nowrap}
+  .plat span+span::before{display:none}
 }

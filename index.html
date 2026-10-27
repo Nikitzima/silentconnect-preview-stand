@@ -71,10 +71,12 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <h1 class="metal"><span>Приватный доступ,</span><span>который просто работает</span></h1>
-          <p class="hero-lead">Выберите тариф, получите ссылку на почту и подключите телефон, ноутбук и телевизор за пару минут. Серверы в Европе, без ограничений по трафику.</p>
-          <div class="hero-cta">
-            <a href="#tariffs" class="btn btn-primary btn-lg">Выбрать тариф</a>
-            <span class="hero-price">от <b class="tab">104 ₽</b> в месяц</span>
+          <div class="hero-subtext">
+            <p class="hero-lead">Выберите тариф, получите ссылку на почту и подключите телефон, ноутбук и телевизор за пару минут. Серверы в Европе, без ограничений по трафику.</p>
+            <div class="hero-cta">
+              <a href="#tariffs" class="btn btn-primary btn-lg">Выбрать тариф</a>
+              <span class="hero-price">от <b class="tab">104 ₽</b> в месяц</span>
+            </div>
           </div>
         </div>
 
@@ -171,14 +173,16 @@
             <div>
               <button type="button" class="promo-toggle" id="promoToggle" aria-expanded="false">
                 Есть промокод?
-                <svg id="promoCaret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="transition:transform .3s" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="promoCaret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="transition:transform .3s ease" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div id="promoBox" hidden>
-                <div class="promo-row">
-                  <input class="field" id="promo" type="text" placeholder="WELCOME10 или GIFT30" autocomplete="off" style="text-transform:uppercase;min-height:44px">
-                  <button type="button" class="btn btn-ghost btn-sm" id="promoApply" style="min-height:44px">Применить</button>
+              <div class="promo-box-wrap" id="promoBoxWrap">
+                <div class="promo-box-inner" id="promoBox">
+                  <div class="promo-row">
+                    <input class="field" id="promo" type="text" placeholder="WELCOME10 или GIFT30" autocomplete="off" style="text-transform:uppercase;min-height:44px">
+                    <button type="button" class="btn btn-ghost btn-sm" id="promoApply" style="min-height:44px">Применить</button>
+                  </div>
+                  <p class="promo-msg" id="promoMsg">Примеры для теста: <code>WELCOME10</code>, <code>SALE20</code> или подарочный <code>GIFT30</code>.</p>
                 </div>
-                <p class="promo-msg" id="promoMsg">Примеры для теста: <code>WELCOME10</code>, <code>SALE20</code> или подарочный <code>GIFT30</code>.</p>
               </div>
             </div>
             <label class="check"><input type="checkbox" id="terms" checked required>
@@ -802,7 +806,7 @@
           </div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px">
-          <button type="button" class="btn btn-ghost btn-block" data-go="sub">Открыть настройки и продлить <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          <button type="button" class="btn btn-primary btn-block" data-go="sub" data-toast="Переход к продлению подписки">Открыть настройки и продлить <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
       </article>
 
