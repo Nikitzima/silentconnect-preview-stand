@@ -356,9 +356,11 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .status i{width:7px;height:7px;border-radius:50%;background:currentColor}
 .status.wait{color:var(--warn);background:rgba(246,196,83,.1);border:1px solid rgba(246,196,83,.3)}
 .status.ok{color:var(--em-t);background:rgba(16,185,129,.12);border:1px solid rgba(52,227,164,.3)}
-.status.cancel{color:var(--danger);background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3)}
-.copy-row{display:flex;gap:8px;margin-top:8px}
-.copy-row .field{min-height:42px;font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.status.cancel,.status.err{color:var(--danger);background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3)}
+.cab-card-expired{border-color:rgba(248,113,113,.22);opacity:.92}
+.copy-row{display:flex;gap:8px;margin-top:8px;min-width:0;max-width:100%}
+.copy-row .field{min-height:42px;font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;min-width:0;flex:1 1 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.copy-row .btn{flex-shrink:0}
 
 .pay-methods{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .pay-chip{padding:5px 11px;border-radius:9px;font-size:12px;color:var(--mut);background:rgba(255,255,255,.035);border:1px solid var(--line)}
@@ -490,8 +492,11 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .modal.open{display:flex;animation:fade .2s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .modal-box{position:relative;width:100%;max-width:450px;padding:26px;border-radius:24px}
-.modal-x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--mut)}
-.modal-x:hover{color:var(--hi)}
+.modal-x{position:absolute;top:12px;right:12px;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--mut);background:rgba(255,255,255,.04);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:all .18s ease;z-index:2}
+.modal-x::after{content:'';position:absolute;inset:-6px}
+.modal-x:hover,.modal-x:focus-visible{color:var(--hi);background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);outline:none}
+.modal-x:active{transform:scale(.92)}
+.modal-x svg{width:16px;height:16px;pointer-events:none}
 .qr{width:184px;height:184px;margin:16px auto;padding:10px;border-radius:16px;background:#080e0c;color:var(--hi);display:grid;place-items:center}
 
 .cmd-box{max-width:520px;padding:14px}
@@ -594,7 +599,16 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
   /* Внутренние страницы */
   .page{padding-top:calc(var(--lab-h) + 68px);padding-bottom:32px}
-  .grid-2,.setup-steps,.cab-grid,.slots,.legal{grid-template-columns:1fr}
+  .grid-2,.setup-steps,.cab-grid,.slots,.legal{grid-template-columns:minmax(0,1fr)!important}
+  .grid-2>*,.setup-steps>*,.cab-grid>*,.slots>*,.legal>*{min-width:0!important;max-width:100%!important}
+  .cab-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px 12px;flex-wrap:wrap}
+  .pay-timer-banner{flex-wrap:wrap;gap:8px 12px}
+  .kv div{flex-wrap:wrap;word-break:break-word;gap:6px 10px}
+  .kv span{min-width:0}
+  .kv b{min-width:0;word-break:break-word}
+  .platform-selector-panel{min-width:0;max-width:100%;overflow:hidden}
+  .platform-nav-track{min-width:0;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  #renDev,#renMonths{min-width:0;max-width:100%}
   .ping{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
   .ping div{padding:8px 8px;border-radius:11px;flex-direction:column;align-items:flex-start;gap:4px;font-size:11.5px}
   .ping b{font-size:11px;padding:1px 6px}
@@ -615,8 +629,16 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   #toast{bottom:92px}
 }
 
+@media (max-width:640px){
+  .btn{white-space:normal;max-width:100%;text-align:center;line-height:1.25}
+  .btn-lg{padding:12px 16px;font-size:14.5px}
+}
+
 @media (max-width:540px){
   .container{padding:0 14px}
+  #renMonths{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #renDev{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  #renDev .platform-tab,#renMonths .platform-tab{min-width:0!important;padding:7px 4px!important;font-size:11.5px!important}
   .card,.prose,.cab-card{padding:18px;border-radius:20px}
   .checkout{padding:18px;border-radius:20px}
   .tiles,.sub-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -680,6 +702,19 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .warn-box{margin-top:12px;padding:12px 16px;border-radius:12px;background:rgba(246,196,83,.09);border:1px solid rgba(246,196,83,.32);font-size:12.5px;color:#fde68a;line-height:1.5}
 .modal-box-danger{border-color:rgba(248,113,113,.4)}
 .modal-title-danger{font-size:19px;font-weight:600;letter-spacing:-.025em;color:var(--danger)}
+
+@media (max-width:420px){
+  .copy-row{flex-direction:column;align-items:stretch}
+  .copy-row .field{width:100%}
+  .copy-row .btn{width:100%}
+}
+
+@media (max-width:400px){
+  .nav{padding:0 8px 0 10px}
+  .brand span{display:none}
+  .nav-actions{gap:6px}
+  .nav-actions .btn-sm{padding:5px 9px;font-size:11.5px}
+}
 
 </style>
 <script type="importmap">
@@ -995,7 +1030,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
     <div class="grid-2">
       <section class="card glass spot">
         <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:20px;font-weight:600;letter-spacing:-.02em">Детали заказа</h2>
             <span class="status wait" id="ordBadge"><i></i>Ожидает оплаты</span>
           </div>
@@ -1047,7 +1082,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
             <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.5">Если не проходит платёж или нужна альтернативная оплата, напишите оператору: отвечаем за от 2 до 5 минут.</p>
           </div>
           <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-            <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать оператору (@SilentConnectSupport)</a>
+            <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Поддержка (@SilentConnectSupport)</a>
             <button type="button" class="btn btn-danger btn-sm" id="cancelOrdBtn">Отменить заказ</button>
           </div>
         </section>
@@ -1433,7 +1468,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
     <div class="cab-bar glass">
       <div class="cab-meta">
         <span>Почта: <b>client@example.com</b></span>
-        <span>Активных подписок: <b>2</b></span>
+        <span>Подписок: <b>3</b> (2 активные, 1 истёкшая)</span>
         <span>Сессия по одноразовой ссылке: <b class="tab" style="color:var(--em-t)">29 мин</b></span>
       </div>
       <button type="button" class="link" style="font-size:13px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти из сессии</button>
@@ -1460,7 +1495,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
       <article class="cab-card glass spot">
         <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #2 · Личный</h2>
             <span class="status wait"><i></i>Истекает через 4 дн.</span>
           </div>
@@ -1473,6 +1508,24 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px">
           <button type="button" class="btn btn-ghost btn-block" data-go="sub">Открыть настройки и продлить <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+      </article>
+
+      <article class="cab-card glass spot cab-card-expired">
+        <div>
+          <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #3 · Расширенный</h2>
+            <span class="status err"><i></i>Срок истёк</span>
+          </div>
+          <div class="kv" style="margin-top:14px">
+            <div><span>Лимит устройств</span><b>до 9 устройств</b></div>
+            <div><span>Пакет AmneziaWG</span><b class="tab" style="color:var(--danger)">1 000 ГБ (исчерпан 0 ГБ)</b></div>
+            <div><span>Действовал до</span><b class="tab">15.10.2026 (истёк 12 дн. назад)</b></div>
+            <div><span>ID профиля</span><b class="tab">sc_live_09e4a3c2</b></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <button type="button" class="btn btn-primary btn-block" data-go="sub" data-toast="Переход к продлению подписки">Возобновить доступ и продлить <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
       </article>
     </div>
@@ -3392,57 +3445,179 @@ window.addEventListener('keydown', e => {
 const LEGAL_DOCS = {
   about: {
     title: 'О сервисе SilentConnect',
-    date: 'Инфраструктура приватного доступа',
+    date: 'Инфраструктура приватного доступа нового поколения',
     html: `
-      <p><b>SilentConnect</b> — сервис защищённого сетевого доступа с европейскими узлами (Нидерланды, Польша, Финляндия) и каналами связи до 10 Гбит/с.</p>
-      <h3>Три режима в одной подписке</h3>
-      <ul>
-        <li><b>Основной контур:</b> безлимитный трафик и скорость на каждый день для всех ваших устройств.</li>
-        <li><b>Игровой контур (AmneziaWG):</b> выделенные слоты с прямым UDP-соединением и минимальной задержкой для онлайн-игр, звонков и роутеров.</li>
-        <li><b>Режим Белых списков (OpenFlux):</b> резервный канал связи на случай жёстких ограничений мобильного интернета оператором.</li>
-      </ul>`
+      <p>Передовой сервис приватного сетевого доступа нового поколения, созданный для безопасного и стабильного интернета.</p>
+      
+      <h3 style="color:#fff;font-size:18px;margin-top:22px">Наша миссия</h3>
+      <p>Мы верим, что свободный и безопасный доступ к информации — это фундаментальное право каждого человека. SilentConnect создавался с нуля для работы в сложных сетевых условиях, где стандартные методы подключения легко распознаются и замедляются провайдерами.</p>
+
+      <h3 style="color:var(--em-t);font-size:18px;margin-top:22px">Инфраструктура и технологии:</h3>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li><strong style="color:#fff">Современное защищенное шифрование:</strong> Наш трафик маскируется под стандартный защищенный протокол веб-сервисов. Для сетевых фильтров ваше подключение выглядит как обычный визит на веб-сайт.</li>
+        <li><strong style="color:#fff">Приватность сетевого доступа:</strong> На серверных узлах отключена фиксация сетевых маршрутов, DNS и истории посещаемых ресурсов. Временные системные журналы серверов автоматически очищаются каждые 48 часов.</li>
+        <li><strong style="color:#fff">Европейские гигабитные узлы:</strong> Серверы размещены в современных дата-центрах Нидерландов и Финляндии с прямыми магистральными каналами связи и минимальным пингом.</li>
+        <li><strong style="color:#fff">Умная доставка и личный кабинет:</strong> Мгновенная генерация подписки, отправка чеков и ключей на Email, удобное управление через веб-интерфейс и Telegram-бота.</li>
+        <li><strong style="color:#fff">Поддержка любых устройств:</strong> Готовые мастера установки под iOS (Happ, Streisand), Android (Happ, V2RayTun), Windows, macOS, Linux, Android TV и Apple TV.</li>
+      </ul>
+
+      <p style="margin-top:24px;color:var(--mut)">Техническая поддержка: <a href="mailto:support@silentconnect.net" style="color:var(--em-t);text-decoration:underline">support@silentconnect.net</a></p>`
   },
   contact: {
-    title: 'Контакты и поддержка 24/7',
-    date: 'Среднее время ответа оператора: 2–5 минут',
+    title: 'Контакты & Поддержка',
+    date: 'Круглосуточная помощь 24/7/365 · Ответ в течение 2–5 минут',
     html: `
-      <p>Поддержка SilentConnect работает круглосуточно без выходных. Мы помогаем с подключением любых устройств, настройкой роутеров и вопросами оплаты.</p>
-      <h3>Связаться с нами</h3>
-      <ul>
-        <li><b>Поддержка в Telegram:</b> <a href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener" class="link">@SilentConnectSupport</a></li>
-        <li><b>Telegram-бот сервиса:</b> <a href="https://t.me/SilentConnectBot" target="_blank" rel="noopener" class="link">@SilentConnectBot</a></li>
-        <li><b>Электронная почта:</b> support@silentconnect.net</li>
-      </ul>`
+      <p>Мы работаем круглосуточно и готовы оперативно помочь с любыми вопросами по настройке и оплате.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px">
+          <h3 style="color:var(--em-t);margin-top:0;font-size:17px">✉️ Электронная почта</h3>
+          <p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">Вопросы по заказам, чекам, возвратам и корпоративным подпискам:</p>
+          <a href="mailto:support@silentconnect.net" style="color:#fff;font-weight:600;font-size:15px;text-decoration:underline">support@silentconnect.net</a>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px">
+          <h3 style="color:#38bdf8;margin-top:0;font-size:17px">✈️ Telegram Поддержка</h3>
+          <p style="font-size:13.5px;color:var(--mut);margin-bottom:10px">Мгновенная помощь специалиста, проверка статуса ключей и продление доступа:</p>
+          <a href="https://t.me/SilentConnectSupport" style="color:#fff;font-weight:600;font-size:15px;text-decoration:underline" target="_blank" rel="noopener">@SilentConnectSupport</a>
+        </div>
+      </div>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:20px">Режим работы поддержки:</h3>
+      <p style="color:var(--mut);line-height:1.7">Консультации и техническая помощь предоставляются круглосуточно (24/7/365). Среднее время ответа в Telegram — 2–5 минут, по электронной почте — до 15–30 минут.</p>`
   },
   terms: {
     title: 'Пользовательское соглашение (Публичная оферта)',
-    date: 'Редакция от 15 октября 2026 г.',
+    date: 'Редакция от 5 сентября 2026 г. · ст. 435, 437, 438 ГК РФ',
     html: `
-      <p>Настоящий документ является публичной безотзывной офертой сервиса <b>SilentConnect</b> на заключение договора об оказании возмездных услуг по предоставлению защищённого сетевого доступа.</p>
-      <h3>1. Предмет соглашения</h3>
-      <p>Исполнитель обязуется предоставить Заказчику доступ к персональным конфигурациям маршрутизации трафика в рамках выбранного тарифного плана на условиях настоящей оферты.</p>
-      <h3>2. Условия возврата денежных средств</h3>
-      <p>Заказчик имеет право на полный возврат уплаченных средств в течение <b>14 календарных дней</b> с момента первичной оплаты при обращении в службу поддержки.</p>
-      <h3>3. Ограничения использования</h3>
-      <p>Запрещается использование сервиса для распространения вредоносного ПО, проведения сетевых атак (DDoS), рассылки спама и любых действий, нарушающих законодательство.</p>`
+      <p>Настоящее Пользовательское соглашение (далее — «Соглашение» или «Оферта») регулирует отношения между Администрацией сервиса <strong>SilentConnect</strong> (далее — «Исполнитель») и любым физическим или юридическим лицом, использующим сервисы Сайта, Telegram-бота или инфраструктуру Платформы (далее — «Пользователь»).</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">1. Термины и определения</h3>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li><strong style="color:#fff">Сервис (Платформа)</strong> — программно-аппаратный комплекс SilentConnect, предназначенный для защищенного сетевого взаимодействия, криптографической маршрутизации и безопасной передачи данных через интернет.</li>
+        <li><strong style="color:#fff">Индивидуальный ключ доступа</strong> — уникальная зашифрованная ссылка (URL подписки) либо конфигурационный файл, генерируемый для аутентификации абонентских устройств Пользователя на узлах Сервиса.</li>
+        <li><strong style="color:#fff">Заказ</strong> — действие Пользователя по выбору Тарифа, заполнению контактных данных и оплате услуг через сайт или интерфейс бота.</li>
+        <li><strong style="color:#fff">Тариф</strong> — установленный Исполнителем объем прав доступа, определяющий срок подписки и лимит одновременно подключенных устройств (3, 6 или 9 устройств).</li>
+      </ul>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">2. Акцепт оферты и заключение договора</h3>
+      <p style="color:var(--mut)">2.1. Настоящий документ является публичной офертой в соответствии со статьями 435 и 437 Гражданского кодекса Российской Федерации (ГК РФ).</p>
+      <p style="color:var(--mut)">2.2. Полным и безоговорочным акцептом настоящей Оферты (ст. 438 ГК РФ) признается совершение Пользователем любого из следующих конклюдентных действий: нажатие кнопки оформления/оплаты заказа, совершение платежа, авторизация в боте либо фактическое использование сгенерированного индивидуального ключа доступа.</p>
+      <p style="color:var(--mut)">2.3. Акцептуя Оферту, Пользователь подтверждает, что достиг совершеннолетия, обладает полной право- и дееспособностью, ознакомился и безоговорочно согласен со всеми положениями настоящего Соглашения, а также с Политикой конфиденциальности и Политикой возвратов.</p>
+
+      <h3 style="color:var(--em-t);font-size:17px;margin-top:22px">3. Предмет соглашения и момент исполнения обязательств</h3>
+      <p style="color:var(--mut)">3.1. Исполнитель предоставляет Пользователю неисключительное право использования программного обеспечения и услуги защищенного сетевого взаимодействия для безопасной передачи данных в соответствии с выбранным Тарифом.</p>
+      <p style="color:var(--mut)"><strong style="color:#fff">3.2. Момент оказания услуг:</strong> Обязательства Исполнителя по предоставлению доступа считаются исполненными надлежащим образом и в полном объеме в момент автоматической генерации и отображения индивидуального ключа доступа (URL подписки) в веб-интерфейсе либо отправки на указанный Пользователем адрес электронной почты или в Telegram. Фактическая настройка клиентского ПО на стороне абонентского оборудования осуществляется Пользователем самостоятельно.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">4. Стоимость услуг и порядок расчетов</h3>
+      <p style="color:var(--mut)">4.1. Стоимость Тарифов публикуется на Сайте и в интерфейсах Сервиса в российских рублях (RUB). Исполнитель вправе в одностороннем порядке изменять стоимость будущих периодов; изменение стоимости уже оплаченного Пользователем периода не допускается.</p>
+      <p style="color:var(--mut)">4.2. Оплата производится через сертифицированные платежные шлюзы (включая Систему быстрых платежей СБП / НСПК и банковские карты). Обязательства по оплате считаются исполненными с момента подтверждения зачисления средств банком-эквайером.</p>
+      <p style="color:var(--mut)">4.3. Автоматические скрытые списания (рекуррентные подписки без предварительного согласия) сервисом не применяются. Продление осуществляется по добровольной инициативе Пользователя.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">5. Правила добросовестного использования (Fair Use Policy)</h3>
+      <p style="color:var(--mut)">5.1. Пользователь обязуется использовать Сервис исключительно в законных целях для личных и семейных нужд в пределах лимита устройств по Тарифу (до 3, 6 или 9 устройств одновременно).</p>
+      <p style="color:var(--mut)">5.2. Категорически запрещается использовать Сервис для:</p>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li>Осуществления массовых спам-рассылок, фишинга, мошеннических действий и социальной инженерии;</li>
+        <li>Проведения сетевых атак любого рода (DDoS, брутфорс, несанкционированное сканирование портов и уязвимостей);</li>
+        <li>Распространения вредоносного программного обеспечения, эксплойтов и троянских программ;</li>
+        <li>Нарушения законодательства РФ и прав интеллектуальной собственности третьих лиц;</li>
+        <li>Организации публичных прокси-серверов, майнинга, торрент-ферм и перепродажи доступа третьим лицам.</li>
+      </ul>
+      <p style="color:var(--mut)">5.3. При выявлении грубых нарушений п. 5.2 Исполнитель оставляет за собой право немедленно приостановить или заблокировать доступ без компенсации и возврата средств.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">6. Ограничение ответственности и отказ от гарантий</h3>
+      <p style="color:var(--mut)">6.1. Сервис предоставляется на условиях «КАК ЕСТЬ» («AS IS»). Исполнитель принимает все разумные меры для обеспечения непрерывной и стабильной работы узлов связи, однако не гарантирует абсолютную безошибочность или бесперебойность.</p>
+      <p style="color:var(--mut)">6.2. Исполнитель не несет ответственности за временные перебои, вызванные действиями локальных интернет-провайдеров Пользователя, магистральных операторов связи, авариями кабельной инфраструктуры, плановыми техническими работами и сетевыми сбоями сторонних операторов связи либо иными форс-мажорными обстоятельствами вне контроля Исполнителя.</p>
+      <p style="color:var(--mut)">6.3. Совокупная ответственность Исполнителя по любым претензиям строго ограничена суммой, фактически уплаченной Пользователем за текущий расчетный период.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">7. Изменение условий и контакты</h3>
+      <p style="color:var(--mut)">7.1. Исполнитель вправе в одностороннем порядке вносить изменения в настоящую Оферту. Новая редакция вступает в силу с момента ее публикации на данной странице.</p>
+      <p style="color:var(--mut);margin-top:10px">
+        Электронная почта: <a href="mailto:support@silentconnect.net" style="color:var(--em-t);text-decoration:underline">support@silentconnect.net</a><br>
+        Telegram-бот поддержки: <a href="https://t.me/SilentConnectSupport" style="color:var(--em-t);text-decoration:underline" target="_blank" rel="noopener">@SilentConnectSupport</a>
+      </p>`
   },
   privacy: {
-    title: 'Политика конфиденциальности (No-Logs)',
-    date: 'Редакция от 15 октября 2026 г.',
+    title: 'Политика конфиденциальности SilentConnect',
+    date: 'Редакция от 5 сентября 2026 г. · Принципы обработки данных (152-ФЗ / GDPR)',
     html: `
-      <p>Мы придерживаемся строгой архитектуры конфиденциальности <b>Zero-Knowledge & No-Logs</b>. Ваша сетевая активность принадлежит исключительно вам.</p>
-      <h3>1. Что мы не собираем</h3>
-      <p>Мы <b>никогда не записываем и не храним</b>: посещённые вами сайты, DNS-запросы, передаваемый контент, IP-адреса назначения и метаданные сессий.</p>
-      <h3>2. Что хранится в учётной записи</h3>
-      <p>Для функционирования подписки хранится исключительно: указанный вами адрес электронной почты (для отправки чеков и напоминаний), дата окончания оплаченного периода и общий объём использованного скоростного трафика AmneziaWG.</p>`
+      <p>Сервис <strong>SilentConnect</strong> ставит своим абсолютным приоритетом цифровую приватность пользователей. Наша политика предельно прозрачна: мы не собираем и не храним информацию о вашей активности в сети, поэтому мы не можем никому ее передать.</p>
+
+      <h3 style="color:var(--em-t);font-size:17px;margin-top:22px">1. Политика полного отсутствия журналов активности (Zero-Logs Policy)</h3>
+      <p style="color:var(--mut)">Мы гарантируем строгое соблюдение принципа ненакопления данных сетевого взаимодействия. Серверные узлы Исполнителя технически настроены так, что мы не записываем, не храним и не передаем третьим лицам:</p>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li>Историю посещенных веб-сайтов, интернет-адреса и обращения к сервисам;</li>
+        <li>Исходные IP-адреса абонентских устройств;</li>
+        <li>Запросы системы доменных имен (DNS-запросы);</li>
+        <li>Содержимое передаваемого трафика, файлов и личной переписки;</li>
+        <li>Временные метки (timestamps) открытия и завершения соединений с конкретными ресурсами.</li>
+      </ul>
+      <p style="color:var(--mut);margin-top:10px"><strong style="color:var(--em-t)">Техническая реализация:</strong> На всех серверных узлах отключена фиксация журналов доступа (access-логи), а временные системные технические метрики операционной системы автоматически удаляются каждые 48 часов.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">2. Состав и цели обработки минимально необходимых сведений</h3>
+      <p style="color:var(--mut)">В соответствии со ст. 5 Федерального закона № 152-ФЗ «О персональных данных» обработка ограничивается достижением конкретных, заранее определенных и законных целей предоставления доступа. Сервис обрабатывает исключительно необходимый технический минимум:</p>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li><strong style="color:#fff">Адрес электронной почты (Email):</strong> Используется исключительно для доставки индивидуального ключа доступа, направления фискальных расчетных документов и авторизации в личном кабинете.</li>
+        <li><strong style="color:#fff">Telegram ID и Username:</strong> Сохраняются только при добровольном обращении Пользователя к официальному Telegram-боту сервиса для привязки уведомлений.</li>
+        <li><strong style="color:#fff">Реквизиты заказов:</strong> Номер заказа, дата, сумма транзакции и выбранный тарифный план (необходимы для бухгалтерского и финансового учета).</li>
+        <li><strong style="color:#fff">Служебные файлы Cookies:</strong> Временный токен авторизации в личном кабинете (<code>sc_web_token</code>) и маркер реферальной программы (<code>sc_ref</code>, 30 дней) для применения положенной скидки.</li>
+        <li><strong style="color:#fff">Агрегированные счетчики трафика:</strong> Общий суммарный объем переданных байт без привязки к ресурсам или действиям, используемый исключительно для контроля соблюдения лимита устройств и стабильности сетевых каналов.</li>
+      </ul>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">3. Безопасность финансовых транзакций</h3>
+      <p style="color:var(--mut)">Исполнитель <strong style="color:#fff">НЕ собирает, НЕ обрабатывает и НЕ хранит</strong> данные банковских карт Пользователей (номера карт, срок действия, CVV/CVC-коды). Все платежи проводятся непосредственно через защищенные платежные шлюзы сертифицированных банков-эквайеров и платежных провайдеров в соответствии со стандартами безопасности PCI DSS и регламентом Системы быстрых платежей (СБП / НСПК).</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">4. Взаимодействие с государственными органами и третьими лицами</h3>
+      <p style="color:var(--mut)">Мы соблюдаем применимое законодательство. Однако, в силу технической архитектуры Платформы и строгого соблюдения Zero-Logs Policy, мы физически не ведем и не накапливаем журналы сетевой активности и сопоставления трафика с конкретными пользователями. Сервис не имеет технической возможности раскрыть то, чем он не владеет.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">5. Права субъекта персональных данных</h3>
+      <p style="color:var(--mut)">Пользователь вправе в любой момент отозвать свое согласие на обработку контактных данных и запросить полное удаление своей учетной записи и истории заказов, направив письменное заявление по официальному адресу <a href="mailto:support@silentconnect.net" style="color:var(--em-t);text-decoration:underline">support@silentconnect.net</a>. Данные удаляются в течение 72 часов с момента подтверждения запроса.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">6. Контакты службы поддержки</h3>
+      <p style="color:var(--mut)">
+        Электронная почта: <a href="mailto:support@silentconnect.net" style="color:var(--em-t);text-decoration:underline">support@silentconnect.net</a><br>
+        Telegram-бот поддержки: <a href="https://t.me/SilentConnectSupport" style="color:var(--em-t);text-decoration:underline" target="_blank" rel="noopener">@SilentConnectSupport</a>
+      </p>`
   },
   refund: {
-    title: 'Политика возвратов (Гарантия 14 дней)',
-    date: 'Редакция от 15 октября 2026 г.',
+    title: 'Политика возврата денежных средств и отмены подписки',
+    date: 'Редакция от 5 сентября 2026 г. · Регламент взаиморасчетов (СБП / НСПК / Fair Use)',
     html: `
-      <p>Мы уверены в надёжности нашего сервиса и гарантируем прозрачные условия возврата средств.</p>
-      <h3>1. Гарантия 14 дней на первый заказ</h3>
-      <p>Если сервис не подошёл вам по скорости, совместимости или любой другой причине — напишите в нашу круглосуточную поддержку <a href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener" class="link">@SilentConnectSupport</a> в течение 14 дней с момента первой оплаты. Возврат осуществляется в полном объёме тем же способом оплаты.</p>`
+      <p>Мы стремимся обеспечить максимальный комфорт при использовании сервиса SilentConnect. Если сервис по техническим причинам вам не подошел, вы вправе запросить возврат денежных средств в рамках правил добросовестного использования (Fair Use Policy).</p>
+
+      <h3 style="color:var(--em-t);font-size:17px;margin-top:22px">1. Гарантия возврата (Money-back Guarantee)</h3>
+      <p style="color:var(--mut)">1.1. Исполнитель предоставляет гарантию возврата 100% уплаченных средств в течение <strong style="color:#fff">14 (четырнадцати) календарных дней</strong> с момента оплаты, если Пользователь не удовлетворен качеством работы сервиса.</p>
+      <p style="color:var(--mut)">1.2. Гарантия возврата распространяется <strong style="color:#fff">исключительно на первый заказ (первую покупку)</strong>, совершенную с уникального аккаунта пользователя.</p>
+      <p style="color:var(--mut)">1.3. Повторные покупки, продления действующей подписки, а также дополнительные заказы тем же пользователем (определяемым по email, Telegram ID либо платежным реквизитам) <strong style="color:#fff">возврату не подлежат</strong>. Факт повторной оплаты услуги юридически подтверждает полную удовлетворенность Пользователя качеством сервиса за предыдущие периоды.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">2. Условия отказа в возврате (Ограничения Fair Use)</h3>
+      <p style="color:var(--mut)">Для защиты инфраструктуры от злоупотреблений и паразитарной нагрузки возврат средств не производится в следующих случаях:</p>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li><strong style="color:#fff">Лимит трафика (Data Cap):</strong> Если с момента генерации доступа через аккаунт прошло более <strong style="color:#fff">5 ГБ (Гигабайт)</strong> суммарного трафика. Превышение порога в 5 ГБ юридически признается Сторонами фактом полного потребления услуги и надлежащего качества соединения;</li>
+        <li><strong style="color:#fff">Истечение срока:</strong> Обращение направлено позднее 14 календарных дней с момента совершения оплаты;</li>
+        <li><strong style="color:#fff">Нарушение правил (AUP):</strong> Аккаунт был заблокирован за нарушение правил допустимого использования (спам, сканирование, атаки, реселлинг);</li>
+        <li><strong style="color:#fff">Локальные ограничения клиента:</strong> Серверная инфраструктура исправна, но клиент не может настроить соединение из-за ограничений на стороне своего локального интернет-провайдера либо специфики личного устройства при условии, что служба поддержки предоставила инструкции и альтернативные конфигурации;</li>
+        <li><strong style="color:#fff">Анонимные транзакции:</strong> Платежи, совершенные в криптовалюте, в силу необратимости блокчейн-транзакций возврату не подлежат (возможна компенсация дополнительными днями доступа).</li>
+      </ul>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">3. Регламент и процедура оформления возврата</h3>
+      <p style="color:var(--mut)">3.1. Для оформления возврата направьте запрос по официальному адресу <a href="mailto:support@silentconnect.net" style="color:var(--em-t);text-decoration:underline">support@silentconnect.net</a> либо через верифицированный <a href="https://t.me/SilentConnectSupport" style="color:var(--em-t);text-decoration:underline" target="_blank" rel="noopener">Telegram-бот поддержки</a>.</p>
+      <p style="color:var(--mut)">3.2. В обращении необходимо указать:</p>
+      <ul style="padding-left:20px;line-height:1.8;color:var(--mut)">
+        <li>Номер заказа (#ord_...) и контактный Email или Telegram ID;</li>
+        <li>Дату и сумму оплаты, приложив чек или электронную квитанцию;</li>
+        <li>Краткую причину обращения.</li>
+      </ul>
+      <p style="color:var(--mut)">3.3. Единственным объективным доказательством факта использования услуги являются серверные счетчики биллинга трафика. Скриншоты замера скорости сторонних утилит не требуются.</p>
+      <p style="color:var(--mut)">3.4. Срок рассмотрения заявления службой поддержки составляет <strong style="color:#fff">до 48 часов</strong> (не более 3 рабочих дней).</p>
+      <p style="color:var(--mut)">3.5. Выплата денежных средств осуществляется тем же способом, которым производилась оплата: через Систему быстрых платежей (СБП / НСПК) по номеру телефона плательщика либо на банковскую карту. Срок зачисления банком получателя составляет <strong style="color:#fff">от 1 до 3 банковских дней</strong>.</p>
+
+      <h3 style="color:#fff;font-size:17px;margin-top:22px">4. Контакты службы поддержки</h3>
+      <p style="color:var(--mut)">
+        Электронная почта: <a href="mailto:support@silentconnect.net" style="color:var(--em-t);text-decoration:underline">support@silentconnect.net</a><br>
+        Telegram-бот поддержки: <a href="https://t.me/SilentConnectSupport" style="color:var(--em-t);text-decoration:underline" target="_blank" rel="noopener">@SilentConnectSupport</a>
+      </p>`
   }
 };
 

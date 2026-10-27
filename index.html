@@ -325,7 +325,7 @@
     <div class="grid-2">
       <section class="card glass spot">
         <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:20px;font-weight:600;letter-spacing:-.02em">Детали заказа</h2>
             <span class="status wait" id="ordBadge"><i></i>Ожидает оплаты</span>
           </div>
@@ -377,7 +377,7 @@
             <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.5">Если не проходит платёж или нужна альтернативная оплата, напишите оператору: отвечаем за от 2 до 5 минут.</p>
           </div>
           <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-            <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать оператору (@SilentConnectSupport)</a>
+            <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Поддержка (@SilentConnectSupport)</a>
             <button type="button" class="btn btn-danger btn-sm" id="cancelOrdBtn">Отменить заказ</button>
           </div>
         </section>
@@ -763,7 +763,7 @@
     <div class="cab-bar glass">
       <div class="cab-meta">
         <span>Почта: <b>client@example.com</b></span>
-        <span>Активных подписок: <b>2</b></span>
+        <span>Подписок: <b>3</b> (2 активные, 1 истёкшая)</span>
         <span>Сессия по одноразовой ссылке: <b class="tab" style="color:var(--em-t)">29 мин</b></span>
       </div>
       <button type="button" class="link" style="font-size:13px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти из сессии</button>
@@ -790,7 +790,7 @@
 
       <article class="cab-card glass spot">
         <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #2 · Личный</h2>
             <span class="status wait"><i></i>Истекает через 4 дн.</span>
           </div>
@@ -803,6 +803,24 @@
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px">
           <button type="button" class="btn btn-ghost btn-block" data-go="sub">Открыть настройки и продлить <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+      </article>
+
+      <article class="cab-card glass spot cab-card-expired">
+        <div>
+          <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #3 · Расширенный</h2>
+            <span class="status err"><i></i>Срок истёк</span>
+          </div>
+          <div class="kv" style="margin-top:14px">
+            <div><span>Лимит устройств</span><b>до 9 устройств</b></div>
+            <div><span>Пакет AmneziaWG</span><b class="tab" style="color:var(--danger)">1 000 ГБ (исчерпан 0 ГБ)</b></div>
+            <div><span>Действовал до</span><b class="tab">15.10.2026 (истёк 12 дн. назад)</b></div>
+            <div><span>ID профиля</span><b class="tab">sc_live_09e4a3c2</b></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <button type="button" class="btn btn-primary btn-block" data-go="sub" data-toast="Переход к продлению подписки">Возобновить доступ и продлить <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
       </article>
     </div>
