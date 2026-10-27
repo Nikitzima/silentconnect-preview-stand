@@ -170,14 +170,19 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
    HERO (Split Layout на ПК и компактный сбалансированный Split на мобильных)
    ========================================================================= */
 .hero{position:relative;padding-top:calc(var(--lab-h) + 120px);padding-bottom:20px}
-.hero-grid{display:grid;align-items:center;gap:24px 40px;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
-  grid-template-areas:"copy stage" "facts stage"}
-.hero-copy{grid-area:copy;min-width:0}
-.stage-col{grid-area:stage;position:relative;display:flex;justify-content:center}
-.hero-facts{grid-area:facts;align-self:start;margin-top:6px;padding-top:22px;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:12px 40px}
-.hero h1{font-size:clamp(2.4rem,4.7vw,4.35rem);line-height:.99;letter-spacing:-.046em;font-weight:600}
-.hero h1 span{display:block}
+.hero-grid{display:grid;align-items:center;gap:28px 48px;grid-template-columns:minmax(0,1.2fr) minmax(0,0.95fr);
+  grid-template-areas:
+    "title title"
+    "subtext stage"
+    "facts facts"}
+.hero-copy{display:contents}
+.stage-col{grid-area:stage;position:relative;display:flex;justify-content:center;align-items:center;min-width:0}
+.hero-facts{grid-area:facts;align-self:start;margin-top:12px;padding-top:22px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:start;gap:12px 24px}
+.hero h1{grid-area:title;font-size:clamp(2.4rem,4.2vw,3.8rem);line-height:1.08;letter-spacing:-.035em;font-weight:600;width:100%;max-width:100%}
+.hero h1 span{display:inline}
+.hero h1 span:first-child::after{content:" "}
+.hero-subtext{grid-area:subtext;min-width:0;display:flex;flex-direction:column;justify-content:center}
 .hero-lead{margin-top:20px;max-width:31em;font-size:clamp(1rem,1.3vw,1.14rem);line-height:1.58;color:var(--mut)}
 .hero-cta{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}
 .hero-price{font-size:14px;color:var(--mut)}
@@ -199,7 +204,10 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 /* =========================================================================
    ТАРИФЫ, LIQUID GLASS SEGMENTED CONTROL И ЧЕКАУТ
    ========================================================================= */
-.tariffs{display:grid;gap:24px;grid-template-columns:minmax(0,1.48fr) minmax(0,1fr);align-items:start}
+.tariffs{display:grid;gap:24px;grid-template-columns:minmax(0,1.48fr) minmax(0,1fr);align-items:stretch}
+.tariff-builder{display:flex;flex-direction:column;justify-content:space-between;height:100%;box-sizing:border-box}
+.tariff-builder .includes{margin-top:auto}
+.checkout{display:flex;flex-direction:column;justify-content:space-between;height:100%;box-sizing:border-box}
 .field-label{font-size:13px;font-weight:560;color:var(--mut);margin-bottom:10px;display:block}
 .group+.group{margin-top:26px}
 .group-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
@@ -420,6 +428,8 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .email-unbound-alert{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:12px;
   background:rgba(246,196,83,.11);border:1px solid rgba(246,196,83,.38);margin-top:14px;margin-bottom:14px;font-size:13px;color:#fde68a;line-height:1.45}
 .bind-only-panel{padding:12px 16px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid var(--line);margin-bottom:16px;transition:border-color .2s,background .2s}
+.renew-selector-box{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;justify-content:space-between}
+.renew-selector-box .field-label{margin:0;font-size:12.5px;font-weight:600;color:var(--hi)}
 .bind-only-panel.active{border-color:rgba(52,227,164,.45);background:rgba(16,185,129,.08)}
 .dimmed-block{opacity:.32;pointer-events:none;filter:grayscale(.85);user-select:none;transition:opacity .25s,filter .25s}
 
@@ -433,9 +443,13 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .platform-bar-title{font-size:13.5px;font-weight:600;color:var(--hi);display:flex;align-items:center;gap:8px}
 .platform-bar-hint{font-size:12px;color:var(--mut)}
 .platform-bar-hint strong{color:var(--em-t);font-weight:600}
-.platform-nav-track{display:flex;gap:6px;background:rgba(0,0,0,.42);border:1px solid var(--line);border-radius:12px;padding:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;cursor:grab;user-select:none;scroll-behavior:smooth}
+.platform-nav-track{display:flex;width:100%;gap:6px;background:rgba(0,0,0,.42);border:1px solid var(--line);border-radius:12px;padding:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;cursor:grab;user-select:none;scroll-behavior:smooth;box-sizing:border-box}
 .platform-nav-track::-webkit-scrollbar{display:none}
 .platform-nav-track:active{cursor:grabbing}
+.platform-nav-track .platform-tab{flex:1 1 0;min-width:0;min-height:38px;border-radius:9px;cursor:pointer;padding:6px 8px;
+  font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  color:var(--mut);border:1px solid transparent;background:transparent;white-space:nowrap;user-select:none;
+  transition:background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease),transform .2s var(--ease)}
 .platform-tab{flex:0 0 auto;min-width:92px;min-height:38px;border-radius:9px;cursor:pointer;padding:6px 12px;
   font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:7px;
   color:var(--mut);border:1px solid transparent;background:transparent;white-space:nowrap;user-select:none;
@@ -653,6 +667,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 @media (max-width:640px){
   .btn{white-space:normal;max-width:100%;text-align:center;line-height:1.25}
   .btn-lg{padding:12px 16px;font-size:14.5px}
+  .platform-nav-track .platform-tab{flex:0 0 auto;min-width:80px}
 }
 
 @media (max-width:540px){
@@ -1005,7 +1020,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
       </div>
 
       <div class="tariffs">
-        <div class="card glass spot">
+        <div class="card glass spot tariff-builder">
           <div class="group">
             <div class="group-head"><span class="field-label">Устройства</span></div>
             <div class="seg" id="devSeg" role="radiogroup" aria-label="Количество устройств">
@@ -1374,8 +1389,8 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
               <div id="renewPlanSelectors">
                 <p style="font-size:13px;color:var(--mut);margin-bottom:12px">При продлении новые дни суммируются с вашим текущим остатком (180 дн.). Ссылка и настройки на устройствах не изменятся.</p>
-                <div class="grid-2" style="align-items:start;margin-bottom:16px">
-                  <div>
+                <div class="grid-2" style="align-items:stretch;margin-bottom:16px">
+                  <div class="renew-selector-box">
                     <span class="field-label">1. Лимит устройств</span>
                     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" id="renDev">
                       <button type="button" class="platform-tab" data-r-dev="3" style="min-width:0">Личный (3)</button>
@@ -1383,7 +1398,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
                       <button type="button" class="platform-tab" data-r-dev="9" style="min-width:0">Расшир. (9)</button>
                     </div>
                   </div>
-                  <div>
+                  <div class="renew-selector-box">
                     <span class="field-label">2. Период продления</span>
                     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px" id="renMonths">
                       <button type="button" class="platform-tab" data-r-m="1" style="min-width:0">1 мес</button>

@@ -109,7 +109,7 @@
       </div>
 
       <div class="tariffs">
-        <div class="card glass spot">
+        <div class="card glass spot tariff-builder">
           <div class="group">
             <div class="group-head"><span class="field-label">Устройства</span></div>
             <div class="seg" id="devSeg" role="radiogroup" aria-label="Количество устройств">
@@ -478,8 +478,8 @@
 
               <div id="renewPlanSelectors">
                 <p style="font-size:13px;color:var(--mut);margin-bottom:12px">При продлении новые дни суммируются с вашим текущим остатком (180 дн.). Ссылка и настройки на устройствах не изменятся.</p>
-                <div class="grid-2" style="align-items:start;margin-bottom:16px">
-                  <div>
+                <div class="grid-2" style="align-items:stretch;margin-bottom:16px">
+                  <div class="renew-selector-box">
                     <span class="field-label">1. Лимит устройств</span>
                     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" id="renDev">
                       <button type="button" class="platform-tab" data-r-dev="3" style="min-width:0">Личный (3)</button>
@@ -487,7 +487,7 @@
                       <button type="button" class="platform-tab" data-r-dev="9" style="min-width:0">Расшир. (9)</button>
                     </div>
                   </div>
-                  <div>
+                  <div class="renew-selector-box">
                     <span class="field-label">2. Период продления</span>
                     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px" id="renMonths">
                       <button type="button" class="platform-tab" data-r-m="1" style="min-width:0">1 мес</button>
