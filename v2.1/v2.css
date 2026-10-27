@@ -294,6 +294,12 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
    ========================================================================= */
 .bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
 .b7{grid-column:span 7}.b5{grid-column:span 5}
+/* Bento на узких экранах: ПК-раскладка 7/5 + 5/7 целиком уменьшается (JS fitBento) */
+.bento-scaler-wrap{width:100%;overflow:hidden;position:relative}
+.bento.is-scaled{width:720px;max-width:none;transform-origin:0 0}
+.bento.is-scaled .quota div{padding:9px 4px}
+.bento.is-scaled .quota small{font-size:10px}
+.bento.is-scaled .quota b{font-size:13px}
 .bcard{padding:24px 26px;border-radius:var(--r-card);display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:190px}
 .bcard h3{font-size:20px;line-height:1.2;letter-spacing:-.025em;font-weight:600}
 .bcard p{margin-top:8px;font-size:14px;line-height:1.55;color:var(--mut);max-width:36em}
@@ -583,20 +589,6 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .h2{font-size:1.5rem}
   .sec-lead{font-size:13.5px}
 
-  /* Компактные карточки "Что вы получаете" (2 колонки на планшетах/крупных экранах, компактные на телефонах) */
-  .bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .bento .b7,.bento .b5{grid-column:span 1}
-  .bcard{padding:15px;border-radius:18px;gap:12px;min-height:0}
-  .bcard h3{font-size:14.5px;line-height:1.2}
-  .bcard p{margin-top:5px;font-size:12px;line-height:1.42}
-  .route{gap:6px}
-  .route .node{padding:4px 8px;font-size:10.5px}
-  .quota{gap:4px}
-  .quota div{padding:6px 4px;border-radius:9px}
-  .quota small{font-size:9.5px}
-  .quota b{font-size:11.5px}
-  .plat{gap:4px 10px;font-size:11px}
-  .plat span+span::before{left:-6px;width:2px;height:2px}
 
   /* Компактные горизонтальные карточки "Три шага" */
   .steps{grid-template-columns:1fr;gap:10px}
@@ -677,8 +669,6 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
 /* На узких экранах (<410px) делаем карточки "Что вы получаете" компактными в 1 колонку, чтобы текст дышал */
 @media (max-width:410px){
-  .bento{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px}
-  .bcard{padding:14px 15px;gap:10px}
   .apps-grid{grid-template-columns:1fr}
   .stage-wrap{width:clamp(140px,38vw,165px);height:clamp(140px,38vw,165px)}
 }
@@ -761,7 +751,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .sub-mode-slider {
   display: flex;
   width: 300%;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.25, 1);
   will-change: transform;
   align-items: flex-start;
 }
@@ -770,59 +760,14 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   flex-shrink: 0;
   box-sizing: border-box;
   padding: 0 1px;
+  transition: opacity 0.5s ease;
 }
+.sub-pane[aria-hidden="true"] { opacity: 0.25; }
 .sub-pane > section {
-  display: flex !important;
+  display: block !important;
   width: 100%;
   box-sizing: border-box;
 }
-
-/* Переключатель подписок в Кабинете */
-.cab-selector-bar {
-  display: none;
-}
-.cab-pills-track {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 4px;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  margin-bottom: 12px;
-}
-.cab-pill-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 4px;
-  border-radius: 10px;
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--mut);
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: all 0.2s ease;
-  text-align: center;
-}
-.cab-pill-btn.on {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(52, 227, 164, 0.3);
-  color: var(--hi);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.cab-pill-btn .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-bottom: 3px;
-}
-.cab-pill-btn .dot.ok { background: var(--em); box-shadow: 0 0 6px var(--em); }
-.cab-pill-btn .dot.wait { background: var(--warn); }
-.cab-pill-btn .dot.err { background: var(--danger); }
-.cab-pill-title { font-size: 11.5px; font-weight: 600; line-height: 1.2; }
-.cab-pill-sub { font-size: 9.5px; opacity: 0.75; line-height: 1.2; }
 
 @media (max-width:768px){
   /* 1. Тарифы: симметричная сетка 2x2 (1 и 3 сверху, 6 и 12 снизу) */
@@ -847,21 +792,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .co-form .field{min-height:40px;font-size:13.5px;padding:0 12px}
   .checkout .btn-lg{min-height:42px;font-size:14px}
 
-  /* 2. Блок 'Что вы получаете' (Bento): масштабированная точная миниатюра ПК-версии */
-  .bento-scaler-wrap{overflow:hidden;width:100%;margin-top:12px;border-radius:var(--r-card)}
-  .bento{
-    display:grid!important;
-    grid-template-columns:repeat(12,minmax(0,1fr))!important;
-    gap:10px!important;
-    width:680px!important;
-    zoom:calc((100vw - 32px)/680)!important;
-    margin:0 auto!important;
-  }
-  .bento .b7{grid-column:span 7!important}
-  .bento .b5{grid-column:span 5!important}
-  .bcard{padding:18px 20px!important;border-radius:20px!important;min-height:160px!important}
-  .bcard h3{font-size:18px!important}
-  .bcard p{font-size:13.5px!important}
+  /* 2. Блок 'Что вы получаете': масштабируется скриптом fitBento (см. .bento.is-scaled) */
 
   /* 3. Страница заказа: компактно умещается на одном экране */
   #view-order .page{padding-top:calc(var(--lab-h) + 56px);padding-bottom:12px}
@@ -873,12 +804,14 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   #view-order .grid-2 > section.card{padding:12px 14px;border-radius:16px}
   #view-order .cab-card-head h2{font-size:16px!important}
   #view-order .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
-  #view-order .kv div{padding:0}
+  #view-order .kv div{padding:0;flex-direction:column;align-items:flex-start;gap:1px;border-bottom:none}
   #view-order .kv span{font-size:10.5px}
-  #view-order .kv b{font-size:12px}
+  #view-order .kv b{font-size:12px;text-align:left}
   #view-order .grid-2 > section.card > div:first-child > div:last-child{margin-top:10px!important}
   #view-order #ordTotal{font-size:26px!important}
-  #view-order .copy-row{margin-top:4px}
+  #view-order .copy-row{margin-top:4px;flex-direction:row;align-items:center;gap:8px}
+  #view-order .copy-row .field{width:auto;flex:1 1 0;min-width:0}
+  #view-order .copy-row .btn{width:auto;flex:none}
   #view-order .copy-row .field{min-height:36px;font-size:11px;padding:0 10px}
   #view-order .copy-row .btn{min-height:36px;padding:0 12px;font-size:12px}
   #view-order .lbl{font-size:11px;margin-bottom:2px}
@@ -895,17 +828,28 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   #ordWait section:last-child div:last-child{margin-top:6px!important}
   #ordWait section:last-child .btn{min-height:32px;font-size:11.5px}
 
-  /* 4. Личный кабинет: выбор между подписками через табы, один экран */
-  .cab-selector-bar{display:block}
-  .cab-grid{display:block!important}
-  .cab-card{display:none!important;padding:14px 16px;border-radius:16px;gap:10px}
-  .cab-card.active-tab{display:flex!important}
+  /* 4. Личный кабинет: подписки списком, карточки компактнее */
+  .cab-grid{gap:10px}
+  .cab-card{padding:12px 14px;border-radius:16px;gap:8px}
   .cab-card h2{font-size:16px!important}
   .cab-card .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin-top:8px;padding-top:8px}
   .cab-card .kv div{flex-direction:column;align-items:flex-start;border-bottom:none;padding:2px 0;gap:2px}
   .cab-card .kv span{font-size:11px}
-  .cab-card .kv b{font-size:12.5px}
+  .cab-card .kv b{font-size:12.5px;text-align:left}
   .cab-card .btn{min-height:38px;font-size:13px;padding:0 14px}
+
+  /* 6. Инфо и документы: чуть мельче, больше текста на экране */
+  #view-legal .page-head{margin-bottom:10px}
+  #view-legal .page-head h1{font-size:20px}
+  #view-legal .page-head p{font-size:12px;margin-top:3px}
+  #view-legal .legal{gap:10px}
+  #view-legal .legal-nav{padding:5px;border-radius:14px}
+  #view-legal .legal-nav button{padding:7px 11px;font-size:12px}
+  #view-legal .prose{padding:14px 16px;border-radius:16px}
+  #view-legal .prose h2{font-size:18px}
+  #view-legal .prose .date{font-size:11px;margin-top:3px}
+  #view-legal .prose h3{margin-top:14px;font-size:14px}
+  #view-legal .prose p,#view-legal .prose li{margin-top:5px;font-size:12.5px;line-height:1.5}
 
   /* 5. Мастер подключения: компактные Игровой и БС */
   .platform-selector-panel{padding:10px 14px;margin-bottom:10px}
@@ -914,16 +858,37 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .setup-steps{gap:10px}
   .s-step{padding:12px 14px;gap:10px}
   .s-step p{font-size:12px;line-height:1.42}
+  .s-step h4{font-size:14px}
+  .s-step-num{width:22px;height:22px;font-size:11.5px}
+  .s-step .btn{min-height:34px;font-size:12.5px}
+  .s-step-head{gap:8px}
   #subMode-awg .grid-12{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-  #subMode-awg h3{font-size:16px!important}
-  #subMode-awg p{font-size:12px!important;line-height:1.4}
+  #subMode-awg h3{font-size:15px!important}
+  #subMode-awg p{font-size:11.5px!important;line-height:1.4;margin-top:4px!important}
+  .ping-head{flex-wrap:nowrap!important;gap:8px!important}
+  .ping-head .field-label{flex:1 1 0;min-width:0}
+  .ping-head .btn{flex:none;white-space:nowrap}
   .app-details-box{padding:10px 12px;border-radius:14px}
   .ping{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;padding:6px 8px;font-size:11.5px}
   .ping div{padding:4px 6px;gap:4px}
-  .slots{grid-template-columns:1fr!important;gap:8px}
-  .slot-card{padding:10px 12px;border-radius:14px;gap:8px}
+  .slots{grid-template-columns:minmax(0,1fr)!important;gap:8px;margin:10px 0 12px}
+  .slot{padding:10px 12px;border-radius:14px;gap:6px}
+  .slot > div:last-child{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin-top:4px!important}
+  .slot .btn-sm{min-height:32px;padding:0 4px;font-size:11px;gap:4px}
+  .app-details-box > div{gap:8px;flex-wrap:wrap}
+  #subMode-awg .field-label,#subMode-openflux .field-label{font-size:12px;line-height:1.35}
   .of-info-banner{padding:10px 12px;font-size:12px;line-height:1.4;margin-bottom:10px}
   .of-banner-head{font-size:14.5px!important}
   .of-banner-desc{font-size:12px!important;line-height:1.42}
-  .of-box{padding:12px 14px;border-radius:14px}
+  .of-box{padding:12px 14px;border-radius:14px;min-width:0}
+  .of-box > div{min-width:0}
+  .of-box h4{font-size:14px!important;margin-top:6px!important;overflow-wrap:anywhere}
+  .of-box p{font-size:12px!important;line-height:1.45!important}
+  .of-box .status{max-width:100%;flex-wrap:nowrap;white-space:nowrap;font-size:11.5px;padding:4px 10px}
+  .of-box .status b{display:inline-flex;align-items:center;overflow:hidden;text-overflow:ellipsis}
+  .of-box .btn-sm{min-height:34px;font-size:11.5px;padding:0 8px;gap:4px}
+  #subMode-openflux h3{font-size:15px!important}
+  #subMode-openflux > div:nth-of-type(2) p{font-size:11.5px!important;margin-top:2px!important}
+  #subMode-openflux .lab-group{width:100%;justify-content:flex-start;gap:4px;flex-wrap:wrap}
+  #subMode-openflux .lab-pill{padding:3px 8px;font-size:10.5px}
 }

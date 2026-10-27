@@ -598,7 +598,7 @@
         </div>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
+      <div class="ping-head" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
         <span class="field-label" style="margin:0">Задержка (Ping) до игровых узлов от вашего провайдера</span>
         <button type="button" class="btn btn-ghost btn-sm" id="pingBtn"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Проверить пинг</button>
       </div>
@@ -614,7 +614,7 @@
         <div class="platform-bar-header">
           <div class="platform-bar-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--em)" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Инструкция по установке: выберите устройство (<span id="curOsNameAwg">Windows</span>)
+            <span>Инструкция по установке: выберите устройство (<span id="curOsNameAwg">Windows</span>)</span>
           </div>
           <div class="platform-bar-hint">Автоопределение: <strong id="detectedOsAwg">Windows</strong></div>
         </div>
@@ -686,7 +686,7 @@
             <span class="of-timer tab"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg> Безопасный переход на <b id="ofTargetCountry"><span class="flag-badge" aria-label="Польша" title="Польша"><svg width="16" height="11" viewBox="0 0 16 11" fill="none" aria-hidden="true"><rect width="16" height="11" rx="2" fill="#DC143C"/><rect width="16" height="5.5" rx="2" fill="#fff"/></svg></span>Польшу (Варшава)</b> · Осталось <b id="ofTimer">04:52</b></span>
             <h4 style="font-size:17px;font-weight:600;margin-top:8px">Шаг 1: Добавьте новый ключ, пока старый сервер ещё работает</h4>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm" data-set-of="active">✖ Отменить переход</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-set-of="active"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Отменить переход</button>
         </div>
         <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.55">Чтобы вы не потеряли доступ в условиях блокировки, старый сервер продолжает работать ещё 5 минут. Скопируйте новый ключ ниже, импортируйте его в приложение и только после этого нажмите «Подтвердить переход».</p>
         <div class="copy-row" style="margin-top:12px">
@@ -703,7 +703,7 @@
         <div class="platform-bar-header">
           <div class="platform-bar-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--em)" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Настройка клиента OpenFlux (<span id="curOsNameOf">Windows</span>)
+            <span>Настройка клиента OpenFlux (<span id="curOsNameOf">Windows</span>)</span>
           </div>
           <div class="platform-bar-hint">Автоопределение: <strong id="detectedOsOf">Windows</strong></div>
         </div>
@@ -752,29 +752,8 @@
       <button type="button" class="link" style="font-size:12.5px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти</button>
     </div>
 
-    <!-- Выбор между оплаченными подписками на мобильных и планшетах -->
-    <div class="cab-selector-bar">
-      <div class="cab-pills-track" role="tablist" aria-label="Ваши подписки">
-        <button type="button" class="cab-pill-btn on" data-cab-tab="1" role="tab" aria-selected="true">
-          <i class="dot ok"></i>
-          <span class="cab-pill-title">#1 Домашний</span>
-          <span class="cab-pill-sub">до 6 устр. · Активна</span>
-        </button>
-        <button type="button" class="cab-pill-btn" data-cab-tab="2" role="tab" aria-selected="false">
-          <i class="dot wait"></i>
-          <span class="cab-pill-title">#2 Личный</span>
-          <span class="cab-pill-sub">до 3 устр. · 4 дня</span>
-        </button>
-        <button type="button" class="cab-pill-btn" data-cab-tab="3" role="tab" aria-selected="false">
-          <i class="dot err"></i>
-          <span class="cab-pill-title">#3 Расширенный</span>
-          <span class="cab-pill-sub">до 9 устр. · Истёк</span>
-        </button>
-      </div>
-    </div>
-
     <div class="cab-grid">
-      <article class="cab-card glass spot border-beam active-tab" id="cabCard-1" data-cab-card="1">
+      <article class="cab-card glass spot border-beam" id="cabCard-1" data-cab-card="1">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #1 · Домашний</h2>

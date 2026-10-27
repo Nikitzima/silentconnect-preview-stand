@@ -956,20 +956,59 @@ function setSubMode(mode) {
     slider.style.transform = `translateX(-${newIdx * 33.333333}%)`;
   }
 
-  // Auto-adjust viewport height to active pane
-  const viewport = $('#subViewport');
-  const activePane = $(`#pane-${mode}`);
-  if (viewport && activePane) {
-    requestAnimationFrame(() => {
-      viewport.style.height = activePane.offsetHeight + 'px';
-    });
-  }
-
   if (mode === 'main') renderMainSetup();
   else if (mode === 'awg') renderAwgSetup();
   else if (mode === 'openflux') renderOfSetup();
+  syncSubViewport();
 }
 window.setSubMode = setSubMode;
+
+/* Высота окна карусели = высота активной панели (плавно, следит за изменением контента) */
+function syncSubViewport() {
+  const viewport = $('#subViewport');
+  const pane = $(`#pane-${S.subMode}`);
+  if (!viewport || !pane) return;
+  const h = pane.offsetHeight;
+  if (h > 0) viewport.style.height = h + 'px';
+  MODES.forEach(m => {
+    const p = $(`#pane-${m}`);
+    if (!p) return;
+    p.inert = m !== S.subMode;
+    p.setAttribute('aria-hidden', String(m !== S.subMode));
+  });
+}
+if (window.ResizeObserver) {
+  const subRO = new ResizeObserver(syncSubViewport);
+  MODES.forEach(m => { const p = $(`#pane-${m}`); if (p) subRO.observe(p); });
+}
+syncSubViewport();
+
+/* =========================================================================
+   Bento «Что вы получаете»: на узких экранах ПК-раскладка целиком уменьшается
+   ========================================================================= */
+(function fitBentoInit() {
+  const wrap = $('.bento-scaler-wrap');
+  const bento = wrap && wrap.querySelector('.bento');
+  if (!wrap || !bento) return;
+  const DESIGN_W = 720;
+  function fitBento() {
+    const w = wrap.clientWidth;
+    if (!w) return;
+    if (w < DESIGN_W) {
+      const k = w / DESIGN_W;
+      bento.classList.add('is-scaled');
+      bento.style.transform = `scale(${k})`;
+      wrap.style.height = Math.ceil(bento.offsetHeight * k) + 'px';
+    } else {
+      bento.classList.remove('is-scaled');
+      bento.style.transform = '';
+      wrap.style.height = '';
+    }
+  }
+  if (window.ResizeObserver) new ResizeObserver(fitBento).observe(wrap.parentElement);
+  window.addEventListener('resize', fitBento);
+  fitBento();
+})();
 
 /* =========================================================================
    7. РЕЖИМ 2: AMNEZIAWG (vpn_shop/web.py render_awg_slots_widget)
@@ -1168,7 +1207,7 @@ if (awgApplyBtn) {
         slot.server = code;
         renderAwgSetup();
         const srv = AWG_SERVERS[code];
-        toast(`Слот переключён на ${srv.flag} ${srv.name}! Скачайте новый .conf`);
+        toast(`Слот переключён на ${srv.name}! Скачайте новый .conf`);
       }
     }
     closeAllModals();
@@ -1214,10 +1253,10 @@ function setOfState(state) {
   const targetSrv = AWG_SERVERS[S.ofTargetCountry] || AWG_SERVERS.pl;
 
   const actCountryEl = $('#ofActiveCountry');
-  if (actCountryEl) actCountryEl.textContent = `${srv.flag} ${srv.name} (${srv.city})`;
+  if (actCountryEl) actCountryEl.innerHTML = `${srv.flag} ${srv.name} (${srv.city})`;
 
   const targetCountryEl = $('#ofTargetCountry');
-  if (targetCountryEl) targetCountryEl.textContent = `${targetSrv.flag} ${targetSrv.name} (${targetSrv.city})`;
+  if (targetCountryEl) targetCountryEl.innerHTML = `${targetSrv.flag} ${targetSrv.name} (${targetSrv.city})`;
 
   const keyInput = $('#ofKeyInput');
   if (keyInput) keyInput.value = `vless://of_${SUB_ID}-${srv.code}@edge.silentconnect.net:443?security=reality&sni=cloud.mail.ru#SilentConnect-OpenFlux-${srv.code.toUpperCase()}`;
@@ -1303,12 +1342,12 @@ if (wlConfirmPickBtn) {
     if (S.ofState === 'inactive') {
       S.ofCountry = targetCode;
       setOfState('active');
-      toast(`✓ Слот OpenFlux активирован на ${AWG_SERVERS[targetCode].flag} ${AWG_SERVERS[targetCode].name}!`);
+      toast(`✓ Слот OpenFlux активирован на ${AWG_SERVERS[targetCode].name}!`);
     } else {
       S.ofTargetCountry = targetCode;
       ofTimeRemaining = 300;
       setOfState('migrating');
-      toast(`Подготовлен новый сервер: ${AWG_SERVERS[targetCode].flag} ${AWG_SERVERS[targetCode].name}. Скопируйте новый ключ!`);
+      toast(`Подготовлен новый сервер: ${AWG_SERVERS[targetCode].name}. Скопируйте новый ключ!`);
     }
   });
 }
@@ -1782,18 +1821,3 @@ if (legalNav) {
 showLegalDoc('refund');
 
 })();
-/* ---------- Переключатель подписок в Личном кабинете (Мобильная верстка) ---------- */
-document.addEventListener('click', e => {
-  const pill = e.target && e.target.closest && e.target.closest('[data-cab-tab]');
-  if (!pill) return;
-  const tabId = pill.dataset.cabTab;
-  document.querySelectorAll('[data-cab-tab]').forEach(btn => {
-    const active = btn.dataset.cabTab === tabId;
-    btn.classList.toggle('on', active);
-    btn.setAttribute('aria-selected', String(active));
-  });
-  document.querySelectorAll('[data-cab-card]').forEach(card => {
-    const active = card.dataset.cabCard === tabId;
-    card.classList.toggle('active-tab', active);
-  });
-});
