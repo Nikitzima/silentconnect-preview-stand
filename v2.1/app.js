@@ -247,9 +247,10 @@ function num(el, target, suffix = '', dur = 380) {
   if (!el) return;
   let r = numReg.get(el);
   if (!r) {
-    numReg.set(el, { v: target, raf: 0 });
-    el.textContent = fmt(target) + suffix;
-    return;
+    const parsed = parseFloat(String(el.textContent).replace(/[^\d.-]/g, ''));
+    const initial = !isNaN(parsed) ? parsed : target;
+    r = { v: initial, raf: 0 };
+    numReg.set(el, r);
   }
   cancelAnimationFrame(r.raf);
   const from = r.v;
@@ -430,33 +431,41 @@ function renderCatalog() {
     coOld.hidden = cur.saved <= 0;
   }
 
-  const coMonthEl = $('#coMonth');
-  if (coMonthEl) {
+  const coMonthVal = $('#coMonthVal') || $('#coMonth');
+  if (coMonthVal) {
     if (S.promoType === 'gift') {
-      coMonthEl.textContent = '0';
+      coMonthVal.textContent = '0';
     } else {
-      num(coMonthEl, cur.per, '', 320);
+      num(coMonthVal, cur.per, '', 320);
     }
   }
 
   const coSaveRow = $('#coSaveRow');
   const coSave = $('#coSave');
+  const coSavePrefix = $('#coSavePrefix');
+  const coSaveVal = $('#coSaveVal');
+  const coSaveSuffix = $('#coSaveSuffix');
   if (coSaveRow && coSave) {
     if (S.promoType === 'gift') {
       coSaveRow.hidden = false;
-      coSave.innerHTML = `бесплатно по коду (${fmt(cur.base)} ₽)`;
+      if (coSavePrefix) coSavePrefix.textContent = 'бесплатно по коду (';
+      if (coSaveVal) num(coSaveVal, cur.base, '', 320);
+      if (coSaveSuffix) coSaveSuffix.textContent = ' ₽)';
     } else if (S.promoPct > 0) {
       coSaveRow.hidden = false;
-      coSave.innerHTML = `экономия <span id="coSaveVal">${fmt(cur.saved)}</span> ₽ (промокод −${S.promoPct}%)`;
-      if ($('#coSaveVal')) num($('#coSaveVal'), cur.saved, '', 320);
+      if (coSavePrefix) coSavePrefix.textContent = 'экономия ';
+      if (coSaveVal) num(coSaveVal, cur.saved, '', 320);
+      if (coSaveSuffix) coSaveSuffix.textContent = ` ₽ (промокод −${S.promoPct}%)`;
     } else if (S.refPct > 0) {
       coSaveRow.hidden = false;
-      coSave.innerHTML = `экономия <span id="coSaveVal">${fmt(cur.saved)}</span> ₽ (приглашение −${S.refPct}%)`;
-      if ($('#coSaveVal')) num($('#coSaveVal'), cur.saved, '', 320);
+      if (coSavePrefix) coSavePrefix.textContent = 'экономия ';
+      if (coSaveVal) num(coSaveVal, cur.saved, '', 320);
+      if (coSaveSuffix) coSaveSuffix.textContent = ` ₽ (приглашение −${S.refPct}%)`;
     } else if (cur.saved > 0) {
       coSaveRow.hidden = false;
-      coSave.innerHTML = `экономия <span id="coSaveVal">${fmt(cur.saved)}</span> ₽`;
-      if ($('#coSaveVal')) num($('#coSaveVal'), cur.saved, '', 320);
+      if (coSavePrefix) coSavePrefix.textContent = 'экономия ';
+      if (coSaveVal) num(coSaveVal, cur.saved, '', 320);
+      if (coSaveSuffix) coSaveSuffix.textContent = ' ₽';
     } else {
       coSaveRow.hidden = true;
     }
@@ -932,13 +941,37 @@ const setModeSegVisual = bindLiquidSegmented(
 
 function setSubMode(mode) {
   if (!MODES.includes(mode)) mode = 'main';
+  const oldIdx = MODES.indexOf(S.subMode);
+  const newIdx = MODES.indexOf(mode);
+  const dir = newIdx >= oldIdx ? 1 : -1;
   const changed = mode !== S.subMode;
   S.subMode = mode;
-  setModeSegVisual(MODES.indexOf(mode), changed);
+  setModeSegVisual(newIdx, changed);
 
   MODES.forEach(m => {
     const sec = $('#subMode-' + m);
-    if (sec) sec.hidden = m !== mode;
+    if (sec) {
+      if (m === mode) {
+        sec.hidden = false;
+        if (changed) {
+          sec.style.transition = 'none';
+          sec.style.transform = `translateX(${dir * 40}px)`;
+          sec.style.opacity = '0';
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              sec.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease';
+              sec.style.transform = 'translateX(0)';
+              sec.style.opacity = '1';
+            });
+          });
+        } else {
+          sec.style.transform = '';
+          sec.style.opacity = '';
+        }
+      } else {
+        sec.hidden = true;
+      }
+    }
   });
 
   if (mode === 'main') renderMainSetup();

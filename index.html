@@ -46,7 +46,7 @@
   <header class="nav" id="nav">
     <a href="#top" class="brand" data-go="landing" aria-label="SilentConnect">
       <img src="assets/branding/avatar.webp" alt="" class="brand-logo" width="34" height="34">
-      <span>SilentConnect</span>
+      <span class="brand-text">SilentConnect</span>
     </a>
     <nav class="nav-links" aria-label="Разделы">
       <a href="#tariffs" data-go="landing">Тарифы</a>
@@ -70,7 +70,7 @@
     <div class="container">
       <div class="hero-grid">
         <div class="hero-copy">
-          <h1 class="metal"><span>Приватный доступ,</span><span>который просто работает</span></h1>
+          <h1 class="metal"><span>Приватный доступ,</span><span class="hero-highlight">который просто работает</span></h1>
           <div class="hero-subtext">
             <p class="hero-lead">Выберите тариф, получите ссылку на почту и подключите телефон, ноутбук и телевизор за пару минут. Серверы в Европе, без ограничений по трафику.</p>
             <div class="hero-cta">
@@ -152,11 +152,11 @@
             <div class="co-breakdown tab">
               <div class="co-row">
                 <span>Стоимость в пересчёте</span>
-                <b id="coMonth">120 ₽ / мес</b>
+                <b id="coMonth"><span id="coMonthVal">120</span> ₽ / мес</b>
               </div>
               <div class="co-row" id="coSaveRow">
                 <span>Выгода за выбранный срок</span>
-                <b class="co-save" id="coSave">экономия 175 ₽</b>
+                <b class="co-save" id="coSave"><span id="coSavePrefix">экономия </span><span id="coSaveVal" class="co-save-val">175</span><span id="coSaveSuffix"> ₽</span></b>
               </div>
             </div>
           </div>
@@ -582,6 +582,7 @@
       </div>
     </div>
 
+    <div class="sub-mode-viewport" style="overflow:hidden;position:relative">
     <!-- РЕЖИМ 1: ОСНОВНОЙ -->
     <section class="card glass spot" id="subMode-main">
       <div class="platform-selector-panel">
@@ -736,6 +737,7 @@
 
       <div class="setup-steps" id="stepsGridOf"></div>
     </section>
+    </div> <!-- /.sub-mode-viewport -->
 
     <section class="card glass spot" style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 24px">
       <div>

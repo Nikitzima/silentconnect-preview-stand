@@ -1,3 +1,24 @@
+/* Градиенты бренда и акцентных надписей (в фирменном стиле SilentConnect) */
+.brand-text, .brand span {
+  background: linear-gradient(135deg, #ffffff 40%, #34e3a4 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.hero-highlight {
+  background: linear-gradient(135deg, #ffffff 30%, #34e3a4 95%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  display: inline-block;
+}
+
+.co-row b.co-save, .co-row b.co-save *, .co-save-val {
+  color: var(--em-t) !important;
+  font-weight: 600;
+}
+
 /* Hallmark: silentconnect-v2.1 | modern-minimal | clean craft */
 /* =========================================================================
    SilentConnect — Redesign v2 (Complete Ecosystem: Storefront + Order +
@@ -87,13 +108,14 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   border:1px solid var(--line);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.2),0 24px 48px -16px rgba(0,0,0,.8)}
 .glass::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;z-index:2;pointer-events:none;
-  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),rgba(110,245,185,calc(.48*var(--so,0))),transparent 65%);
+  opacity:0;transition:opacity .45s cubic-bezier(.16,1,.3,1);will-change:opacity;
+  background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(110,245,185,.38),transparent 65%);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:0;pointer-events:none;
-  background:radial-gradient(440px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,calc(.038*var(--so,0))),transparent 60%)}
+  opacity:0;transition:opacity .45s cubic-bezier(.16,1,.3,1);will-change:opacity;
+  background:radial-gradient(460px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.045),transparent 60%)}
 .glass>*{position:relative;z-index:1}
-.spot{--so:0;transition:--so .35s}
-.spot:hover{--so:1}
+.spot:hover::before,.spot:hover::after{opacity:1}
 
 /* Статичный премиальный изумрудный блик в стиле Resend (не вызывает перерисовку backdrop-filter) */
 .border-beam{
@@ -655,7 +677,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
 /* На узких экранах (<410px) делаем карточки "Что вы получаете" компактными в 1 колонку, чтобы текст дышал */
 @media (max-width:410px){
-  .bento{grid-template-columns:1fr;gap:8px}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px}
   .bcard{padding:14px 15px;gap:10px}
   .apps-grid{grid-template-columns:1fr}
   .stage-wrap{width:clamp(140px,38vw,165px);height:clamp(140px,38vw,165px)}
@@ -703,7 +725,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
 @media (max-width:400px){
   .nav{padding:0 8px 0 10px}
-  .brand span{display:none}
+  .brand span{display:inline-block;font-size:13.5px}
   .nav-actions{gap:6px}
   .nav-actions .btn-sm{padding:5px 9px;font-size:11.5px}
 }
@@ -723,4 +745,58 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .plat{gap:6px 6px;font-size:11.5px}
   .plat span{padding:2px 7px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid var(--line);white-space:nowrap}
   .plat span+span::before{display:none}
+}
+
+/* =========================================================================
+   ВЫСОКАЯ ПЛОТНОСТЬ ИНФОРМАЦИИ И КОМПАКТНОСТЬ НА МОБИЛЬНЫХ УСТРОЙСТВАХ
+   ========================================================================= */
+@media (max-width:768px){
+  /* Тарифный калькулятор умещается на одном экране */
+  .tariffs{grid-template-columns:1fr;gap:10px}
+  .tariff-builder{padding:14px 16px;border-radius:18px}
+  .tariff-builder .field-label{font-size:12px;margin-bottom:6px}
+  .tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px}
+  .tile{padding:8px 6px;border-radius:12px;gap:2px}
+  .tile-name{font-size:11.5px}
+  .tile-devices{font-size:10px}
+  .tile-price b{font-size:16px}
+  .tile-price small{font-size:9.5px}
+  .seg{min-height:38px;padding:3px;gap:3px}
+  .seg-btn{min-height:32px;font-size:11.5px;padding:4px 2px}
+  .seg-btn small{font-size:9.5px}
+  .includes{display:none} /* Скрываем 4 вертикальные строчки, дублирующие блок 'Что вы получаете', чтобы чекаут вошёл в экран */
+  .checkout{padding:14px 16px;border-radius:18px;margin-top:0}
+  .co-top{margin-bottom:8px}
+  .co-price-row b{font-size:26px}
+  .co-breakdown{margin-top:8px;padding:8px 12px;gap:4px;font-size:12px}
+  .co-form{margin-top:10px;gap:8px}
+  .co-form .field{min-height:40px;font-size:13.5px;padding:0 12px}
+  .checkout .btn-lg{min-height:42px;font-size:14px}
+
+  /* Страница заказа: компактная симметрия 2x2 */
+  #view-order .grid-2{gap:12px}
+  #view-order .card{padding:15px 16px;border-radius:18px}
+  #view-order .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin-top:10px;padding-top:8px}
+  #view-order .kv div{flex-direction:column;align-items:flex-start;border-bottom:none;padding:2px 0;gap:2px}
+  #view-order .kv span{font-size:11px}
+  #view-order .kv b{font-size:12.5px}
+  .pay-timer-banner{margin-top:8px;padding:8px 12px;font-size:11.5px}
+
+  /* Личный кабинет: компактные карточки подписок без листания вниз */
+  .cab-grid{grid-template-columns:1fr!important;gap:10px}
+  .cab-card{padding:14px 16px;border-radius:16px;gap:10px}
+  .cab-card h2{font-size:16px!important}
+  .cab-card .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin-top:8px;padding-top:8px}
+  .cab-card .kv div{flex-direction:column;align-items:flex-start;border-bottom:none;padding:2px 0;gap:2px}
+  .cab-card .kv span{font-size:11px}
+  .cab-card .kv b{font-size:12.5px}
+  .cab-card .btn{min-height:38px;font-size:13px;padding:0 14px}
+
+  /* Мастер подключения: компактные карточки шагов */
+  .platform-selector-panel{padding:10px 14px;margin-bottom:10px}
+  .apps-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px;margin-bottom:10px}
+  .app-card{min-height:46px;padding:7px 10px}
+  .setup-steps{gap:10px}
+  .s-step{padding:12px 14px;gap:10px}
+  .s-step p{font-size:12px;line-height:1.42}
 }
