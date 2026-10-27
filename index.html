@@ -51,7 +51,7 @@
     <nav class="nav-links" aria-label="Разделы">
       <a href="#tariffs" data-go="landing">Тарифы</a>
       <a href="#features" data-go="landing">Возможности</a>
-      <a href="#steps" data-go="landing">Подключение</a>
+      <a href="#faq" data-go="landing">Подключение</a>
       <a href="#faq" data-go="landing">Вопросы</a>
     </nav>
     <div class="nav-actions">
@@ -211,7 +211,7 @@
         <h2 class="h2 metal">Что вы получаете</h2>
         <p class="sec-lead">Только то, что действительно влияет на скорость и стабильность каждый день.</p>
       </div>
-      <div class="bento">
+      <div class="bento-scaler-wrap"><div class="bento">
         <article class="bcard glass spot b7">
           <div>
             <h3>Европейские локации до 10 Гбит/с</h3>
@@ -256,42 +256,12 @@
           </div>
           <div class="plat"><span>iOS</span><span>Android</span><span>Windows</span><span>macOS</span><span>Linux</span><span>Android TV</span><span>Apple TV</span></div>
         </article>
-      </div>
+      </div></div><!-- /.bento-scaler-wrap -->
     </div>
   </section>
 
   <!-- Шаги -->
-  <section class="section" id="steps">
-    <div class="container">
-      <div class="sec-head">
-        <h2 class="h2 metal">Три шага, две минуты</h2>
-        <p class="sec-lead">Страница подписки сама определит устройство и предложит подходящее приложение.</p>
-      </div>
-      <div class="steps">
-        <article class="step glass spot">
-          <div class="step-n metal">1</div>
-          <div class="step-txt">
-            <h3>Оформите подписку</h3>
-            <p>Выберите тариф здесь или в Telegram-боте. Ссылка появится сразу после оплаты и придёт на почту.</p>
-          </div>
-        </article>
-        <article class="step glass spot">
-          <div class="step-n metal">2</div>
-          <div class="step-txt">
-            <h3>Установите приложение</h3>
-            <p>Откройте страницу подписки: мы подскажем, какое приложение скачать для вашего устройства.</p>
-          </div>
-        </article>
-        <article class="step glass spot">
-          <div class="step-n metal-em">3</div>
-          <div class="step-txt">
-            <h3>Нажмите «Подключить»</h3>
-            <p>Профиль добавится одной кнопкой. Дальше всё работает само, в том числе после продления.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- FAQ -->
   <section class="section" id="faq">
@@ -582,9 +552,12 @@
       </div>
     </div>
 
-    <div class="sub-mode-viewport" style="overflow:hidden;position:relative">
-    <!-- РЕЖИМ 1: ОСНОВНОЙ -->
-    <section class="card glass spot" id="subMode-main">
+        <!-- Контейнер с аппаратной горизонтальной анимацией перелистывания (Horizontal Carousel Slider) -->
+    <div class="sub-mode-viewport" id="subViewport">
+      <div class="sub-mode-slider" id="subModeSlider">
+        <div class="sub-pane" id="pane-main">
+          <!-- РЕЖИМ 1: ОСНОВНОЙ -->
+          <section class="card glass spot" id="subMode-main">
       <div class="platform-selector-panel">
         <div class="platform-bar-header">
           <div class="platform-bar-title">
@@ -603,9 +576,10 @@
       <div class="apps-grid" id="appsGridMain"></div>
       <div class="setup-steps" id="stepsGridMain"></div>
     </section>
-
-    <!-- РЕЖИМ 2: ИГРОВОЙ / AMNEZIAWG -->
-    <section class="card glass spot" id="subMode-awg" hidden>
+        </div>
+        <div class="sub-pane" id="pane-awg">
+          <!-- РЕЖИМ 2: AMNEZIAWG -->
+          <section class="card glass spot" id="subMode-awg">
       <div class="grid-12" style="align-items:center;margin-bottom:18px">
         <div style="grid-column:span 7">
           <h3 style="font-size:20px;font-weight:600;letter-spacing:-.03em">Выделенные слоты AmneziaWG (Игровой контур)</h3>
@@ -651,9 +625,10 @@
       <div class="apps-grid" id="appsGridAwg"></div>
       <div class="setup-steps" id="stepsGridAwg"></div>
     </section>
-
-    <!-- РЕЖИМ 3: БЕЛЫЕ СПИСКИ (OpenFlux Stream) -->
-    <section class="card glass spot" id="subMode-openflux" hidden>
+        </div>
+        <div class="sub-pane" id="pane-openflux">
+          <!-- РЕЖИМ 3: БЕЛЫЕ СПИСКИ -->
+          <section class="card glass spot" id="subMode-openflux">
       <div class="of-info-banner">
         <div style="display:flex;align-items:flex-start;gap:12px">
           <span style="font-size:18px;line-height:1"><svg class="ico ico-warn" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
@@ -737,6 +712,8 @@
 
       <div class="setup-steps" id="stepsGridOf"></div>
     </section>
+        </div>
+      </div>
     </div> <!-- /.sub-mode-viewport -->
 
     <section class="card glass spot" style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 24px">
@@ -770,13 +747,34 @@
       <div class="cab-meta">
         <span>Почта: <b>client@example.com</b></span>
         <span>Подписок: <b>3</b> (2 активные, 1 истёкшая)</span>
-        <span>Сессия по одноразовой ссылке: <b class="tab" style="color:var(--em-t)">29 мин</b></span>
+        <span>Сессия: <b class="tab" style="color:var(--em-t)">29 мин</b></span>
       </div>
-      <button type="button" class="link" style="font-size:13px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти из сессии</button>
+      <button type="button" class="link" style="font-size:12.5px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти</button>
+    </div>
+
+    <!-- Выбор между оплаченными подписками на мобильных и планшетах -->
+    <div class="cab-selector-bar">
+      <div class="cab-pills-track" role="tablist" aria-label="Ваши подписки">
+        <button type="button" class="cab-pill-btn on" data-cab-tab="1" role="tab" aria-selected="true">
+          <i class="dot ok"></i>
+          <span class="cab-pill-title">#1 Домашний</span>
+          <span class="cab-pill-sub">до 6 устр. · Активна</span>
+        </button>
+        <button type="button" class="cab-pill-btn" data-cab-tab="2" role="tab" aria-selected="false">
+          <i class="dot wait"></i>
+          <span class="cab-pill-title">#2 Личный</span>
+          <span class="cab-pill-sub">до 3 устр. · 4 дня</span>
+        </button>
+        <button type="button" class="cab-pill-btn" data-cab-tab="3" role="tab" aria-selected="false">
+          <i class="dot err"></i>
+          <span class="cab-pill-title">#3 Расширенный</span>
+          <span class="cab-pill-sub">до 9 устр. · Истёк</span>
+        </button>
+      </div>
     </div>
 
     <div class="cab-grid">
-      <article class="cab-card glass spot border-beam">
+      <article class="cab-card glass spot border-beam active-tab" id="cabCard-1" data-cab-card="1">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #1 · Домашний</h2>
@@ -794,7 +792,7 @@
         </div>
       </article>
 
-      <article class="cab-card glass spot">
+      <article class="cab-card glass spot" id="cabCard-2" data-cab-card="2">
         <div>
           <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #2 · Личный</h2>
@@ -812,7 +810,7 @@
         </div>
       </article>
 
-      <article class="cab-card glass spot cab-card-expired">
+      <article class="cab-card glass spot cab-card-expired" id="cabCard-3" data-cab-card="3">
         <div>
           <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #3 · Расширенный</h2>

@@ -540,6 +540,10 @@ renderCatalog();
    ========================================================================= */
 const FAQ_DATA = [
   {
+    q: 'Как подключиться за 2 минуты (3 простых шага)?',
+    a: '<b>1. Оформите подписку:</b> выберите подходящий тариф на витрине или в боте — ссылка появится сразу после подтверждения оплаты.<br><br><b>2. Установите приложение:</b> откройте ссылку подписки — мастер сам определит вашу операционную систему и предложит проверенный клиент (V2Ray / Amnezia / Happ / Sing-Box).<br><br><b>3. Нажмите «Подключить»:</b> конфигурация импортируется одной кнопкой. Всё готово — доступ работает без ограничений.'
+  },
+  {
     q: 'Как быстро я получу доступ после оплаты?',
     a: 'Сразу после подтверждения платежа (обычно 5–15 секунд) откроется мастер настройки с вашей персональной ссылкой, а копия ссылки и чек придут на указанный Email.'
   },
@@ -941,38 +945,25 @@ const setModeSegVisual = bindLiquidSegmented(
 
 function setSubMode(mode) {
   if (!MODES.includes(mode)) mode = 'main';
-  const oldIdx = MODES.indexOf(S.subMode);
   const newIdx = MODES.indexOf(mode);
-  const dir = newIdx >= oldIdx ? 1 : -1;
   const changed = mode !== S.subMode;
   S.subMode = mode;
   setModeSegVisual(newIdx, changed);
 
-  MODES.forEach(m => {
-    const sec = $('#subMode-' + m);
-    if (sec) {
-      if (m === mode) {
-        sec.hidden = false;
-        if (changed) {
-          sec.style.transition = 'none';
-          sec.style.transform = `translateX(${dir * 40}px)`;
-          sec.style.opacity = '0';
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              sec.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease';
-              sec.style.transform = 'translateX(0)';
-              sec.style.opacity = '1';
-            });
-          });
-        } else {
-          sec.style.transform = '';
-          sec.style.opacity = '';
-        }
-      } else {
-        sec.hidden = true;
-      }
-    }
-  });
+  // Horizontal slide translation (0%, -33.3333%, -66.6666%)
+  const slider = $('#subModeSlider');
+  if (slider) {
+    slider.style.transform = `translateX(-${newIdx * 33.333333}%)`;
+  }
+
+  // Auto-adjust viewport height to active pane
+  const viewport = $('#subViewport');
+  const activePane = $(`#pane-${mode}`);
+  if (viewport && activePane) {
+    requestAnimationFrame(() => {
+      viewport.style.height = activePane.offsetHeight + 'px';
+    });
+  }
 
   if (mode === 'main') renderMainSetup();
   else if (mode === 'awg') renderAwgSetup();
@@ -1791,3 +1782,18 @@ if (legalNav) {
 showLegalDoc('refund');
 
 })();
+/* ---------- Переключатель подписок в Личном кабинете (Мобильная верстка) ---------- */
+document.addEventListener('click', e => {
+  const pill = e.target && e.target.closest && e.target.closest('[data-cab-tab]');
+  if (!pill) return;
+  const tabId = pill.dataset.cabTab;
+  document.querySelectorAll('[data-cab-tab]').forEach(btn => {
+    const active = btn.dataset.cabTab === tabId;
+    btn.classList.toggle('on', active);
+    btn.setAttribute('aria-selected', String(active));
+  });
+  document.querySelectorAll('[data-cab-card]').forEach(card => {
+    const active = card.dataset.cabCard === tabId;
+    card.classList.toggle('active-tab', active);
+  });
+});

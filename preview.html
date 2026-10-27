@@ -762,23 +762,97 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 }
 
 /* =========================================================================
-   ВЫСОКАЯ ПЛОТНОСТЬ ИНФОРМАЦИИ И КОМПАКТНОСТЬ НА МОБИЛЬНЫХ УСТРОЙСТВАХ
+   ВЫСОКАЯ ПЛОТНОСТЬ ИНФОРМАЦИИ, 2X2 СИММЕТРИЯ И СЛАЙДЕРЫ (MOBILE & TABLET)
    ========================================================================= */
+
+/* Слайдер мастера подключения (Horizontal Carousel Track) */
+.sub-mode-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sub-mode-slider {
+  display: flex;
+  width: 300%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  align-items: flex-start;
+}
+.sub-pane {
+  width: 33.333333%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0 1px;
+}
+.sub-pane > section {
+  display: flex !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Переключатель подписок в Кабинете */
+.cab-selector-bar {
+  display: none;
+}
+.cab-pills-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.cab-pill-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 4px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--mut);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.cab-pill-btn.on {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(52, 227, 164, 0.3);
+  color: var(--hi);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.cab-pill-btn .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-bottom: 3px;
+}
+.cab-pill-btn .dot.ok { background: var(--em); box-shadow: 0 0 6px var(--em); }
+.cab-pill-btn .dot.wait { background: var(--warn); }
+.cab-pill-btn .dot.err { background: var(--danger); }
+.cab-pill-title { font-size: 11.5px; font-weight: 600; line-height: 1.2; }
+.cab-pill-sub { font-size: 9.5px; opacity: 0.75; line-height: 1.2; }
+
 @media (max-width:768px){
-  /* Тарифный калькулятор умещается на одном экране */
+  /* 1. Тарифы: симметричная сетка 2x2 (1 и 3 сверху, 6 и 12 снизу) */
   .tariffs{grid-template-columns:1fr;gap:10px}
   .tariff-builder{padding:14px 16px;border-radius:18px}
   .tariff-builder .field-label{font-size:12px;margin-bottom:6px}
-  .tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px}
-  .tile{padding:8px 6px;border-radius:12px;gap:2px}
-  .tile-name{font-size:11.5px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .tile{padding:10px 8px;border-radius:14px;gap:3px}
+  .tile-name{font-size:12.5px}
   .tile-devices{font-size:10px}
-  .tile-price b{font-size:16px}
-  .tile-price small{font-size:9.5px}
+  .tile-price b{font-size:17px}
+  .tile-price small{font-size:10px}
   .seg{min-height:38px;padding:3px;gap:3px}
   .seg-btn{min-height:32px;font-size:11.5px;padding:4px 2px}
   .seg-btn small{font-size:9.5px}
-  .includes{display:none} /* Скрываем 4 вертикальные строчки, дублирующие блок 'Что вы получаете', чтобы чекаут вошёл в экран */
+  .includes{display:none} /* Скрываем список, дублирующий блок возможностей */
   .checkout{padding:14px 16px;border-radius:18px;margin-top:0}
   .co-top{margin-bottom:8px}
   .co-price-row b{font-size:26px}
@@ -787,18 +861,59 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .co-form .field{min-height:40px;font-size:13.5px;padding:0 12px}
   .checkout .btn-lg{min-height:42px;font-size:14px}
 
-  /* Страница заказа: компактная симметрия 2x2 */
-  #view-order .grid-2{gap:12px}
-  #view-order .card{padding:15px 16px;border-radius:18px}
-  #view-order .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin-top:10px;padding-top:8px}
-  #view-order .kv div{flex-direction:column;align-items:flex-start;border-bottom:none;padding:2px 0;gap:2px}
-  #view-order .kv span{font-size:11px}
-  #view-order .kv b{font-size:12.5px}
-  .pay-timer-banner{margin-top:8px;padding:8px 12px;font-size:11.5px}
+  /* 2. Блок 'Что вы получаете' (Bento): масштабированная точная миниатюра ПК-версии */
+  .bento-scaler-wrap{overflow:hidden;width:100%;margin-top:12px;border-radius:var(--r-card)}
+  .bento{
+    display:grid!important;
+    grid-template-columns:repeat(12,minmax(0,1fr))!important;
+    gap:10px!important;
+    width:680px!important;
+    zoom:calc((100vw - 32px)/680)!important;
+    margin:0 auto!important;
+  }
+  .bento .b7{grid-column:span 7!important}
+  .bento .b5{grid-column:span 5!important}
+  .bcard{padding:18px 20px!important;border-radius:20px!important;min-height:160px!important}
+  .bcard h3{font-size:18px!important}
+  .bcard p{font-size:13.5px!important}
 
-  /* Личный кабинет: компактные карточки подписок без листания вниз */
-  .cab-grid{grid-template-columns:1fr!important;gap:10px}
-  .cab-card{padding:14px 16px;border-radius:16px;gap:10px}
+  /* 3. Страница заказа: компактно умещается на одном экране */
+  #view-order .page{padding-top:calc(var(--lab-h) + 56px);padding-bottom:12px}
+  #view-order .page-head{margin-bottom:8px}
+  #view-order .page-head h1{font-size:18px;margin-bottom:2px}
+  #view-order .page-head p{display:none}
+  #view-order .page-head .lab-group{margin-top:4px}
+  #view-order .grid-2{display:flex;flex-direction:column;gap:10px}
+  #view-order .grid-2 > section.card{padding:12px 14px;border-radius:16px}
+  #view-order .cab-card-head h2{font-size:16px!important}
+  #view-order .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+  #view-order .kv div{padding:0}
+  #view-order .kv span{font-size:10.5px}
+  #view-order .kv b{font-size:12px}
+  #view-order .grid-2 > section.card > div:first-child > div:last-child{margin-top:10px!important}
+  #view-order #ordTotal{font-size:26px!important}
+  #view-order .copy-row{margin-top:4px}
+  #view-order .copy-row .field{min-height:36px;font-size:11px;padding:0 10px}
+  #view-order .copy-row .btn{min-height:36px;padding:0 12px;font-size:12px}
+  #view-order .lbl{font-size:11px;margin-bottom:2px}
+  #ordWait .border-beam{padding:12px 14px!important;border-radius:16px}
+  #ordWait h2{font-size:16px!important}
+  #ordWait p{display:none}
+  .pay-methods{margin-top:6px;gap:4px}
+  .pay-chip{font-size:10.5px;padding:3px 8px}
+  #payBtn{margin-top:10px!important;min-height:42px!important;font-size:14px!important}
+  .pay-timer-banner{margin-top:6px;padding:6px 10px;font-size:11px}
+  #ordWait section:last-child{padding:10px 14px!important;border-radius:14px;margin-top:8px}
+  #ordWait section:last-child h3{font-size:13px!important}
+  #ordWait section:last-child p{display:none}
+  #ordWait section:last-child div:last-child{margin-top:6px!important}
+  #ordWait section:last-child .btn{min-height:32px;font-size:11.5px}
+
+  /* 4. Личный кабинет: выбор между подписками через табы, один экран */
+  .cab-selector-bar{display:block}
+  .cab-grid{display:block!important}
+  .cab-card{display:none!important;padding:14px 16px;border-radius:16px;gap:10px}
+  .cab-card.active-tab{display:flex!important}
   .cab-card h2{font-size:16px!important}
   .cab-card .kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin-top:8px;padding-top:8px}
   .cab-card .kv div{flex-direction:column;align-items:flex-start;border-bottom:none;padding:2px 0;gap:2px}
@@ -806,13 +921,25 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .cab-card .kv b{font-size:12.5px}
   .cab-card .btn{min-height:38px;font-size:13px;padding:0 14px}
 
-  /* Мастер подключения: компактные карточки шагов */
+  /* 5. Мастер подключения: компактные Игровой и БС */
   .platform-selector-panel{padding:10px 14px;margin-bottom:10px}
   .apps-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px;margin-bottom:10px}
   .app-card{min-height:46px;padding:7px 10px}
   .setup-steps{gap:10px}
   .s-step{padding:12px 14px;gap:10px}
   .s-step p{font-size:12px;line-height:1.42}
+  #subMode-awg .grid-12{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  #subMode-awg h3{font-size:16px!important}
+  #subMode-awg p{font-size:12px!important;line-height:1.4}
+  .app-details-box{padding:10px 12px;border-radius:14px}
+  .ping{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;padding:6px 8px;font-size:11.5px}
+  .ping div{padding:4px 6px;gap:4px}
+  .slots{grid-template-columns:1fr!important;gap:8px}
+  .slot-card{padding:10px 12px;border-radius:14px;gap:8px}
+  .of-info-banner{padding:10px 12px;font-size:12px;line-height:1.4;margin-bottom:10px}
+  .of-banner-head{font-size:14.5px!important}
+  .of-banner-desc{font-size:12px!important;line-height:1.42}
+  .of-box{padding:12px 14px;border-radius:14px}
 }
 
 </style>
@@ -855,7 +982,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
     <nav class="nav-links" aria-label="Разделы">
       <a href="#tariffs" data-go="landing">Тарифы</a>
       <a href="#features" data-go="landing">Возможности</a>
-      <a href="#steps" data-go="landing">Подключение</a>
+      <a href="#faq" data-go="landing">Подключение</a>
       <a href="#faq" data-go="landing">Вопросы</a>
     </nav>
     <div class="nav-actions">
@@ -1015,7 +1142,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
         <h2 class="h2 metal">Что вы получаете</h2>
         <p class="sec-lead">Только то, что действительно влияет на скорость и стабильность каждый день.</p>
       </div>
-      <div class="bento">
+      <div class="bento-scaler-wrap"><div class="bento">
         <article class="bcard glass spot b7">
           <div>
             <h3>Европейские локации до 10 Гбит/с</h3>
@@ -1060,42 +1187,12 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
           </div>
           <div class="plat"><span>iOS</span><span>Android</span><span>Windows</span><span>macOS</span><span>Linux</span><span>Android TV</span><span>Apple TV</span></div>
         </article>
-      </div>
+      </div></div><!-- /.bento-scaler-wrap -->
     </div>
   </section>
 
   <!-- Шаги -->
-  <section class="section" id="steps">
-    <div class="container">
-      <div class="sec-head">
-        <h2 class="h2 metal">Три шага, две минуты</h2>
-        <p class="sec-lead">Страница подписки сама определит устройство и предложит подходящее приложение.</p>
-      </div>
-      <div class="steps">
-        <article class="step glass spot">
-          <div class="step-n metal">1</div>
-          <div class="step-txt">
-            <h3>Оформите подписку</h3>
-            <p>Выберите тариф здесь или в Telegram-боте. Ссылка появится сразу после оплаты и придёт на почту.</p>
-          </div>
-        </article>
-        <article class="step glass spot">
-          <div class="step-n metal">2</div>
-          <div class="step-txt">
-            <h3>Установите приложение</h3>
-            <p>Откройте страницу подписки: мы подскажем, какое приложение скачать для вашего устройства.</p>
-          </div>
-        </article>
-        <article class="step glass spot">
-          <div class="step-n metal-em">3</div>
-          <div class="step-txt">
-            <h3>Нажмите «Подключить»</h3>
-            <p>Профиль добавится одной кнопкой. Дальше всё работает само, в том числе после продления.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- FAQ -->
   <section class="section" id="faq">
@@ -1386,9 +1483,12 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
       </div>
     </div>
 
-    <div class="sub-mode-viewport" style="overflow:hidden;position:relative">
-    <!-- РЕЖИМ 1: ОСНОВНОЙ -->
-    <section class="card glass spot" id="subMode-main">
+        <!-- Контейнер с аппаратной горизонтальной анимацией перелистывания (Horizontal Carousel Slider) -->
+    <div class="sub-mode-viewport" id="subViewport">
+      <div class="sub-mode-slider" id="subModeSlider">
+        <div class="sub-pane" id="pane-main">
+          <!-- РЕЖИМ 1: ОСНОВНОЙ -->
+          <section class="card glass spot" id="subMode-main">
       <div class="platform-selector-panel">
         <div class="platform-bar-header">
           <div class="platform-bar-title">
@@ -1407,9 +1507,10 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
       <div class="apps-grid" id="appsGridMain"></div>
       <div class="setup-steps" id="stepsGridMain"></div>
     </section>
-
-    <!-- РЕЖИМ 2: ИГРОВОЙ / AMNEZIAWG -->
-    <section class="card glass spot" id="subMode-awg" hidden>
+        </div>
+        <div class="sub-pane" id="pane-awg">
+          <!-- РЕЖИМ 2: AMNEZIAWG -->
+          <section class="card glass spot" id="subMode-awg">
       <div class="grid-12" style="align-items:center;margin-bottom:18px">
         <div style="grid-column:span 7">
           <h3 style="font-size:20px;font-weight:600;letter-spacing:-.03em">Выделенные слоты AmneziaWG (Игровой контур)</h3>
@@ -1455,9 +1556,10 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
       <div class="apps-grid" id="appsGridAwg"></div>
       <div class="setup-steps" id="stepsGridAwg"></div>
     </section>
-
-    <!-- РЕЖИМ 3: БЕЛЫЕ СПИСКИ (OpenFlux Stream) -->
-    <section class="card glass spot" id="subMode-openflux" hidden>
+        </div>
+        <div class="sub-pane" id="pane-openflux">
+          <!-- РЕЖИМ 3: БЕЛЫЕ СПИСКИ -->
+          <section class="card glass spot" id="subMode-openflux">
       <div class="of-info-banner">
         <div style="display:flex;align-items:flex-start;gap:12px">
           <span style="font-size:18px;line-height:1"><svg class="ico ico-warn" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
@@ -1541,6 +1643,8 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 
       <div class="setup-steps" id="stepsGridOf"></div>
     </section>
+        </div>
+      </div>
     </div> <!-- /.sub-mode-viewport -->
 
     <section class="card glass spot" style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 24px">
@@ -1574,13 +1678,34 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
       <div class="cab-meta">
         <span>Почта: <b>client@example.com</b></span>
         <span>Подписок: <b>3</b> (2 активные, 1 истёкшая)</span>
-        <span>Сессия по одноразовой ссылке: <b class="tab" style="color:var(--em-t)">29 мин</b></span>
+        <span>Сессия: <b class="tab" style="color:var(--em-t)">29 мин</b></span>
       </div>
-      <button type="button" class="link" style="font-size:13px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти из сессии</button>
+      <button type="button" class="link" style="font-size:12.5px" data-go="landing" data-toast="Сессия кабинета завершена">Выйти</button>
+    </div>
+
+    <!-- Выбор между оплаченными подписками на мобильных и планшетах -->
+    <div class="cab-selector-bar">
+      <div class="cab-pills-track" role="tablist" aria-label="Ваши подписки">
+        <button type="button" class="cab-pill-btn on" data-cab-tab="1" role="tab" aria-selected="true">
+          <i class="dot ok"></i>
+          <span class="cab-pill-title">#1 Домашний</span>
+          <span class="cab-pill-sub">до 6 устр. · Активна</span>
+        </button>
+        <button type="button" class="cab-pill-btn" data-cab-tab="2" role="tab" aria-selected="false">
+          <i class="dot wait"></i>
+          <span class="cab-pill-title">#2 Личный</span>
+          <span class="cab-pill-sub">до 3 устр. · 4 дня</span>
+        </button>
+        <button type="button" class="cab-pill-btn" data-cab-tab="3" role="tab" aria-selected="false">
+          <i class="dot err"></i>
+          <span class="cab-pill-title">#3 Расширенный</span>
+          <span class="cab-pill-sub">до 9 устр. · Истёк</span>
+        </button>
+      </div>
     </div>
 
     <div class="cab-grid">
-      <article class="cab-card glass spot border-beam">
+      <article class="cab-card glass spot border-beam active-tab" id="cabCard-1" data-cab-card="1">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #1 · Домашний</h2>
@@ -1598,7 +1723,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
         </div>
       </article>
 
-      <article class="cab-card glass spot">
+      <article class="cab-card glass spot" id="cabCard-2" data-cab-card="2">
         <div>
           <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #2 · Личный</h2>
@@ -1616,7 +1741,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
         </div>
       </article>
 
-      <article class="cab-card glass spot cab-card-expired">
+      <article class="cab-card glass spot cab-card-expired" id="cabCard-3" data-cab-card="3">
         <div>
           <div class="cab-card-head" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <h2 style="font-size:19px;font-weight:600;letter-spacing:-.025em">Подписка #3 · Расширенный</h2>
@@ -2546,6 +2671,10 @@ renderCatalog();
    ========================================================================= */
 const FAQ_DATA = [
   {
+    q: 'Как подключиться за 2 минуты (3 простых шага)?',
+    a: '<b>1. Оформите подписку:</b> выберите подходящий тариф на витрине или в боте — ссылка появится сразу после подтверждения оплаты.<br><br><b>2. Установите приложение:</b> откройте ссылку подписки — мастер сам определит вашу операционную систему и предложит проверенный клиент (V2Ray / Amnezia / Happ / Sing-Box).<br><br><b>3. Нажмите «Подключить»:</b> конфигурация импортируется одной кнопкой. Всё готово — доступ работает без ограничений.'
+  },
+  {
     q: 'Как быстро я получу доступ после оплаты?',
     a: 'Сразу после подтверждения платежа (обычно 5–15 секунд) откроется мастер настройки с вашей персональной ссылкой, а копия ссылки и чек придут на указанный Email.'
   },
@@ -2947,38 +3076,25 @@ const setModeSegVisual = bindLiquidSegmented(
 
 function setSubMode(mode) {
   if (!MODES.includes(mode)) mode = 'main';
-  const oldIdx = MODES.indexOf(S.subMode);
   const newIdx = MODES.indexOf(mode);
-  const dir = newIdx >= oldIdx ? 1 : -1;
   const changed = mode !== S.subMode;
   S.subMode = mode;
   setModeSegVisual(newIdx, changed);
 
-  MODES.forEach(m => {
-    const sec = $('#subMode-' + m);
-    if (sec) {
-      if (m === mode) {
-        sec.hidden = false;
-        if (changed) {
-          sec.style.transition = 'none';
-          sec.style.transform = `translateX(${dir * 40}px)`;
-          sec.style.opacity = '0';
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              sec.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease';
-              sec.style.transform = 'translateX(0)';
-              sec.style.opacity = '1';
-            });
-          });
-        } else {
-          sec.style.transform = '';
-          sec.style.opacity = '';
-        }
-      } else {
-        sec.hidden = true;
-      }
-    }
-  });
+  // Horizontal slide translation (0%, -33.3333%, -66.6666%)
+  const slider = $('#subModeSlider');
+  if (slider) {
+    slider.style.transform = `translateX(-${newIdx * 33.333333}%)`;
+  }
+
+  // Auto-adjust viewport height to active pane
+  const viewport = $('#subViewport');
+  const activePane = $(`#pane-${mode}`);
+  if (viewport && activePane) {
+    requestAnimationFrame(() => {
+      viewport.style.height = activePane.offsetHeight + 'px';
+    });
+  }
 
   if (mode === 'main') renderMainSetup();
   else if (mode === 'awg') renderAwgSetup();
@@ -3797,6 +3913,22 @@ if (legalNav) {
 showLegalDoc('refund');
 
 })();
+/* ---------- Переключатель подписок в Личном кабинете (Мобильная верстка) ---------- */
+document.addEventListener('click', e => {
+  const pill = e.target && e.target.closest && e.target.closest('[data-cab-tab]');
+  if (!pill) return;
+  const tabId = pill.dataset.cabTab;
+  document.querySelectorAll('[data-cab-tab]').forEach(btn => {
+    const active = btn.dataset.cabTab === tabId;
+    btn.classList.toggle('on', active);
+    btn.setAttribute('aria-selected', String(active));
+  });
+  document.querySelectorAll('[data-cab-card]').forEach(card => {
+    const active = card.dataset.cabCard === tabId;
+    card.classList.toggle('active-tab', active);
+  });
+});
+
 </script>
 <script type="module">
 /* =========================================================================
