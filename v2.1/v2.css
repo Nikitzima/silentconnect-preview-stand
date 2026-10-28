@@ -151,6 +151,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   opacity:1;
   transform:none;
   filter:none;
+  will-change:auto !important;
 }
 .btn-block{width:100%}
 .btn-primary{color:#04150e;background:linear-gradient(180deg,#9af6d3 0%,#34e3a4 55%,#16b985 100%);
@@ -359,16 +360,29 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .step-txt p{margin-top:6px;font-size:14px;color:var(--mut);line-height:1.55}
 
 .faq-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:40px;align-items:start}
-.faq-list{padding:4px 28px;border-radius:var(--r-card)}
+.faq-list{
+  position:relative;
+  isolation:isolate;
+  background:linear-gradient(180deg,rgba(22,28,25,.82) 0%,rgba(13,17,16,.94) 100%);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.12),0 20px 40px -16px rgba(0,0,0,.7);
+  border-radius:var(--r-card);
+  padding:4px 28px;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  contain:paint;
+}
+.faq-list::before,.faq-list::after{display:none !important}
 .faq{border-bottom:1px solid var(--line)}
 .faq:last-child{border-bottom:0}
 .faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0;text-align:left;font-size:15.5px;font-weight:560;letter-spacing:-.015em}
 .faq-q i{flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:#cbd3d0;font-style:normal;
   transition:transform .35s var(--spring),background .25s,color .25s,border-color .25s}
 .faq[data-open="true"] .faq-q i{transform:rotate(45deg);background:rgba(16,185,129,.16);color:var(--em-t);border-color:rgba(52,227,164,.4)}
-.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
-.faq-a>div{overflow:hidden}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .26s cubic-bezier(.16,1,.3,1);will-change:grid-template-rows}
+.faq-a>div{overflow:hidden;opacity:0;transform:translateY(-4px);transition:opacity .2s ease,transform .2s ease}
 .faq[data-open="true"] .faq-a{grid-template-rows:1fr}
+.faq[data-open="true"] .faq-a>div{opacity:1;transform:translateY(0)}
 .faq-a p{padding:0 36px 18px 0;font-size:14px;line-height:1.6;color:var(--mut)}
 
 /* ---------- Футер ---------- */

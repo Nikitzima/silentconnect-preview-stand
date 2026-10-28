@@ -603,12 +603,16 @@ if (faqListEl) {
     const faq = btn.closest('.faq');
     if (!faq) return;
     const isOpen = faq.getAttribute('data-open') === 'true';
-    $$('.faq', faqListEl).forEach(f => {
-      f.setAttribute('data-open', 'false');
-      const q = $('.faq-q', f);
+    const currentOpen = faqListEl.querySelector('.faq[data-open="true"]');
+    if (currentOpen && currentOpen !== faq) {
+      currentOpen.setAttribute('data-open', 'false');
+      const q = $('.faq-q', currentOpen);
       if (q) q.setAttribute('aria-expanded', 'false');
-    });
-    if (!isOpen) {
+    }
+    if (isOpen) {
+      faq.setAttribute('data-open', 'false');
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
       faq.setAttribute('data-open', 'true');
       btn.setAttribute('aria-expanded', 'true');
     }
