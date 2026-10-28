@@ -127,7 +127,7 @@ function renderSvgQr(text, containerEl, size = 164) {
 /* ---------- Навигация & Автоскрытие нижней панели .mbar у чекаута ---------- */
 const navEl = $('#nav');
 function syncNavScroll() {
-  if (navEl) navEl.classList.toggle('solid', window.scrollY > 16);
+  if (navEl) navEl.classList.toggle('solid', window.scrollY > 20);
 }
 window.addEventListener('scroll', syncNavScroll, { passive: true });
 syncNavScroll();
