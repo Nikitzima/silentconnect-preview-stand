@@ -133,6 +133,25 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .btn:active{transform:scale(.975)}
 .btn-sm{min-height:38px;padding:0 16px;font-size:13.5px}
 .btn-lg{min-height:50px;padding:0 26px;font-size:15.5px}
+
+/* =========================================================================
+   CINEMATIC INTRO & SCROLL REVEAL (.rv)
+   Плавное появление из атмосферного затемнения
+   ========================================================================= */
+.rv{
+  opacity:0;
+  transform:translateY(24px);
+  filter:blur(8px);
+  transition:opacity .85s cubic-bezier(.16,1,.3,1) var(--d,0s),
+             transform .85s cubic-bezier(.16,1,.3,1) var(--d,0s),
+             filter .85s cubic-bezier(.16,1,.3,1) var(--d,0s);
+  will-change:opacity,transform,filter;
+}
+.rv.in{
+  opacity:1;
+  transform:none;
+  filter:none;
+}
 .btn-block{width:100%}
 .btn-primary{color:#04150e;background:linear-gradient(180deg,#9af6d3 0%,#34e3a4 55%,#16b985 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 0 rgba(0,80,45,.28),0 10px 28px -10px rgba(16,185,129,.6)}
@@ -174,11 +193,16 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .fact span{display:block;font-size:12.5px;color:var(--dim);margin-top:2px}
 .stage-wrap{position:relative;width:min(100%,380px);aspect-ratio:1}
 .stage-wrap::before{content:"";position:absolute;left:50%;bottom:-6%;width:120%;height:40%;transform:translateX(-50%);pointer-events:none;
-  background:radial-gradient(closest-side,rgba(16,185,129,.24),rgba(16,185,129,.07) 55%,transparent 80%)}
+  background:radial-gradient(closest-side,rgba(16,185,129,.28),rgba(16,185,129,.09) 55%,transparent 80%);
+  opacity:0;transition:opacity 1.35s cubic-bezier(.16,1,.3,1) .15s}
+.stage-wrap.ready::before,
+.stage-col:has(#stage.ready) .stage-wrap::before{opacity:1}
 #stage{position:relative;width:100%;height:100%;cursor:grab;touch-action:pan-y;user-select:none}
 #stage.dragging{cursor:grabbing}
-#stage canvas{display:block;width:100%;height:100%;opacity:0;transition:opacity .8s ease}
-#stage.ready canvas{opacity:1}
+#stage canvas{display:block;width:100%;height:100%;opacity:0;transform:scale(0.92);filter:blur(5px);
+  transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1),filter 1.2s ease;
+  will-change:opacity,transform,filter}
+#stage.ready canvas{opacity:1;transform:scale(1);filter:blur(0px)}
 
 /* Реферальный баннер */
 .ref-banner{margin-bottom:18px;padding:12px 18px;border-radius:16px;background:rgba(16,185,129,.1);border:1px solid rgba(52,227,164,.28);
@@ -566,35 +590,41 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   .nav-actions{gap:6px}
   .nav-actions .btn-sm{min-height:32px;padding:0 12px;font-size:12px}
 
-  /* Компактный Split-Hero на мобилках с 3D-глобусом справа (как на ПК и у Resend) */
-  .hero{padding-top:calc(var(--lab-h) + 68px);padding-bottom:10px}
+  /* Компактный выразительный Split-Hero на мобилках с увеличенным 3D-глобусом и текстом */
+  .hero{padding-top:calc(var(--lab-h) + 70px);padding-bottom:20px}
   .hero-grid{
-    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-columns:minmax(0,1.18fr) auto;
     grid-template-areas:
       "title title"
       "subtext stage"
       "facts facts";
-    gap:14px 12px;
+    gap:16px 14px;
     align-items:center;
   }
   .hero-copy{display:contents}
-  .hero h1{grid-area:title;width:100%;max-width:100%;font-size:clamp(1.75rem,7.2vw,2.4rem);line-height:1.04;letter-spacing:-.035em}
+  .hero h1{
+    grid-area:title;
+    width:100%;
+    max-width:100%;
+    font-size:clamp(1.72rem,7.0vw,2.35rem);
+    line-height:1.07;
+    letter-spacing:-.035em;
+  }
   .hero h1 span{display:inline}
   .hero h1 span.hero-highlight{white-space:normal}
   .hero h1 span:first-child::after{content:" "}
   .hero-subtext{grid-area:subtext;min-width:0;display:flex;flex-direction:column;justify-content:center}
-  .hero-lead{margin-top:0;font-size:12.5px;line-height:1.48;color:var(--mut)}
-  .hero-cta{margin-top:12px;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
-  .hero-cta .btn-lg{min-height:40px;padding:0 16px;font-size:13.5px;width:100%;max-width:170px}
-  .hero-price{font-size:12px}
-  .stage-col{grid-area:stage;display:flex;justify-content:flex-end;align-items:center;min-width:0}
-  .stage-wrap{width:clamp(150px,39vw,190px);height:clamp(150px,39vw,190px)}
-  .stage-wrap::before{width:100%!important}
-  .stage-col{overflow:hidden}
+  .hero-lead{margin-top:2px;font-size:13.5px;line-height:1.5;color:var(--mut)}
+  .hero-cta{margin-top:14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .hero-cta .btn-lg{min-height:44px;padding:0 18px;font-size:14px;width:100%;max-width:175px}
+  .hero-price{font-size:12.5px}
+  .stage-col{grid-area:stage;display:flex;justify-content:flex-end;align-items:center;min-width:0;overflow:visible}
+  .stage-wrap{width:clamp(165px,44vw,215px);height:clamp(165px,44vw,215px)}
+  .stage-wrap::before{width:110%!important}
 
-  .hero-facts{grid-area:facts;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 10px;margin-top:4px;padding-top:12px}
-  .fact b{font-size:12px;line-height:1.2}
-  .fact span{font-size:10.5px;line-height:1.2}
+  .hero-facts{grid-area:facts;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px;margin-top:8px;padding-top:14px}
+  .fact b{font-size:13px;line-height:1.2}
+  .fact span{font-size:11px;line-height:1.2}
 
   .section{padding-top:52px}
   .sec-head{margin-bottom:18px;gap:8px}
@@ -689,11 +719,14 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 /* На узких экранах (<410px) делаем карточки "Что вы получаете" компактными в 1 колонку, чтобы текст дышал */
 @media (max-width:410px){
   .apps-grid{grid-template-columns:1fr}
-  .stage-wrap{width:clamp(140px,38vw,165px);height:clamp(140px,38vw,165px)}
+  .stage-wrap{width:clamp(155px,42vw,180px);height:clamp(155px,42vw,180px)}
 }
 
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
+  .rv{opacity:1!important;transform:none!important;filter:none!important}
+  #stage canvas{opacity:1!important;transform:none!important;filter:none!important}
+  .stage-wrap::before{opacity:1!important}
   html{scroll-behavior:auto}
 }
 /* Hallmark & Design-to-Motion: Micro-icons, Badges and Fluid Arrows */

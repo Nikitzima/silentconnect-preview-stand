@@ -43,7 +43,7 @@
 
 <!-- Навигация (Бесшовная в самом верху, при прокрутке обретает Liquid Glass и обводку) -->
 <div class="nav-wrap">
-  <header class="nav" id="nav">
+  <header class="nav rv" id="nav" style="--d:.04s">
     <a href="#top" class="brand" data-go="landing" aria-label="SilentConnect">
       <img src="assets/branding/avatar.webp" alt="" class="brand-logo" width="34" height="34">
       <span class="brand-text">SilentConnect</span>
@@ -68,23 +68,23 @@
     <div class="container">
       <div class="hero-grid">
         <div class="hero-copy">
-          <h1 class="metal"><span>Приватный доступ,</span><span class="hero-highlight">который просто&nbsp;работает</span></h1>
+          <h1 class="metal rv" style="--d:.08s"><span>Приватный доступ,</span><span class="hero-highlight">который просто&nbsp;работает</span></h1>
           <div class="hero-subtext">
-            <p class="hero-lead">Выберите тариф, получите ссылку на почту и подключите телефон, ноутбук и телевизор за пару минут. Серверы в Европе, без ограничений по трафику.</p>
-            <div class="hero-cta">
+            <p class="hero-lead rv" style="--d:.20s">Выберите тариф, получите ссылку на почту и подключите телефон, ноутбук и телевизор за пару минут. Серверы в Европе, без ограничений по трафику.</p>
+            <div class="hero-cta rv" style="--d:.32s">
               <a href="#tariffs" class="btn btn-primary btn-lg">Выбрать тариф</a>
               <span class="hero-price">от <b class="tab">104 ₽</b> в месяц</span>
             </div>
           </div>
         </div>
 
-        <div class="stage-col">
+        <div class="stage-col rv" style="--d:.14s">
           <div class="stage-wrap">
             <div id="stage" aria-label="Интерактивный 3D-глобус. Потяните, чтобы повернуть."></div>
           </div>
         </div>
 
-        <div class="hero-facts">
+        <div class="hero-facts rv" style="--d:.44s">
           <div class="fact"><b>Серверы в Европе</b><span>каналы до 10 Гбит/с</span></div>
           <div class="fact"><b>Без лимитов трафика</b><span>в основном профиле</span></div>
           <div class="fact"><b>Возврат 14 дней</b><span>на первый заказ</span></div>
@@ -96,7 +96,7 @@
   <!-- Тарифы -->
   <section class="section" id="tariffs">
     <div class="container">
-      <div class="sec-head">
+      <div class="sec-head rv">
         <h2 class="h2 metal">Выберите тариф</h2>
         <p class="sec-lead">Количество устройств и срок: цена пересчитывается сразу.</p>
       </div>
@@ -107,7 +107,7 @@
       </div>
 
       <div class="tariffs">
-        <div class="card glass spot tariff-builder">
+        <div class="card glass spot tariff-builder rv" style="--d:.12s">
           <div class="group">
             <div class="group-head"><span class="field-label">Устройства</span></div>
             <div class="seg" id="devSeg" role="radiogroup" aria-label="Количество устройств">
@@ -133,7 +133,7 @@
           </div>
         </div>
 
-        <aside class="checkout glass spot border-beam" id="checkout">
+        <aside class="checkout glass spot border-beam rv" style="--d:.20s" id="checkout">
           <div class="checkout-glow" aria-hidden="true"></div>
 
           <div class="co-top">
@@ -205,12 +205,12 @@
   <!-- Возможности (Достоверная информация и компактная верстка) -->
   <section class="section" id="features">
     <div class="container">
-      <div class="sec-head">
+      <div class="sec-head rv">
         <h2 class="h2 metal">Что вы получаете</h2>
         <p class="sec-lead">Только то, что действительно влияет на скорость и стабильность каждый день.</p>
       </div>
       <div class="bento-scaler-wrap"><div class="bento">
-        <article class="bcard glass spot b7">
+        <article class="bcard glass spot b7 rv" style="--d:.06s">
           <div>
             <h3>Европейские локации до 10 Гбит/с</h3>
             <p>Несколько независимых узлов в Евросоюзе с минимальной задержкой. Выбирайте нужную локацию вручную или включите автовыбор лучшего пинга в приложении.</p>
@@ -224,7 +224,7 @@
           </div>
         </article>
 
-        <article class="bcard glass spot b5">
+        <article class="bcard glass spot b5 rv" style="--d:.16s">
           <div>
             <h3>Три режима в одной подписке</h3>
             <p>Безлимитный основной профиль на каждый день, выделенный игровой контур <b>AmneziaWG</b> (прямой UDP) и режим <b>«Белые списки» (OpenFlux)</b> для изолированных сетей.</p>
@@ -236,7 +236,7 @@
           </div>
         </article>
 
-        <article class="bcard glass spot b5">
+        <article class="bcard glass spot b5 rv" style="--d:.24s">
           <div>
             <h3>Без журналов активности</h3>
             <p>Мы не записываем историю посещений и DNS-запросы. Для работы подписки хранится только привязанный Email, срок доступа и общий счётчик трафика.</p>
@@ -247,7 +247,7 @@
           </div>
         </article>
 
-        <article class="bcard glass spot b7">
+        <article class="bcard glass spot b7 rv" style="--d:.32s">
           <div>
             <h3>Постоянная ссылка до 9 устройств</h3>
             <p>Продлили или перешли на другой тариф: настройки на устройствах остаются прежними. Управление подпиской доступно на сайте и в Telegram-боте.</p>
@@ -265,12 +265,12 @@
   <section class="section" id="faq">
     <div class="container">
       <div class="faq-grid">
-        <div>
+        <div class="rv">
           <h2 class="h2 metal">Частые вопросы</h2>
           <p class="sec-lead" style="margin-top:12px">Не нашли ответ? Напишите нам, поддержка отвечает круглосуточно.</p>
           <div style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать в поддержку</a></div>
         </div>
-        <div class="faq-list glass spot" id="faqList"></div>
+        <div class="faq-list glass spot rv" style="--d:.14s" id="faqList"></div>
       </div>
     </div>
   </section>
@@ -961,7 +961,7 @@
 
 <script src="v2.1/bg.js"></script>
 <script src="v2.1/os-icons.js"></script>
-<script src="v2.1/app.js?v=2.1.4"></script>
+<script src="v2.1/app.js?v=2.1.5"></script>
 <script type="module" src="v2.1/globe.js"></script>
 </body>
 </html>

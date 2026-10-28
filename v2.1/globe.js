@@ -337,6 +337,7 @@ function tick(){
 }
 renderer.compile(scene, camera);
 stage.classList.add('ready');
+if (stage.parentElement) stage.parentElement.classList.add('ready');
 tick();
 }
 

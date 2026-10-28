@@ -1836,4 +1836,52 @@ if (legalNav) {
 }
 showLegalDoc('refund');
 
+/* =========================================================================
+   Cinematic Intro & Scroll Reveal (.rv)
+   Плавное появление из атмосферного затемнения
+   ========================================================================= */
+function initScrollReveal() {
+  const rvs = $$('.rv');
+  if (!rvs.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    rvs.forEach(el => el.classList.add('in'));
+    return;
+  }
+
+  const obs = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -30px 0px',
+    threshold: 0.05
+  });
+
+  rvs.forEach(el => obs.observe(el));
+
+  // Immediate kick-off for above-the-fold elements
+  requestAnimationFrame(() => {
+    rvs.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.95) {
+        el.classList.add('in');
+      }
+    });
+  });
+
+  // Safety fallback after 1.2s in case of any observer glitch
+  setTimeout(() => {
+    $$('.rv:not(.in)').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) el.classList.add('in');
+    });
+  }, 1200);
+}
+window.initScrollReveal = initScrollReveal;
+initScrollReveal();
+
 })();
