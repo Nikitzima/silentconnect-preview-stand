@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="v2.1/v2.css?v=2.1.4">
+<link rel="stylesheet" href="v2.1/v2.css?v=2.1.5">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -443,91 +443,160 @@
       <div class="renew-acc" id="renewAcc" data-open="false">
         <button type="button" class="renew-head" id="renewToggle" aria-expanded="false">
           <div class="renew-head-left">
-            <span class="renew-head-title"><svg class="ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span id="renewAccTitle">Продлить или изменить тариф / Почта</span></span>
-            <span class="status ok" id="renewEmailBadge" style="font-size:12px;padding:3px 10px"><i></i>Почта привязана</span>
+            <span class="renew-head-ico" aria-hidden="true">
+              <svg class="ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </span>
+            <div class="renew-head-text">
+              <span class="renew-head-title"><span id="renewAccTitle">Продлить или изменить тариф / Почта</span></span>
+              <span class="renew-head-sub">Дни суммируются с текущим сроком · постоянная ссылка не меняется</span>
+            </div>
+            <span class="status ok" id="renewEmailBadge"><i></i>Почта привязана</span>
           </div>
           <span class="renew-chevron" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </span>
         </button>
 
         <div class="renew-body-wrap">
           <div class="renew-body-inner">
             <div class="renew-body">
-              <div class="email-bound-pill" id="emailBoundPill">
-                <span><svg class="ico ico-ok" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <b>Почта привязана:</b> <span class="bound-email-val" id="boundEmailLabel">c***t@example.com</span> (напоминания и вход в кабинет активны)</span>
-                <button type="button" class="link" id="changeBoundEmailBtn" style="font-size:13px">Изменить почту</button>
-              </div>
 
-              <div class="email-unbound-alert" id="emailUnboundAlert" hidden>
-                <span style="font-size:18px;line-height:1"><svg class="ico ico-warn" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-                <div>
-                  <b class="bind-notice-title">К этой подписке ещё не привязана электронная почта</b>
-                  Привяжите Email бесплатно (или одновременно с продлением), чтобы получать чеки, напоминания об окончании срока и входить в личный кабинет с любого устройства.
-                </div>
-              </div>
-
-              <div class="bind-only-panel" id="bindOnlyCard">
-                <label class="check bind-check">
-                  <input type="checkbox" id="bindEmailOnly">
-                  <span>Только привязать или сменить почту (без продления тарифа: <b style="color:var(--em-t)">0 ₽ Бесплатно</b>)</span>
-                </label>
-              </div>
-
-              <div id="renewPlanSelectors">
-                <p style="font-size:13px;color:var(--mut);margin-bottom:12px">При продлении новые дни суммируются с вашим текущим остатком (180 дн.). Ссылка и настройки на устройствах не изменятся.</p>
-                <div class="grid-2" style="align-items:stretch;margin-bottom:16px">
-                  <div class="renew-selector-box">
-                    <span class="field-label">1. Лимит устройств</span>
-                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" id="renDev">
-                      <button type="button" class="platform-tab" data-r-dev="3" style="min-width:0">Личный (3)</button>
-                      <button type="button" class="platform-tab active" data-r-dev="6" style="min-width:0">Домашний (6)</button>
-                      <button type="button" class="platform-tab" data-r-dev="9" style="min-width:0">Расшир. (9)</button>
+              <!-- Верхняя панель: Статус почты (слева) + Тумблер «Только почта 0 ₽» (справа) -->
+              <div class="renew-top-strip">
+                <div class="email-bound-pill" id="emailBoundPill">
+                  <div class="renew-pill-main">
+                    <span class="renew-pill-ico ok" aria-hidden="true">
+                      <svg class="ico ico-ok" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <div class="renew-pill-copy">
+                      <div class="renew-pill-title"><b>Почта привязана:</b> <span class="bound-email-val" id="boundEmailLabel">c***t@example.com</span></div>
+                      <span class="renew-pill-sub">Чеки, напоминания и вход в личный кабинет активны</span>
                     </div>
                   </div>
-                  <div class="renew-selector-box">
-                    <span class="field-label">2. Период продления</span>
-                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px" id="renMonths">
-                      <button type="button" class="platform-tab" data-r-m="1" style="min-width:0">1 мес</button>
-                      <button type="button" class="platform-tab" data-r-m="3" style="min-width:0">3 мес</button>
-                      <button type="button" class="platform-tab active" data-r-m="6" style="min-width:0">6 мес</button>
-                      <button type="button" class="platform-tab" data-r-m="12" style="min-width:0">12 мес</button>
-                    </div>
+                  <button type="button" class="renew-pill-action link" id="changeBoundEmailBtn">Изменить почту</button>
+                </div>
+
+                <div class="email-unbound-alert" id="emailUnboundAlert" hidden>
+                  <span class="renew-pill-ico warn" aria-hidden="true">
+                    <svg class="ico ico-warn" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  <div class="renew-pill-copy">
+                    <b class="bind-notice-title">К подписке ещё не привязана электронная почта</b>
+                    <span class="renew-pill-sub">Привяжите Email бесплатно или вместе с продлением для получения чеков и входа в кабинет.</span>
                   </div>
                 </div>
-              </div>
 
-              <form id="renewForm" class="grid-2" style="align-items:end;padding-top:14px;border-top:1px solid var(--line)" novalidate>
-                <div style="display:grid;gap:10px">
-                  <div id="renewEmailFieldWrap">
-                    <label class="lbl" for="renewEmailInput">Ваш Email (для чека, напоминаний и входа в кабинет)</label>
-                    <input class="field" id="renewEmailInput" type="email" placeholder="name@example.com" value="client@example.com" required style="min-height:44px">
-                  </div>
-                  <div id="renewPromoWrap">
-                    <label class="lbl" for="renewPromoInput">Промокод или подарочный код (необязательно)</label>
-                    <input class="field" id="renewPromoInput" type="text" placeholder="WELCOME10 или GIFT30" style="min-height:44px;text-transform:uppercase">
-                  </div>
-                  <label class="check">
-                    <input type="checkbox" checked>
-                    <span>Отправлять уведомления об окончании срока подписки на Email</span>
+                <div class="bind-only-panel" id="bindOnlyCard">
+                  <label class="check bind-check" for="bindEmailOnly">
+                    <div class="bind-check-copy">
+                      <span class="bind-check-title">Только привязать или сменить почту <i class="bind-free-badge">0 ₽ Бесплатно</i></span>
+                      <span class="bind-check-sub">Без оплаты и без продления текущего тарифа</span>
+                    </div>
+                    <input type="checkbox" id="bindEmailOnly" class="renew-switch">
                   </label>
                 </div>
+              </div>
 
-                <div style="display:grid;gap:10px">
-                  <div class="cf-widget" data-checked="true" role="checkbox" aria-checked="true" tabindex="0">
-                    <div class="cf-left"><span class="cf-check">✓</span><span>Проверка безопасности пройдена</span></div>
-                    <div class="cf-right"><span class="cf-brand">CLOUDFLARE</span><span class="cf-sub">Turnstile</span></div>
+              <!-- Основная сетка: Слева конфигуратор тарифа, Справа чекаут и почта -->
+              <div class="renew-workspace">
+
+                <div class="renew-builder" id="renewPlanSelectors">
+                  <div class="renew-builder-note">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>Новые дни <b>суммируются с вашим остатком (180 дн.)</b>. Ссылка и настройки на устройствах не изменятся.</span>
                   </div>
 
-                  <div class="contour-desc-box">
-                    <div>
-                      <small style="color:var(--mut);font-size:12px;display:block" id="renSummary">Домашний (6 устр.) · +180 дней</small>
-                      <b class="metal-em tab" style="font-size:28px;letter-spacing:-.04em" id="renPrice">959 ₽</b>
+                  <div class="renew-selector-box">
+                    <div class="renew-box-head">
+                      <span class="field-label">1. Лимит устройств</span>
+                      <small class="renew-box-hint">одновременный доступ</small>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm" id="renSubmitBtn">Оплатить 959 ₽ <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+                    <div class="ren-dev-grid" id="renDev">
+                      <button type="button" class="platform-tab ren-card" data-r-dev="3">
+                        <span class="rc-top"><span class="rc-name">Личный</span><i class="rc-dot"></i></span>
+                        <span class="rc-meta">до 3 устройств</span>
+                        <small class="rc-sub tab">250 ГБ AWG / мес</small>
+                      </button>
+                      <button type="button" class="platform-tab ren-card active" data-r-dev="6">
+                        <span class="rc-top"><span class="rc-name">Домашний</span><i class="rc-dot"></i></span>
+                        <span class="rc-meta">до 6 устройств</span>
+                        <small class="rc-sub tab">500 ГБ AWG / мес</small>
+                      </button>
+                      <button type="button" class="platform-tab ren-card" data-r-dev="9">
+                        <span class="rc-top"><span class="rc-name">Расширенный</span><i class="rc-dot"></i></span>
+                        <span class="rc-meta">до 9 устройств</span>
+                        <small class="rc-sub tab">1 000 ГБ AWG / мес</small>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="renew-selector-box">
+                    <div class="renew-box-head">
+                      <span class="field-label">2. Период продления</span>
+                      <small class="renew-box-hint">выгода до −30% за год</small>
+                    </div>
+                    <div class="ren-months-grid" id="renMonths">
+                      <button type="button" class="platform-tab ren-card" data-r-m="1">
+                        <span class="rc-top"><span class="rc-name">1 мес</span></span>
+                        <small class="rc-sub tab">+30 дней</small>
+                      </button>
+                      <button type="button" class="platform-tab ren-card" data-r-m="3">
+                        <span class="rc-top"><span class="rc-name">3 мес</span><em class="rc-save tab">−10%</em></span>
+                        <small class="rc-sub tab">+90 дней</small>
+                      </button>
+                      <button type="button" class="platform-tab ren-card active" data-r-m="6">
+                        <span class="rc-top"><span class="rc-name">6 мес</span><em class="rc-save tab">−20%</em></span>
+                        <small class="rc-sub tab">+180 дней</small>
+                      </button>
+                      <button type="button" class="platform-tab ren-card" data-r-m="12">
+                        <span class="rc-top"><span class="rc-name">12 мес</span><em class="rc-save hot tab">−30%</em></span>
+                        <small class="rc-sub tab">+365 дней</small>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </form>
+
+                <form id="renewForm" class="renew-checkout" novalidate>
+                  <div class="renew-fields-stack">
+                    <div id="renewEmailFieldWrap" class="renew-field-group">
+                      <div class="renew-lbl-row">
+                        <label class="lbl" for="renewEmailInput">Ваш Email</label>
+                        <small class="renew-lbl-hint">для чека, уведомлений и кабинета</small>
+                      </div>
+                      <input class="field" id="renewEmailInput" type="email" placeholder="name@example.com" value="client@example.com" required>
+                    </div>
+
+                    <div id="renewPromoWrap" class="renew-field-group">
+                      <div class="renew-lbl-row">
+                        <label class="lbl" for="renewPromoInput">Промокод или подарочный код</label>
+                        <small class="renew-lbl-hint">необязательно</small>
+                      </div>
+                      <input class="field renew-promo-field" id="renewPromoInput" type="text" placeholder="WELCOME10 или GIFT30">
+                    </div>
+
+                    <label class="check renew-rem-check">
+                      <input type="checkbox" checked>
+                      <span>Отправлять уведомления об окончании срока подписки на Email</span>
+                    </label>
+                  </div>
+
+                  <div class="renew-checkout-foot">
+                    <div class="cf-widget" data-checked="true" role="checkbox" aria-checked="true" tabindex="0">
+                      <div class="cf-left"><span class="cf-check">✓</span><span>Проверка безопасности пройдена</span></div>
+                      <div class="cf-right"><span class="cf-brand">CLOUDFLARE</span><span class="cf-sub">Turnstile</span></div>
+                    </div>
+
+                    <div class="contour-desc-box">
+                      <div class="contour-price-meta">
+                        <small id="renSummary">Домашний (6 устр.) · +180 дней</small>
+                        <b class="metal-em tab" id="renPrice">959 ₽</b>
+                      </div>
+                      <button type="submit" class="btn btn-primary" id="renSubmitBtn">Оплатить 959 ₽ <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
             </div>
           </div>
         </div>
@@ -961,7 +1030,7 @@
 
 <script src="v2.1/bg.js"></script>
 <script src="v2.1/os-icons.js"></script>
-<script src="v2.1/app.js?v=2.1.7"></script>
+<script src="v2.1/app.js?v=2.1.8"></script>
 <script type="module" src="v2.1/globe.js"></script>
 </body>
 </html>
