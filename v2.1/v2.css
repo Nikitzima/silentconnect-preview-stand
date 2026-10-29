@@ -62,7 +62,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 }
 :focus-visible{outline:2px solid var(--em);outline-offset:2px;border-radius:8px}
 
-.container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
+.container{width:100%;max-width:1248px;margin:0 auto;padding:0 24px}
 .metal{background:linear-gradient(180deg,#fff 0%,#dfe5e3 50%,#8d9794 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .metal-em{background:linear-gradient(180deg,#f0fff9,#7ff3c8 55%,#25c991);-webkit-background-clip:text;background-clip:text;color:transparent}
 
@@ -80,7 +80,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .kbd-hint kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--mut)}
 
 /* ---------- Навигация ---------- */
-.nav-wrap{position:fixed;top:calc(var(--lab-h) + 12px);left:0;right:0;z-index:70;padding:0 16px;pointer-events:none}
+.nav-wrap{position:fixed;top:calc(var(--lab-h) + 12px);left:0;right:0;z-index:70;padding:0 24px;pointer-events:none}
 .nav{pointer-events:auto;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
   height:56px;padding:0 10px 0 16px;border-radius:99px;position:relative}
 .nav::before{
