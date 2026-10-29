@@ -1590,8 +1590,8 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
     font-size: 11px;
     padding: 2px 9px;
   }
-  #renewAcc .renew-body {
-    padding: 12px 14px 14px;
+    #renewAcc .renew-body {
+    padding: 10px 10px 14px !important;
   }
   #renewAcc .email-bound-pill,
   #renewAcc .email-unbound-alert,
@@ -1601,7 +1601,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
   }
   #renewAcc .renew-builder,
   #renewAcc .renew-checkout {
-    padding: 13px 14px;
+    padding: 12px 10px !important;
     border-radius: 15px;
     gap: 12px;
   }
@@ -1609,7 +1609,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
     padding: 8px 10px;
     font-size: 11.5px;
   }
-  /* На мобильных: 3 компактные карточки тарифа в ряд + 2x2 сетка периодов */
+  /* ⚡ На мобильных: вертикальная центрированная иерархия в 3 компактных карточках */
   #renewAcc #renDev.ren-dev-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 6px !important;
@@ -1619,34 +1619,51 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
     gap: 6px !important;
   }
   #renewAcc #renDev .platform-tab.ren-card {
-    padding: 8px 6px !important;
-    border-radius: 11px !important;
-    gap: 3px !important;
+    padding: 9px 4px 8px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 4px !important;
+  }
+  #renewAcc #renDev .rc-top {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+  #renewAcc #renDev .rc-name {
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: -.03em !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+  }
+  #renewAcc #renDev .rc-dot {
+    display: block !important;
+    width: 14px !important;
+    height: 14px !important;
+    flex-shrink: 0 !important;
+    margin: 0 auto !important;
+  }
+  #renewAcc #renDev .platform-tab.ren-card.active .rc-dot::after {
+    inset: 3px !important;
+  }
+  #renewAcc #renDev .rc-meta {
+    font-size: 10.5px !important;
+    color: var(--mut) !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+  }
+  #renewAcc #renDev .rc-sub {
+    display: none !important;
   }
   #renewAcc #renMonths .platform-tab.ren-card {
     padding: 9px 8px !important;
     border-radius: 11px !important;
     gap: 3px !important;
-  }
-  #renewAcc #renDev .rc-name {
-    font-size: 11.5px !important;
-    letter-spacing: -.03em !important;
-  }
-  #renewAcc #renDev .rc-dot {
-    width: 12px !important;
-    height: 12px !important;
-  }
-  #renewAcc #renDev .rc-meta {
-    font-size: 10.5px !important;
-  }
-  #renewAcc .rc-name {
-    font-size: 12.5px;
-  }
-  #renewAcc .rc-meta {
-    font-size: 11px;
-  }
-  #renewAcc #renDev .rc-sub {
-    display: none;
   }
   #renewAcc .contour-desc-box {
     padding: 11px 13px;
