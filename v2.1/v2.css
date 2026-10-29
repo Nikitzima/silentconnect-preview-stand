@@ -62,7 +62,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 }
 :focus-visible{outline:2px solid var(--em);outline-offset:2px;border-radius:8px}
 
-.container{width:100%;max-width:1248px;margin:0 auto;padding:0 24px}
+.container{width:100%;max-width:1192px;margin:0 auto;padding:0 24px}
 .metal{background:linear-gradient(180deg,#fff 0%,#dfe5e3 50%,#8d9794 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .metal-em{background:linear-gradient(180deg,#f0fff9,#7ff3c8 55%,#25c991);-webkit-background-clip:text;background-clip:text;color:transparent}
 
@@ -545,12 +545,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .prose p,.prose li{margin-top:8px;font-size:14.5px;line-height:1.65;color:var(--mut)}
 .prose ul{padding-left:20px}
 .prose b{color:#e6ebe9;font-weight:560}
-/* Выравнивание ширины контентных экранов строго по точкам начала скругления верхней плашки навигации (1200px - 56px = 1144px контент) */
-#view-legal .container,
-#view-cabinet .container,
-#view-order .container {
-  max-width: 1192px;
-}
+
 
 /* Модалки, Command Palette и Тост */
 .modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(3,5,5,.76);

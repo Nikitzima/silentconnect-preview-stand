@@ -76,7 +76,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 }
 :focus-visible{outline:2px solid var(--em);outline-offset:2px;border-radius:8px}
 
-.container{width:100%;max-width:1248px;margin:0 auto;padding:0 24px}
+.container{width:100%;max-width:1192px;margin:0 auto;padding:0 24px}
 .metal{background:linear-gradient(180deg,#fff 0%,#dfe5e3 50%,#8d9794 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .metal-em{background:linear-gradient(180deg,#f0fff9,#7ff3c8 55%,#25c991);-webkit-background-clip:text;background-clip:text;color:transparent}
 
@@ -559,12 +559,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
 .prose p,.prose li{margin-top:8px;font-size:14.5px;line-height:1.65;color:var(--mut)}
 .prose ul{padding-left:20px}
 .prose b{color:#e6ebe9;font-weight:560}
-/* Выравнивание ширины контентных экранов строго по точкам начала скругления верхней плашки навигации (1200px - 56px = 1144px контент) */
-#view-legal .container,
-#view-cabinet .container,
-#view-order .container {
-  max-width: 1192px;
-}
+
 
 /* Модалки, Command Palette и Тост */
 .modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(3,5,5,.76);
@@ -2092,7 +2087,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
             <b style="font-size:14px;display:block">Уведомления и продление в Telegram</b>
             <span style="font-size:12.5px;color:var(--mut)">Привяжите заказ к боту, чтобы не пропустить окончание срока</span>
           </div>
-          <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectBot?start=claim_ord_9f42a8c1" target="_blank" rel="noopener">Привязать в Telegram</a>
+          <a class="btn btn-telegram btn-sm" href="https://t.me/SilentConnectBot?start=claim_ord_9f42a8c1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C7.8 2.5 6 5.5 6 9.5V17c0 2.5 1.8 4.5 4.5 4.5h3c2.7 0 4.5-2 4.5-4.5V9.5C18 5.5 16.2 2.5 12 2.5zM8.4 10.8V9.5C8.4 7.2 9.8 5.2 12 5.2s3.6 2 3.6 4.3v1.3H8.4zM3.5 8.5C4.33 8.5 5 9.17 5 10v6c0 .83-.67 1.5-1.5 1.5S2 16.83 2 16v-6c0-.83.67-1.5 1.5-1.5zm17 0c.83 0 1.5.67 1.5 1.5v6c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-6c0-.83.67-1.5 1.5-1.5z"/></svg><span>Привязать в Telegram</span></a>
         </div>
       </section>
 
@@ -2141,7 +2136,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button type="button" class="btn btn-ghost btn-sm" data-qr="QR-код для импорта подписки">QR-код подписки</button>
           <button type="button" class="btn btn-primary btn-sm" id="copyMainImportBtn" data-copy-url="https://sub.silentconnect.net/my-secret-sub/import/sc_live_88f29a1d">Скопировать подписку</button>
-          <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectBot?start=sub_88f29a1d" target="_blank" rel="noopener">Telegram-бот</a>
+          <a class="btn btn-telegram btn-sm" href="https://t.me/SilentConnectBot?start=sub_88f29a1d" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C7.8 2.5 6 5.5 6 9.5V17c0 2.5 1.8 4.5 4.5 4.5h3c2.7 0 4.5-2 4.5-4.5V9.5C18 5.5 16.2 2.5 12 2.5zM8.4 10.8V9.5C8.4 7.2 9.8 5.2 12 5.2s3.6 2 3.6 4.3v1.3H8.4zM3.5 8.5C4.33 8.5 5 9.17 5 10v6c0 .83-.67 1.5-1.5 1.5S2 16.83 2 16v-6c0-.83.67-1.5 1.5-1.5zm17 0c.83 0 1.5.67 1.5 1.5v6c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-6c0-.83.67-1.5 1.5-1.5z"/></svg><span>Telegram-бот</span></a>
         </div>
       </div>
 
@@ -2501,7 +2496,7 @@ h1, h2, h3, .hero h1, .sec-head h2, .bcard h3 {
         <h3 style="font-size:17.5px;font-weight:600;letter-spacing:-.02em">Партнёрская программа: 10% вам + 10% другу</h3>
         <p style="margin-top:3px;color:var(--mut);font-size:13.5px">Делитесь реферальной ссылкой в Telegram-боте: друг получит скидку 10%, а вы получите бонусные дни или баланс.</p>
       </div>
-      <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectBot?start=partner" target="_blank" rel="noopener">Присоединиться в Telegram-боте <svg class="btn-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="btn btn-telegram btn-sm" href="https://t.me/SilentConnectBot?start=partner" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C7.8 2.5 6 5.5 6 9.5V17c0 2.5 1.8 4.5 4.5 4.5h3c2.7 0 4.5-2 4.5-4.5V9.5C18 5.5 16.2 2.5 12 2.5zM8.4 10.8V9.5C8.4 7.2 9.8 5.2 12 5.2s3.6 2 3.6 4.3v1.3H8.4zM3.5 8.5C4.33 8.5 5 9.17 5 10v6c0 .83-.67 1.5-1.5 1.5S2 16.83 2 16v-6c0-.83.67-1.5 1.5-1.5zm17 0c.83 0 1.5.67 1.5 1.5v6c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-6c0-.83.67-1.5 1.5-1.5z"/></svg><span>Присоединиться в Telegram-боте</span></a>
     </section>
 
   </div></div>

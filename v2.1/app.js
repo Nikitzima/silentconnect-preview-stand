@@ -624,6 +624,7 @@ if (faqListEl) {
    ========================================================================= */
 const TG_SVG = `<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.674c.458 0 .66-.21.916-.458l2.198-2.137 4.572 3.377c.843.465 1.45.226 1.66-.782l3-14.126c.307-1.232-.469-1.789-1.277-1.421z"/></svg>`;
 const TG_SUPPORT_URL = 'https://t.me/SilentConnectSupport';
+const TG_BOT_SVG = `<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C7.8 2.5 6 5.5 6 9.5V17c0 2.5 1.8 4.5 4.5 4.5h3c2.7 0 4.5-2 4.5-4.5V9.5C18 5.5 16.2 2.5 12 2.5zM8.4 10.8V9.5C8.4 7.2 9.8 5.2 12 5.2s3.6 2 3.6 4.3v1.3H8.4zM3.5 8.5C4.33 8.5 5 9.17 5 10v6c0 .83-.67 1.5-1.5 1.5S2 16.83 2 16v-6c0-.83.67-1.5 1.5-1.5zm17 0c.83 0 1.5.67 1.5 1.5v6c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-6c0-.83.67-1.5 1.5-1.5z"/></svg>`;
 
 function updateNavForView(name) {
   const navLinks = $('#navLinks') || $('.nav-links');
@@ -1262,17 +1263,27 @@ function renderAwgSetup() {
       stepsGrid.innerHTML = `
         <div class="s-step">
           <div>
-            <div class="s-step-head"><span class="s-step-num">1</span><h4>Установка ${cur.name}</h4></div>
-            <p>${cur.description} Операционная система: ${OS_LABEL[S.osAwg]}.</p>
+            <div class="s-step-head"><span class="s-step-num">1</span><h4>Установка клиента Amnezia VPN</h4></div>
+            <p>Скачайте официальное бесплатное приложение с открытым исходным кодом для вашей операционной системы (${OS_LABEL[S.osAwg]}):</p>
           </div>
           <div class="step-btns">${dlButtonsHtml(cur.downloads[S.osAwg] || [])}</div>
         </div>
+        <div class="s-step">
+          <div>
+            <div class="s-step-head"><span class="s-step-num">2</span><h4>Добавление конфигурации устройства</h4></div>
+            <p>Выберите нужный слот в блоке выше (например, «Устройство 1» для смартфона, «Устройство 2» для ПК):</p>
+            <ul style="margin:6px 0 0 18px;padding:0;font-size:13px;color:var(--dim);line-height:1.5">
+              <li><b>На смартфоне:</b> Нажмите «🔲 QR-код» у слота, в Amnezia VPN нажмите <b>«+»</b> → <b>«Сканировать QR-код»</b>.</li>
+              <li><b>На компьютере:</b> Нажмите «📥 .conf», в Amnezia VPN выберите <b>«Файл с настройками»</b> и укажите скачанный файл.</li>
+            </ul>
+          </div>
+          <div class="step-btns"><button type="button" class="btn btn-primary btn-sm" onclick="downloadSlotConf(1)"><svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Скачать слот #1 (.conf)</button></div>
+        </div>
         <div class="s-step done">
           <div>
-            <div class="s-step-head"><span class="s-step-num">2</span><h4>Импорт конфигурации слота</h4></div>
-            <p>Скачайте <code>.conf</code> файл или отсканируйте QR-код любого из ваших слотов выше и включите тумблер подключения.</p>
+            <div class="s-step-head"><span class="s-step-num">3</span><h4>Подключение и работа</h4></div>
+            <p>Нажмите центральную кнопку подключения в Amnezia VPN. Весь заблокированный трафик пойдёт через наш скоростной шифрованный WireGuard-канал без потери скорости.</p>
           </div>
-          <div class="step-btns"><button type="button" class="btn btn-primary btn-sm" onclick="downloadSlotConf(1)">Скачать слот #1 (.conf) <svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></button></div>
         </div>`;
     }
   }
@@ -1385,10 +1396,10 @@ function setOfState(state) {
   if (targetCountryEl) targetCountryEl.innerHTML = `${targetSrv.flag} ${targetSrv.name} (${targetSrv.city})`;
 
   const keyInput = $('#ofKeyInput');
-  if (keyInput) keyInput.value = `vless://of_${SUB_ID}-${srv.code}@edge.silentconnect.net:443?security=reality&sni=cloud.mail.ru#SilentConnect-OpenFlux-${srv.code.toUpperCase()}`;
+  if (keyInput) keyInput.value = `openflux://v1/${SUB_ID}-${srv.code}?doc=mailru_shared_doc_88f29&srv=${srv.code}.edge.silentconnect.net:443#SilentConnect-OpenFlux-${srv.code.toUpperCase()}`;
 
   const newKeyInput = $('#ofNewKeyInput');
-  if (newKeyInput) newKeyInput.value = `vless://of_mig_${SUB_ID}-${targetSrv.code}@edge.silentconnect.net:443?security=reality&sni=cloud.mail.ru#SilentConnect-OpenFlux-${targetSrv.code.toUpperCase()}`;
+  if (newKeyInput) newKeyInput.value = `openflux://v1/mig_${SUB_ID}-${targetSrv.code}?doc=mailru_shared_doc_88f29&srv=${targetSrv.code}.edge.silentconnect.net:443#SilentConnect-OpenFlux-${targetSrv.code.toUpperCase()}`;
 
   if (state === 'migrating') startOfHandoverTimer();
   else clearInterval(ofTimerInterval);
@@ -1415,6 +1426,56 @@ function startOfHandoverTimer() {
   ofTimerInterval = setInterval(tick, 1000);
 }
 
+const OF_CLIENT_DATA = {
+  ios: {
+    name: 'OpenFlux для iOS',
+    downloads: [
+      dl('1. Присоединиться в TestFlight', 'https://testflight.apple.com/join/BwnAcdus', 'testflight'),
+      dl('TestFlight в App Store', 'https://apps.apple.com/app/testflight/id899247664', 'appstore')
+    ],
+    step1: 'Присоединитесь к официальному бета-тестированию OpenFlux для iOS через Apple TestFlight по кнопкам ниже.',
+    step2: 'Нажмите «Скопировать ключ» выше, откройте OpenFlux на iPhone и нажмите «Вставить из буфера» (или отсканируйте «🔲 QR-код»).',
+    step3: 'В приложении OpenFlux нажмите синюю кнопку «Start VPN» ⚡. При первом запуске подтвердите добавление VPN-конфигурации в диалоговом окне iOS.'
+  },
+  android: {
+    name: 'OpenFlux для Android',
+    downloads: [
+      dl('GitHub Релизы (.apk)', 'https://github.com/p1neappleXpress/OpenFluxAndroid/releases/latest', 'github')
+    ],
+    step1: 'Скачайте официальный APK-файл OpenFlux с GitHub Releases и установите его (разрешите установку из браузера при запросе).',
+    step2: 'Нажмите кнопку «1-Click импорт» или отсканируйте QR-код активного слота выше — браузер передаст профиль в OpenFlux.',
+    step3: 'Нажмите большую центральную кнопку «Tap to connect» и разрешите системный запрос Android на подключение VPN.'
+  },
+  windows: {
+    name: 'OpenFlux Desktop для Windows',
+    downloads: [
+      dl('GitHub Релизы (.exe / .zip)', 'https://github.com/p1neappleXpress/OpenFluxDesktop/releases/latest', 'github')
+    ],
+    step1: 'Скачайте официальный дистрибутив OpenFlux Desktop (.msi / .exe или портативный .zip) для Windows 10/11 (64-bit).',
+    step2: 'Нажмите «Скопировать ключ», откройте OpenFlux Desktop и выберите «Профили» → «Импорт» (Ctrl+I). Включите режим «Весь трафик» (Wintun).',
+    step3: 'В приложении OpenFlux Desktop нажмите кнопку включения туннеля для защиты всего интернет-трафика ПК.'
+  },
+  macos: {
+    name: 'OpenFlux для macOS',
+    downloads: [
+      dl('Присоединиться в TestFlight', 'https://testflight.apple.com/join/BwnAcdus', 'testflight'),
+      dl('GitHub Релизы (.dmg)', 'https://github.com/p1neappleXpress/OpenFluxDesktop/releases/latest', 'github')
+    ],
+    step1: 'Установите OpenFlux через TestFlight или скачайте готовый бинарный пакет (.dmg) с GitHub Releases для Apple Silicon / Intel.',
+    step2: 'Скопируйте ключ слота выше и добавьте его в настройки OpenFlux.',
+    step3: 'Включите туннель в OpenFlux для защищённой работы в условиях ограничений сети.'
+  },
+  linux: {
+    name: 'OpenFlux для Linux',
+    downloads: [
+      dl('GitHub Релизы (.deb / .tar.gz)', 'https://github.com/p1neappleXpress/OpenFluxDesktop/releases/latest', 'github')
+    ],
+    step1: 'Скачайте официальный пакет OpenFlux (.deb / AppImage / CLI) с GitHub Releases.',
+    step2: 'Импортируйте строку openflux:// в конфигурационный файл или GUI.',
+    step3: 'Активируйте VPN-интерфейс tun0.'
+  }
+};
+
 function renderOfSetup() {
   renderPlatformTrack($('#osTabsOf'), OF_OS_LIST, S.osOf, id => {
     S.osOf = id;
@@ -1424,19 +1485,31 @@ function renderOfSetup() {
   const curOsEl = $('#curOsNameOf');
   if (curOsEl) curOsEl.textContent = OS_LABEL[S.osOf] || S.osOf;
 
+  const data = OF_CLIENT_DATA[S.osOf] || OF_CLIENT_DATA.ios;
   const stepsGrid = $('#stepsGridOf');
   if (stepsGrid) {
     stepsGrid.innerHTML = `
       <div class="s-step">
         <div>
-          <div class="s-step-head"><span class="s-step-num">1</span><h4>Клиент для ${OS_LABEL[S.osOf]}</h4></div>
-          <p>Для подключения ключа OpenFlux используйте Happ, Streisand, v2rayNG или v2rayN, установленный на вашем устройстве.</p>
+          <div class="s-step-head"><span class="s-step-num">1</span><h4>Установка ${data.name}</h4></div>
+          <p>${data.step1}</p>
+        </div>
+        <div class="step-btns">${dlButtonsHtml(data.downloads)}</div>
+      </div>
+      <div class="s-step">
+        <div>
+          <div class="s-step-head"><span class="s-step-num">2</span><h4>Добавление подключения</h4></div>
+          <p>${data.step2}</p>
+        </div>
+        <div class="step-btns">
+          <button type="button" class="btn btn-primary btn-sm" onclick="copyToClipboard($('#ofKeyInput')?.value || '', 'Ключ OpenFlux скопирован!')"><svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Скопировать ключ OpenFlux</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="openQrModal('OpenFlux QR-код', $('#ofKeyInput')?.value || '')"><svg class="ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> QR-код</button>
         </div>
       </div>
       <div class="s-step done">
         <div>
-          <div class="s-step-head"><span class="s-step-num">2</span><h4>Импорт защищённого ключа</h4></div>
-          <p>Скопируйте персональный ключ OpenFlux выше и нажмите «Импорт из буфера обмена» в приложении.</p>
+          <div class="s-step-head"><span class="s-step-num">3</span><h4>Активация соединения</h4></div>
+          <p>${data.step3}</p>
         </div>
       </div>`;
   }
