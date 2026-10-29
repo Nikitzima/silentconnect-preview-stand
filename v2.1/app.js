@@ -622,6 +622,61 @@ if (faqListEl) {
 /* =========================================================================
    4. РОУТИНГ СТРАНИЦ / ЭКРАНОВ И СТРАНИЦА ЗАКАЗА
    ========================================================================= */
+const TG_SVG = `<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.832.968z"/></svg>`;
+const TG_SUPPORT_URL = 'https://t.me/SilentConnectSupport';
+
+function updateNavForView(name) {
+  const navLinks = $('#navLinks') || $('.nav-links');
+  const navActions = $('#navActions') || $('.nav-actions');
+  if (!navLinks || !navActions) return;
+
+  if (name === 'landing') {
+    navLinks.innerHTML = `
+      <a href="#tariffs" data-go="landing">Тарифы</a>
+      <a href="#features" data-go="landing">Возможности</a>
+      <a href="#faq" data-go="landing">Вопросы</a>
+    `;
+    navActions.innerHTML = `
+      <button type="button" class="btn btn-ghost btn-sm" data-open-cabinet>Кабинет</button>
+    `;
+  } else if (name === 'sub') {
+    navLinks.innerHTML = `
+      <a href="#renewAcc" data-nav-action="renew">Продлить</a>
+      <a href="#modeBar" data-nav-action="scroll">Режимы</a>
+      <a href="#subViewport" data-nav-action="scroll">Инструкция</a>
+    `;
+    navActions.innerHTML = `
+      <a class="btn btn-telegram btn-sm" href="${TG_SUPPORT_URL}" target="_blank" rel="noopener">${TG_SVG}<span>Поддержка</span></a>
+      <button type="button" class="btn btn-ghost btn-sm hide-sm" data-open-cabinet>Кабинет</button>
+    `;
+  } else if (name === 'order') {
+    navLinks.innerHTML = `
+      <a href="#top" data-go="landing">← На главную</a>
+    `;
+    navActions.innerHTML = `
+      <a class="btn btn-telegram btn-sm" href="${TG_SUPPORT_URL}" target="_blank" rel="noopener">${TG_SVG}<span>Поддержка</span></a>
+    `;
+  } else if (name === 'cabinet') {
+    navLinks.innerHTML = `
+      <a href="#top" data-nav-action="scroll">Мои подписки</a>
+      <a href="#tariffs" data-go="landing">Оформить новую</a>
+      <a href="#view-legal" data-go="legal">Документы</a>
+    `;
+    navActions.innerHTML = `
+      <a class="btn btn-telegram btn-sm" href="${TG_SUPPORT_URL}" target="_blank" rel="noopener">${TG_SVG}<span>Поддержка</span></a>
+    `;
+  } else if (name === 'legal') {
+    navLinks.innerHTML = `
+      <a href="#top" data-go="landing">← На главную</a>
+      <a href="#tariffs" data-go="landing">Тарифы</a>
+    `;
+    navActions.innerHTML = `
+      <a class="btn btn-telegram btn-sm hide-sm" href="${TG_SUPPORT_URL}" target="_blank" rel="noopener">${TG_SVG}<span>Поддержка</span></a>
+      <button type="button" class="btn btn-ghost btn-sm" data-open-cabinet>Кабинет</button>
+    `;
+  }
+}
+
 const VIEWS = ['landing', 'order', 'sub', 'cabinet', 'legal'];
 function view(name, hash) {
   if (!VIEWS.includes(name)) name = 'landing';
@@ -631,6 +686,8 @@ function view(name, hash) {
   });
   $$('[data-page-tab]').forEach(b => b.classList.toggle('on', b.dataset.pageTab === name));
   if (mbarEl) mbarEl.style.display = name === 'landing' ? '' : 'none';
+
+  updateNavForView(name);
 
   const target = hash && hash.length > 1 ? $(hash) : null;
   if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 30);
@@ -653,6 +710,55 @@ document.addEventListener('click', e => {
   if (doc) showLegalDoc(doc);
   view(a.dataset.go, href.startsWith('#') ? href : '');
 });
+
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-nav-action]');
+  if (!a) return;
+  e.preventDefault();
+  const action = a.dataset.navAction;
+  const href = a.getAttribute('href') || '';
+
+  if (action === 'renew') {
+    const doOpenRenew = () => {
+      const el = $('#renewAcc');
+      if (el) {
+        if (typeof setRenewOpen === 'function') setRenewOpen(true);
+        else if (window.setRenewOpen) window.setRenewOpen(true);
+        else el.setAttribute('data-open', 'true');
+        const headerOffset = 76;
+        const elPos = el.getBoundingClientRect().top;
+        const offsetPos = elPos + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPos, behavior: 'smooth' });
+      }
+    };
+    if ($('#view-sub') && $('#view-sub').hidden) {
+      view('sub');
+      setTimeout(doOpenRenew, 60);
+    } else {
+      doOpenRenew();
+    }
+  } else if (action === 'scroll' && href && href.startsWith('#')) {
+    if (href === '#top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const target = $(href);
+      if (target) {
+        const headerOffset = 76;
+        const elPos = target.getBoundingClientRect().top;
+        const offsetPos = elPos + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPos, behavior: 'smooth' });
+      }
+    }
+  }
+});
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-open-cabinet]');
+  if (!btn) return;
+  e.preventDefault();
+  openModal('cabinetModal');
+});
+
 
 function setOrderState(state) {
   if (!['waiting', 'delivered', 'cancelled'].includes(state)) state = 'waiting';
@@ -1395,6 +1501,7 @@ const renewToggle = $('#renewToggle');
 const bindEmailOnlyChk = $('#bindEmailOnly');
 
 function setRenewOpen(open) {
+  window.setRenewOpen = setRenewOpen;
   if (!renewAcc) return;
   renewAcc.setAttribute('data-open', String(open));
   if (renewToggle) renewToggle.setAttribute('aria-expanded', String(open));

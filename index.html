@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="v2.1/v2.css?v=2.1.6">
+<link rel="stylesheet" href="v2.1/v2.css?v=2.1.7">
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -48,12 +48,12 @@
       <img src="assets/branding/avatar.webp" alt="" class="brand-logo" width="34" height="34">
       <span class="brand-text">SilentConnect</span>
     </a>
-    <nav class="nav-links" aria-label="Разделы">
+    <nav class="nav-links" id="navLinks" aria-label="Разделы">
       <a href="#tariffs" data-go="landing">Тарифы</a>
       <a href="#features" data-go="landing">Возможности</a>
       <a href="#faq" data-go="landing">Вопросы</a>
     </nav>
-    <div class="nav-actions">
+    <div class="nav-actions" id="navActions">
       <button type="button" class="btn btn-ghost btn-sm" data-open-cabinet>Кабинет</button>
     </div>
   </header>
@@ -268,7 +268,7 @@
         <div class="rv">
           <h2 class="h2 metal">Частые вопросы</h2>
           <p class="sec-lead" style="margin-top:12px">Не нашли ответ? Напишите нам, поддержка отвечает круглосуточно.</p>
-          <div style="margin-top:18px"><a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Написать в поддержку</a></div>
+          <div style="margin-top:18px"><a class="btn btn-telegram btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.832.968z"/></svg><span>Написать в поддержку</span></a></div>
         </div>
         <div class="faq-list glass spot rv" style="--d:.14s" id="faqList"></div>
       </div>
@@ -349,7 +349,7 @@
             <p style="margin-top:6px;color:var(--mut);font-size:13.5px;line-height:1.5">Если не проходит платёж или нужна альтернативная оплата, напишите оператору: отвечаем за от 2 до 5 минут.</p>
           </div>
           <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-            <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Поддержка (@SilentConnectSupport)</a>
+            <a class="btn btn-telegram btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.832.968z"/></svg><span>Поддержка (@SilentConnectSupport)</span></a>
             <button type="button" class="btn btn-danger btn-sm" id="cancelOrdBtn">Отменить заказ</button>
           </div>
         </section>
@@ -391,7 +391,7 @@
         </div>
         <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px">
           <button type="button" class="btn btn-primary" data-go="landing">Выбрать тариф заново</button>
-          <a class="btn btn-ghost" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Связаться с поддержкой</a>
+          <a class="btn btn-telegram" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.832.968z"/></svg><span>Связаться с поддержкой</span></a>
         </div>
       </section>
     </div>
@@ -604,7 +604,7 @@
     </section>
 
     <!-- Переключатель 3 режимов Мастера подключения (Liquid Glass Segmented Control) -->
-    <div class="mode-bar">
+    <div class="mode-bar" id="modeBar">
       <div>
         <h2 style="font-size:22px;font-weight:600;letter-spacing:-.03em">Мастер настройки и подключения</h2>
         <p style="font-size:14px;color:var(--mut);margin-top:3px">Выберите контур: безлимитный основной, игровой AmneziaWG с выбором страны или резервный канал Белых списков.</p>
@@ -806,7 +806,7 @@
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button type="button" class="btn btn-primary btn-sm" data-go="landing">Новая подписка</button>
-        <a class="btn btn-ghost btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener">Поддержка в Telegram</a>
+        <a class="btn btn-telegram btn-sm" href="https://t.me/SilentConnectSupport" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.832.968z"/></svg><span>Поддержка в Telegram</span></a>
       </div>
     </div>
 
@@ -1030,7 +1030,7 @@
 
 <script src="v2.1/bg.js"></script>
 <script src="v2.1/os-icons.js"></script>
-<script src="v2.1/app.js?v=2.1.8"></script>
+<script src="v2.1/app.js?v=2.1.9"></script>
 <script type="module" src="v2.1/globe.js"></script>
 </body>
 </html>
